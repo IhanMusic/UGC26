@@ -4,6 +4,7 @@ import { AuthSessionProvider } from "@/components/session-provider";
 import { ToastProvider } from "@/components/toast";
 import { ConfirmProvider } from "@/components/confirm-modal";
 import { NextIntlClientProvider } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
 import { getMessages } from "@/i18n/get-messages";
 import { isLocale, type AppLocale } from "@/i18n/routing";
 import "../globals.css";
@@ -56,6 +57,7 @@ export default async function LocaleLayout({
     return children;
   }
   const l = locale as AppLocale;
+  setRequestLocale(l);
   const messages = await getMessages(l);
   const dir = l === "ar" ? "rtl" : "ltr";
 
