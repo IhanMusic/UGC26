@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface Props {
   reviewedId: string;
@@ -11,6 +12,8 @@ interface Props {
 }
 
 export function ReviewModal({ reviewedId, reviewedName, campaignId, onSuccess, onClose }: Props) {
+  const t = useTranslations("reviews");
+  const tc = useTranslations("common");
   const [rating, setRating] = useState(0);
   const [hovered, setHovered] = useState(0);
   const [comment, setComment] = useState("");
@@ -19,7 +22,7 @@ export function ReviewModal({ reviewedId, reviewedName, campaignId, onSuccess, o
 
   const handleSubmit = async () => {
     if (!rating) {
-      setError("Veuillez sélectionner une note");
+      setError(t("selectRating"));
       return;
     }
     setLoading(true);
@@ -32,11 +35,11 @@ export function ReviewModal({ reviewedId, reviewedName, campaignId, onSuccess, o
       });
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error || "Erreur");
+        throw new Error(data.error || t("submitError"));
       }
       onSuccess();
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Erreur");
+      setError(e instanceof Error ? e.message : t("submitError"));
     } finally {
       setLoading(false);
     }
@@ -46,14 +49,14 @@ export function ReviewModal({ reviewedId, reviewedName, campaignId, onSuccess, o
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
       <div className="glass w-full max-w-md rounded-2xl p-6 space-y-5">
         <div>
-          <h2 className="text-lg font-bold text-[#E2E8F0]">Laisser un avis</h2>
-          <p className="text-sm text-[#64748B]">Votre expérience avec {reviewedName}</p>
+          <h2 className="text-lg font-bold text-[#E2E8F0]">{t("leaveReview")}</h2>
+          <p className="text-sm text-[#64748B]">{t("yourExperience", { name: reviewedName })}</p>
         </div>
 
         {/* Star rating */}
         <div className="space-y-2">
           <p className="text-xs font-semibold uppercase tracking-widest text-[#475569]">
-            Note <span className="text-[#F43F5E]">*</span>
+            {t("noteLabel")} <span className="text-[#F43F5E]">{t("required")}</span>
           </p>
           <div className="flex gap-1">
             {[1, 2, 3, 4, 5].map((star) => (
@@ -75,13 +78,13 @@ export function ReviewModal({ reviewedId, reviewedName, campaignId, onSuccess, o
         {/* Comment */}
         <div className="space-y-1">
           <p className="text-xs font-semibold uppercase tracking-widest text-[#475569]">
-            Commentaire <span className="text-[#94A3B8]">(optionnel)</span>
+            {t("commentLabel")} <span className="text-[#94A3B8]">{t("optional")}</span>
           </p>
           <textarea
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             rows={3}
-            placeholder="Partagez votre expérience..."
+            placeholder={t("commentPlaceholder")}
             className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-[#E2E8F0] placeholder-[#64748B] focus:border-violet-500/40 focus:outline-none"
           />
         </div>
@@ -93,14 +96,14 @@ export function ReviewModal({ reviewedId, reviewedName, campaignId, onSuccess, o
             onClick={onClose}
             className="rounded-lg border border-white/[0.08] px-4 py-2 text-sm text-[#94A3B8] hover:bg-white/[0.05]"
           >
-            Annuler
+            {tc("cancel")}
           </button>
           <button
             onClick={handleSubmit}
             disabled={loading || !rating}
             className="rounded-xl bg-gradient-to-r from-amber-600 to-yellow-500 px-4 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
           >
-            {loading ? "Publication..." : "Publier l'avis ✓"}
+            {loading ? t("publishing") : t("publishButton")}
           </button>
         </div>
       </div>
