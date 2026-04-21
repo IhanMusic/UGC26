@@ -108,12 +108,17 @@ export function CompanyDeliverablesTab({ campaignId, participations }: Props) {
   };
 
   const handleApprove = async (id: string) => {
-    await fetch(`/api/deliverables/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action: "approve" }),
-    });
-    fetchDeliverables();
+    try {
+      const res = await fetch(`/api/deliverables/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "approve" }),
+      });
+      if (!res.ok) throw new Error("Erreur");
+      fetchDeliverables();
+    } catch {
+      setError("Erreur lors de l'approbation");
+    }
   };
 
   if (loading) return <div className="text-[#64748B] p-6">Chargement...</div>;

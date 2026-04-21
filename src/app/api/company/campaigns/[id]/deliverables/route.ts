@@ -20,6 +20,14 @@ export async function GET(
   }
   const { id } = await params;
 
+  const campaign = await prisma.campaign.findUnique({
+    where: { id },
+    select: { companyId: true },
+  });
+  if (!campaign || campaign.companyId !== session.user.id) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
   const deliverables = await prisma.deliverable.findMany({
     where: { campaignId: id },
     include: {
@@ -48,6 +56,14 @@ export async function POST(
   }
   const { id: campaignId } = await params;
 
+  const campaign = await prisma.campaign.findUnique({
+    where: { id: campaignId },
+    select: { companyId: true },
+  });
+  if (!campaign || campaign.companyId !== session.user.id) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
   const body = await req.json();
   const parsed = createSchema.safeParse(body);
   if (!parsed.success) {
@@ -57,6 +73,16 @@ export async function POST(
   const { type, description, influencerId } = parsed.data;
 
   if (influencerId) {
+    const participation = await prisma.campaignParticipation.findFirst({
+      where: {
+        campaignId,
+        influencerId,
+        status: { in: ["ONGOING", "CONFIRMED", "COMPLETED", "PAID"] },
+      },
+    });
+    if (!participation) {
+      return NextResponse.json({ error: "Influencer is not an accepted participant" }, { status: 400 });
+    }
     const deliverable = await prisma.deliverable.create({
       data: { campaignId, type, description, influencerId },
     });
