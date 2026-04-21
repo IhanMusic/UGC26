@@ -22,10 +22,9 @@ const TYPE_LABELS: Record<string, string> = {
 
 interface Props {
   campaignId: string;
-  influencerId: string;
 }
 
-export function InfluencerDeliverablesTab({ campaignId, influencerId }: Props) {
+export function InfluencerDeliverablesTab({ campaignId }: Props) {
   const [deliverables, setDeliverables] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [links, setLinks] = useState<Record<string, string>>({}); // deliverable.id -> link input value
@@ -72,9 +71,6 @@ export function InfluencerDeliverablesTab({ campaignId, influencerId }: Props) {
       setSubmitting(null);
     }
   };
-
-  // influencerId prop kept for future use (e.g. analytics)
-  void influencerId;
 
   if (loading) return <div className="text-[#64748B] p-6">Chargement...</div>;
 

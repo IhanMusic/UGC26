@@ -201,7 +201,6 @@ export default function InfluencerCampaignClient({ campaignId }: { campaignId: s
       {activeTab === "Livrables" && session?.user?.id && (
         <InfluencerDeliverablesTab
           campaignId={campaign.id}
-          influencerId={session.user.id}
         />
       )}
     </div>

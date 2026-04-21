@@ -4,7 +4,8 @@ import { requireUser } from "@/server/guards";
 
 // PATCH /api/deliverables/[id] — company approves/rejects, or influencer updates file
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const user = await requireUser();
+  const user = await requireUser().catch(() => null);
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { id } = await params;
   const body = await req.json();
 
