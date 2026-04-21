@@ -10,6 +10,7 @@ import { Table, TBody, TD, TH, THead, TR } from "@/components/ui/table";
 import { AdminSearchInput } from "@/components/admin-search-input";
 import { AdminStatusFilter } from "@/components/admin-status-filter";
 import type { CampaignStatus } from "@/generated/prisma/enums";
+import { getTranslations } from "next-intl/server";
 
 const PAGE_SIZE = 20;
 
@@ -27,6 +28,7 @@ export default async function AdminCampaignsPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   await requireRole("ADMIN");
+  const t = await getTranslations("admin");
   const sp = await searchParams;
 
   const q = (sp.q as string | undefined)?.trim() ?? "";
@@ -79,7 +81,7 @@ export default async function AdminCampaignsPage({
         <div className="flex flex-wrap items-center gap-3">
           <AdminStatusFilter />
           <div className="w-64">
-            <AdminSearchInput placeholder="Search by title…" />
+            <AdminSearchInput placeholder={t("searchCampaign")} />
           </div>
         </div>
       </div>
@@ -130,21 +132,21 @@ export default async function AdminCampaignsPage({
 
         {campaigns.length === 0 && (
           <div className="glass rounded-xl p-8 text-center text-[#64748B]">
-            Aucun résultat{q ? ` pour "${q}"` : ""}.
+            {q ? t("noResultsFor", { query: q }) : t("noResultsEmpty")}
           </div>
         )}
       </div>
 
       <div className="mt-6 flex items-center justify-between text-sm text-slate-500">
         <div>
-          Page {page} / {pages} &mdash; {total} total
+          {t("pageLabel")} {page} / {pages} &mdash; {t("totalCount", { count: total })}
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm" asChild disabled={page <= 1}>
-            <Link href={buildHref(Math.max(1, page - 1))}>← Previous</Link>
+            <Link href={buildHref(Math.max(1, page - 1))}>{t("previousPage")}</Link>
           </Button>
           <Button variant="outline" size="sm" asChild disabled={page >= pages}>
-            <Link href={buildHref(Math.min(pages, page + 1))}>Next →</Link>
+            <Link href={buildHref(Math.min(pages, page + 1))}>{t("nextPage")}</Link>
           </Button>
         </div>
       </div>

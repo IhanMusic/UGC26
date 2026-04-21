@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { ActionButton } from "@/components/action-button";
 import { Table, TBody, TD, TH, THead, TR } from "@/components/ui/table";
 import { AdminSearchInput } from "@/components/admin-search-input";
+import { getTranslations } from "next-intl/server";
 
 const PAGE_SIZE = 20;
 
@@ -18,6 +19,7 @@ export default async function AdminCompaniesPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   await requireRole("ADMIN");
+  const t = await getTranslations("admin");
   const sp = await searchParams;
   const q = (sp.q as string | undefined)?.trim() ?? "";
   const page = Math.max(1, Number(sp.page ?? 1) || 1);
@@ -80,14 +82,14 @@ export default async function AdminCompaniesPage({
           <div className="text-sm text-slate-500">Total companies</div>
         </div>
         <div className="w-72">
-          <AdminSearchInput placeholder="Search name / email / company…" />
+          <AdminSearchInput placeholder={t("searchCompany")} />
         </div>
       </div>
 
       <div className="mt-6">
         {users.length === 0 && (
           <div className="glass rounded-xl p-8 text-center text-[#64748B]">
-            Aucun résultat{q ? ` pour "${q}"` : ""}.
+            {q ? t("noResultsFor", { query: q }) : t("noResultsEmpty")}
           </div>
         )}
         <Table>
@@ -193,14 +195,14 @@ export default async function AdminCompaniesPage({
 
       <div className="mt-6 flex items-center justify-between text-sm text-slate-500">
         <div>
-          Page {page} / {pages} &mdash; {total} total
+          {t("pageLabel")} {page} / {pages} &mdash; {t("totalCount", { count: total })}
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm" asChild disabled={page <= 1}>
-            <Link href={buildHref(Math.max(1, page - 1))}>← Previous</Link>
+            <Link href={buildHref(Math.max(1, page - 1))}>{t("previousPage")}</Link>
           </Button>
           <Button variant="outline" size="sm" asChild disabled={page >= pages}>
-            <Link href={buildHref(Math.min(pages, page + 1))}>Next →</Link>
+            <Link href={buildHref(Math.min(pages, page + 1))}>{t("nextPage")}</Link>
           </Button>
         </div>
       </div>
