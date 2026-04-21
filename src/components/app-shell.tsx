@@ -8,6 +8,7 @@ import { LanguageSwitcher } from "@/components/language-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { NotificationBell } from "@/components/notification-bell";
 import { getTranslations } from "next-intl/server";
+import { VerificationBanner } from "@/components/verification-banner";
 
 export async function AppShell({
   title,
@@ -79,6 +80,9 @@ export async function AppShell({
 
       {/* ── Main content ── */}
       <div className="flex flex-1 flex-col">
+        {/* Verification banner */}
+        <VerificationBanner />
+
         {/* Header */}
         <header className="border-b border-white/[0.08] bg-[#0D0F1C]/60 px-4 py-4 backdrop-blur-2xl">
           <div className="mx-auto flex max-w-6xl items-center justify-between">
