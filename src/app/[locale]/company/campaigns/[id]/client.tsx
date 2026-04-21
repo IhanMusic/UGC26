@@ -5,6 +5,7 @@ import { cn } from "@/components/ui/utils";
 import { AppShell } from "@/components/app-shell";
 import { companyNav } from "../../_nav";
 import { CompanyDeliverablesTab } from "@/components/company-deliverables-tab";
+import { CampaignChat } from "@/components/campaign-chat";
 
 // Prisma-shaped types inferred from schema
 type InfluencerUser = {
@@ -52,7 +53,13 @@ type Campaign = {
 const TABS = ["Infos", "Candidats", "Livrables", "Messages"] as const;
 type Tab = (typeof TABS)[number];
 
-export function CampaignDetailClient({ campaign }: { campaign: Campaign }) {
+export function CampaignDetailClient({
+  campaign,
+  conversationId,
+}: {
+  campaign: Campaign;
+  conversationId: string | null;
+}) {
   const [activeTab, setActiveTab] = useState<Tab>("Infos");
 
   return (
@@ -95,9 +102,10 @@ export function CampaignDetailClient({ campaign }: { campaign: Campaign }) {
             />
           )}
           {activeTab === "Messages" && (
-            <div className="glass rounded-xl p-6 text-[#64748B]">
-              Messages — à venir (Tâche 10)
-            </div>
+            <CampaignChat
+              conversationId={conversationId}
+              campaignId={campaign.id}
+            />
           )}
         </div>
       </div>

@@ -46,5 +46,16 @@ export default async function CompanyCampaignDetailPage({ params }: Props) {
 
   if (!campaign) notFound();
 
-  return <CampaignDetailClient campaign={campaign} />;
+  // Find any existing conversation for this campaign (company side: any participant)
+  const conversation = await prisma.conversation.findFirst({
+    where: { campaignId: campaign.id },
+    select: { id: true },
+  });
+
+  return (
+    <CampaignDetailClient
+      campaign={campaign}
+      conversationId={conversation?.id ?? null}
+    />
+  );
 }

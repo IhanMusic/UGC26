@@ -10,6 +10,7 @@ import { fileToDataUrl } from "@/components/file-utils";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/components/ui/utils";
 import { InfluencerDeliverablesTab } from "@/components/influencer-deliverables-tab";
+import { CampaignChat } from "@/components/campaign-chat";
 
 type CampaignDto = {
   id: string;
@@ -24,10 +25,16 @@ type ParticipationDto = {
   status: "UPCOMING" | "ONGOING" | "COMPLETED" | "CONFIRMED" | "PAID";
 };
 
-const TABS = ["Détails", "Exécution", "Livrables"] as const;
+const TABS = ["Détails", "Exécution", "Livrables", "Messages"] as const;
 type Tab = (typeof TABS)[number];
 
-export default function InfluencerCampaignClient({ campaignId }: { campaignId: string }) {
+export default function InfluencerCampaignClient({
+  campaignId,
+  conversationId,
+}: {
+  campaignId: string;
+  conversationId: string | null;
+}) {
   const { data: session } = useSession();
   const [loading, setLoading] = useState(true);
   const [campaign, setCampaign] = useState<CampaignDto | null>(null);
@@ -200,6 +207,14 @@ export default function InfluencerCampaignClient({ campaignId }: { campaignId: s
       {/* Livrables tab */}
       {activeTab === "Livrables" && session?.user?.id && (
         <InfluencerDeliverablesTab
+          campaignId={campaign.id}
+        />
+      )}
+
+      {/* Messages tab */}
+      {activeTab === "Messages" && (
+        <CampaignChat
+          conversationId={conversationId}
           campaignId={campaign.id}
         />
       )}
