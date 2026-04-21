@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { cn } from "@/components/ui/utils";
 
 interface FileUploadProps {
@@ -15,12 +16,15 @@ export function FileUpload({
   value,
   onChange,
   accept = "image/*",
-  label = "Choisir une image",
+  label,
   className,
 }: FileUploadProps) {
+  const t = useTranslations("fileUpload");
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const displayLabel = label ?? t("label");
 
   const handleFile = async (file: File) => {
     setError(null);
@@ -30,10 +34,10 @@ export function FileUpload({
       form.append("file", file);
       const res = await fetch("/api/upload", { method: "POST", body: form });
       const data = (await res.json()) as { url?: string; error?: string };
-      if (!res.ok) throw new Error(data.error ?? "Upload failed");
+      if (!res.ok) throw new Error(data.error ?? t("error"));
       onChange(data.url!);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Upload failed");
+      setError(e instanceof Error ? e.message : t("error"));
     } finally {
       setUploading(false);
     }
@@ -64,7 +68,7 @@ export function FileUpload({
               />
             </svg>
             <span className="text-sm text-[#64748B]">
-              {uploading ? "Upload en cours..." : label}
+              {uploading ? t("uploading") : displayLabel}
             </span>
           </>
         )}
