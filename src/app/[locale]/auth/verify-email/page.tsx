@@ -1,3 +1,5 @@
+import { Link } from "@/i18n/navigation";
+
 interface Props {
   searchParams: Promise<{ error?: string; verified?: string }>;
 }
@@ -18,12 +20,12 @@ export default async function VerifyEmailPage({ searchParams }: Props) {
             ? "Ce lien de verification n'est plus valide. Connectez-vous et cliquez sur 'Renvoyer l'email'."
             : "Un email de verification a ete envoye a votre adresse. Cliquez sur le lien dans l'email pour activer votre compte."}
         </p>
-        <a
-          href="/en/auth/login"
+        <Link
+          href="/auth/login"
           className="mt-6 inline-block rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-6 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
         >
           Retour a la connexion
-        </a>
+        </Link>
       </div>
     </div>
   );

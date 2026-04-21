@@ -47,6 +47,13 @@ export const authOptions: NextAuthOptions = {
         t.sub = user.id;
         t.role = user.role;
         t.isVerified = user.isVerified ?? false;
+      } else if (t.sub) {
+        // Re-check isVerified on every token refresh so banner clears immediately after verification
+        const dbUser = await prisma.user.findUnique({
+          where: { id: t.sub },
+          select: { isVerified: true },
+        });
+        if (dbUser) t.isVerified = dbUser.isVerified;
       }
       return t;
     },
