@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { cn } from "@/components/ui/utils";
 
 const STATUS_COLORS: Record<string, string> = {
@@ -10,21 +11,13 @@ const STATUS_COLORS: Record<string, string> = {
   REJECTED: "bg-red-500/20 text-red-300",
 };
 
-const TYPE_LABELS: Record<string, string> = {
-  INSTAGRAM_POST: "Instagram Post",
-  STORY: "Story",
-  REEL: "Reel",
-  VIDEO: "Vidéo",
-  TIKTOK: "TikTok",
-  YOUTUBE: "YouTube",
-  OTHER: "Autre",
-};
-
 interface Props {
   campaignId: string;
 }
 
 export function InfluencerDeliverablesTab({ campaignId }: Props) {
+  const t = useTranslations("deliverables");
+
   const [deliverables, setDeliverables] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [links, setLinks] = useState<Record<string, string>>({}); // deliverable.id -> link input value
@@ -51,7 +44,7 @@ export function InfluencerDeliverablesTab({ campaignId }: Props) {
   const handleSubmit = async (deliverableId: string) => {
     const link = links[deliverableId]?.trim();
     if (!link) {
-      setErrors((e) => ({ ...e, [deliverableId]: "Le lien est obligatoire" }));
+      setErrors((e) => ({ ...e, [deliverableId]: t("submitError") }));
       return;
     }
     setSubmitting(deliverableId);
@@ -66,13 +59,13 @@ export function InfluencerDeliverablesTab({ campaignId }: Props) {
       setLinks((l) => ({ ...l, [deliverableId]: "" }));
       void fetchDeliverables();
     } catch {
-      setErrors((e) => ({ ...e, [deliverableId]: "Erreur lors de la soumission" }));
+      setErrors((e) => ({ ...e, [deliverableId]: t("submitError") }));
     } finally {
       setSubmitting(null);
     }
   };
 
-  if (loading) return <div className="text-[#64748B] p-6">Chargement...</div>;
+  if (loading) return <div className="text-[#64748B] p-6">{t("loading")}</div>;
 
   const approved = deliverables.filter((d) => d.status === "APPROVED").length;
   const total = deliverables.length;
@@ -83,8 +76,8 @@ export function InfluencerDeliverablesTab({ campaignId }: Props) {
       {total > 0 && (
         <div className="glass rounded-xl p-4 space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-[#94A3B8]">Progression</span>
-            <span className="font-medium text-[#E2E8F0]">{approved}/{total} approuvés</span>
+            <span className="text-[#94A3B8]">{t("progressLabel")}</span>
+            <span className="font-medium text-[#E2E8F0]">{t("approvedCount", { approved, total })}</span>
           </div>
           <div className="h-2 rounded-full bg-white/[0.08]">
             <div
@@ -98,7 +91,7 @@ export function InfluencerDeliverablesTab({ campaignId }: Props) {
       {/* Deliverable cards */}
       {deliverables.length === 0 ? (
         <div className="glass rounded-xl p-8 text-center text-[#64748B]">
-          Aucun livrable assigné pour le moment.
+          {t("noneAssigned")}
         </div>
       ) : (
         <div className="space-y-4">
@@ -113,20 +106,20 @@ export function InfluencerDeliverablesTab({ campaignId }: Props) {
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="space-y-1">
-                  <p className="font-medium text-[#E2E8F0]">{TYPE_LABELS[d.type] ?? d.type}</p>
+                  <p className="font-medium text-[#E2E8F0]">{t(`types.${d.type}`)}</p>
                   <p className="text-sm text-[#94A3B8]">{d.description}</p>
                 </div>
                 <span className={cn("shrink-0 rounded-full px-3 py-1 text-xs font-medium", STATUS_COLORS[d.status] ?? "bg-white/10 text-white/60")}>
-                  {d.status === "PENDING" ? "En attente" :
-                   d.status === "SUBMITTED" ? "En cours de validation" :
-                   d.status === "APPROVED" ? "Approuvé ✓" : "Rejeté"}
+                  {d.status === "PENDING" ? t("statusPending") :
+                   d.status === "SUBMITTED" ? t("statusSubmitted") :
+                   d.status === "APPROVED" ? t("statusApproved") : t("statusRejected")}
                 </span>
               </div>
 
               {/* Rejection feedback */}
               {d.status === "REJECTED" && d.feedback && (
                 <div className="rounded-lg border border-red-500/20 bg-red-500/10 px-3 py-2 space-y-1">
-                  <p className="text-xs font-semibold text-red-400">Feedback de l&apos;entreprise :</p>
+                  <p className="text-xs font-semibold text-red-400">{t("feedbackLabel")}</p>
                   <p className="text-sm text-red-300">{d.feedback}</p>
                 </div>
               )}
@@ -135,12 +128,12 @@ export function InfluencerDeliverablesTab({ campaignId }: Props) {
               {(d.status === "PENDING" || d.status === "REJECTED") && (
                 <div className="space-y-2">
                   <label className="text-xs font-semibold uppercase tracking-widest text-[#475569]">
-                    {d.status === "REJECTED" ? "Nouveau lien de publication" : "Lien de publication"}
+                    {d.status === "REJECTED" ? t("newPublicationLinkLabel") : t("publicationLinkLabel")}
                   </label>
                   <div className="flex gap-2">
                     <input
                       type="url"
-                      placeholder="https://www.instagram.com/p/..."
+                      placeholder={t("linkPlaceholder")}
                       value={links[d.id] ?? ""}
                       onChange={(e) => setLinks((l) => ({ ...l, [d.id]: e.target.value }))}
                       className="flex-1 rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-[#E2E8F0] placeholder-[#64748B] focus:border-violet-500/40 focus:outline-none"
@@ -150,7 +143,7 @@ export function InfluencerDeliverablesTab({ campaignId }: Props) {
                       disabled={submitting === d.id}
                       className="rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
                     >
-                      {submitting === d.id ? "..." : "Soumettre"}
+                      {submitting === d.id ? t("submitting") : t("submitButton")}
                     </button>
                   </div>
                   {errors[d.id] && <p className="text-xs text-[#F43F5E]">{errors[d.id]}</p>}
@@ -160,7 +153,7 @@ export function InfluencerDeliverablesTab({ campaignId }: Props) {
               {/* Submitted state — locked */}
               {d.status === "SUBMITTED" && d.fileUrl && (
                 <a href={d.fileUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-violet-400 hover:underline">
-                  Voir ma soumission →
+                  {t("viewSubmission")}
                 </a>
               )}
             </div>

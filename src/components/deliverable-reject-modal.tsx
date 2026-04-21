@@ -1,13 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-const REJECT_REASONS = [
-  "Mauvaise qualité visuelle",
-  "Ne respecte pas le brief",
-  "Lien invalide",
-  "Autre",
-];
+import { useTranslations } from "next-intl";
 
 interface Props {
   deliverableId: string;
@@ -16,6 +10,16 @@ interface Props {
 }
 
 export function DeliverableRejectModal({ deliverableId, onSuccess, onClose }: Props) {
+  const t = useTranslations("deliverables");
+  const tc = useTranslations("common");
+
+  const REJECT_REASONS = [
+    t("reasons.badQuality"),
+    t("reasons.doesntMatchBrief"),
+    t("reasons.invalidLink"),
+    t("reasons.other"),
+  ];
+
   const [reason, setReason] = useState(REJECT_REASONS[0]);
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
@@ -23,7 +27,7 @@ export function DeliverableRejectModal({ deliverableId, onSuccess, onClose }: Pr
 
   const handleSubmit = async () => {
     if (!feedback.trim()) {
-      setError("Le message de débrief est obligatoire");
+      setError(t("debriefMissing"));
       return;
     }
     setLoading(true);
@@ -37,7 +41,7 @@ export function DeliverableRejectModal({ deliverableId, onSuccess, onClose }: Pr
       if (!res.ok) throw new Error("Erreur");
       onSuccess();
     } catch {
-      setError("Erreur lors du rejet");
+      setError(t("rejectError"));
     } finally {
       setLoading(false);
     }
@@ -46,10 +50,10 @@ export function DeliverableRejectModal({ deliverableId, onSuccess, onClose }: Pr
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
       <div className="glass w-full max-w-md rounded-2xl p-6 space-y-4">
-        <h2 className="text-lg font-bold text-[#E2E8F0]">Rejeter le livrable</h2>
+        <h2 className="text-lg font-bold text-[#E2E8F0]">{t("rejectTitle")}</h2>
 
         <div className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#475569]">Raison</p>
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#475569]">{t("reasonLabel")}</p>
           {REJECT_REASONS.map((r) => (
             <label key={r} className="flex items-center gap-2 cursor-pointer">
               <input
@@ -67,13 +71,13 @@ export function DeliverableRejectModal({ deliverableId, onSuccess, onClose }: Pr
 
         <div className="space-y-1">
           <p className="text-xs font-semibold uppercase tracking-widest text-[#475569]">
-            Message de débrief <span className="text-[#F43F5E]">*</span>
+            {t("debriefLabel")} <span className="text-[#F43F5E]">*</span>
           </p>
           <textarea
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
             rows={4}
-            placeholder="Expliquez les modifications nécessaires..."
+            placeholder={t("debriefPlaceholder")}
             className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-[#E2E8F0] placeholder-[#64748B] focus:border-violet-500/40 focus:outline-none focus:ring-1 focus:ring-violet-500/20"
           />
           {error && <p className="text-xs text-[#F43F5E]">{error}</p>}
@@ -84,14 +88,14 @@ export function DeliverableRejectModal({ deliverableId, onSuccess, onClose }: Pr
             onClick={onClose}
             className="rounded-lg border border-white/[0.08] px-4 py-2 text-sm text-[#94A3B8] hover:bg-white/[0.05]"
           >
-            Annuler
+            {tc("cancel")}
           </button>
           <button
             onClick={handleSubmit}
             disabled={loading}
             className="rounded-lg bg-[#F43F5E] px-4 py-2 text-sm font-medium text-white hover:bg-[#E11D48] disabled:opacity-50"
           >
-            {loading ? "Envoi..." : "Confirmer le rejet"}
+            {loading ? t("rejecting") : t("confirmReject")}
           </button>
         </div>
       </div>
