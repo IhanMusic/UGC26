@@ -9,10 +9,10 @@ interface Props {
 
 export default async function CompanyCampaignDetailPage({ params }: Props) {
   const { id } = await params;
-  await requireRole("COMPANY");
+  const user = await requireRole("COMPANY");
 
   const campaign = await prisma.campaign.findUnique({
-    where: { id },
+    where: { id, companyId: user.id },
     include: {
       participations: {
         include: {
