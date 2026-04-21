@@ -12,6 +12,7 @@ import { cn } from "@/components/ui/utils";
 import { InfluencerDeliverablesTab } from "@/components/influencer-deliverables-tab";
 import { CampaignChat } from "@/components/campaign-chat";
 import { ReviewBanner } from "@/components/review-banner";
+import { DisputeModal } from "@/components/dispute-modal";
 
 type CampaignDto = {
   id: string;
@@ -52,6 +53,8 @@ export default function InfluencerCampaignClient({
   const [date, setDate] = useState<string>("");
   const [working, setWorking] = useState(false);
   const [activeTab, setActiveTab] = useState<Tab>("Détails");
+  const [showDispute, setShowDispute] = useState(false);
+  const [disputeSubmitted, setDisputeSubmitted] = useState(false);
 
   useEffect(() => {
     fetch(`/api/influencer/campaign/${campaignId}`)
@@ -117,6 +120,24 @@ export default function InfluencerCampaignClient({
           <CardContent className="space-y-3 text-sm text-slate-700">
             <div className="whitespace-pre-wrap">{campaign.description}</div>
             <div>Objective: {campaign.objectivePlatforms ?? "—"}</div>
+
+            {/* Dispute button — visible for ONGOING or COMPLETED participations */}
+            {(status === "ONGOING" || status === "COMPLETED") && (
+              <div className="pt-2 border-t border-white/[0.06]">
+                {disputeSubmitted ? (
+                  <p className="text-xs text-emerald-400 font-medium">
+                    Dispute soumis avec succès. L&apos;équipe UGC26 reviendra vers vous sous 48h.
+                  </p>
+                ) : (
+                  <button
+                    onClick={() => setShowDispute(true)}
+                    className="rounded-lg border border-[#F43F5E]/40 px-3 py-1.5 text-xs font-semibold text-[#F43F5E] hover:bg-[#F43F5E]/10 transition-colors"
+                  >
+                    Ouvrir un dispute
+                  </button>
+                )}
+              </div>
+            )}
           </CardContent>
         </Card>
       )}
@@ -234,6 +255,18 @@ export default function InfluencerCampaignClient({
           reviewedId={reviewBanner.reviewedId}
           reviewedName={reviewBanner.reviewedName}
           hasReviewed={reviewBanner.hasReviewed}
+        />
+      )}
+
+      {/* Dispute modal */}
+      {showDispute && campaign && (
+        <DisputeModal
+          campaignId={campaign.id}
+          onClose={() => setShowDispute(false)}
+          onSuccess={() => {
+            setShowDispute(false);
+            setDisputeSubmitted(true);
+          }}
         />
       )}
     </div>
