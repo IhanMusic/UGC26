@@ -2,7 +2,7 @@
 
 import { useRouter, usePathname } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useState, useTransition, useRef } from "react";
 
 interface Props {
   placeholder: string;
@@ -15,19 +15,23 @@ export function AdminSearchInput({ placeholder, paramName = "q" }: Props) {
   const searchParams = useSearchParams();
   const [value, setValue] = useState(searchParams.get(paramName) || "");
   const [isPending, startTransition] = useTransition();
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleSearch = (val: string) => {
     setValue(val);
-    const params = new URLSearchParams(searchParams.toString());
-    if (val) {
-      params.set(paramName, val);
-    } else {
-      params.delete(paramName);
-    }
-    params.delete("page"); // reset page on new search
-    startTransition(() => {
-      router.push(`${pathname}?${params.toString()}`);
-    });
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (val) {
+        params.set(paramName, val);
+      } else {
+        params.delete(paramName);
+      }
+      params.delete("page");
+      startTransition(() => {
+        router.push(`${pathname}?${params.toString()}`);
+      });
+    }, 300);
   };
 
   return (
