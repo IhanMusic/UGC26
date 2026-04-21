@@ -52,10 +52,35 @@ export default async function CompanyCampaignDetailPage({ params }: Props) {
     select: { id: true },
   });
 
+  // Check if review banner should be shown (first CONFIRMED or PAID participation)
+  const reviewableParticipation = campaign.participations.find(
+    (p) => p.status === "CONFIRMED" || p.status === "PAID",
+  );
+
+  let hasReviewed = false;
+  if (reviewableParticipation) {
+    const existingReview = await prisma.review.findFirst({
+      where: {
+        reviewerId: user.id,
+        campaignId: campaign.id,
+      },
+    });
+    hasReviewed = !!existingReview;
+  }
+
   return (
     <CampaignDetailClient
       campaign={campaign}
       conversationId={conversation?.id ?? null}
+      reviewBanner={
+        reviewableParticipation
+          ? {
+              reviewedId: reviewableParticipation.influencer.id,
+              reviewedName: `${reviewableParticipation.influencer.firstName} ${reviewableParticipation.influencer.lastName}`,
+              hasReviewed,
+            }
+          : null
+      }
     />
   );
 }

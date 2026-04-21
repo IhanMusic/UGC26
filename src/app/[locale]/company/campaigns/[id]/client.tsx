@@ -6,6 +6,7 @@ import { AppShell } from "@/components/app-shell";
 import { companyNav } from "../../_nav";
 import { CompanyDeliverablesTab } from "@/components/company-deliverables-tab";
 import { CampaignChat } from "@/components/campaign-chat";
+import { ReviewBanner } from "@/components/review-banner";
 
 // Prisma-shaped types inferred from schema
 type InfluencerUser = {
@@ -53,12 +54,20 @@ type Campaign = {
 const TABS = ["Infos", "Candidats", "Livrables", "Messages"] as const;
 type Tab = (typeof TABS)[number];
 
+type ReviewBannerProps = {
+  reviewedId: string;
+  reviewedName: string;
+  hasReviewed: boolean;
+};
+
 export function CampaignDetailClient({
   campaign,
   conversationId,
+  reviewBanner,
 }: {
   campaign: Campaign;
   conversationId: string | null;
+  reviewBanner: ReviewBannerProps | null;
 }) {
   const [activeTab, setActiveTab] = useState<Tab>("Infos");
 
@@ -107,6 +116,16 @@ export function CampaignDetailClient({
             />
           )}
         </div>
+
+        {/* Review banner */}
+        {reviewBanner && (
+          <ReviewBanner
+            campaignId={campaign.id}
+            reviewedId={reviewBanner.reviewedId}
+            reviewedName={reviewBanner.reviewedName}
+            hasReviewed={reviewBanner.hasReviewed}
+          />
+        )}
       </div>
     </AppShell>
   );

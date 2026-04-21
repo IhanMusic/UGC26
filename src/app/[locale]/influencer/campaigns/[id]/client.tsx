@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/components/ui/utils";
 import { InfluencerDeliverablesTab } from "@/components/influencer-deliverables-tab";
 import { CampaignChat } from "@/components/campaign-chat";
+import { ReviewBanner } from "@/components/review-banner";
 
 type CampaignDto = {
   id: string;
@@ -28,12 +29,20 @@ type ParticipationDto = {
 const TABS = ["Détails", "Exécution", "Livrables", "Messages"] as const;
 type Tab = (typeof TABS)[number];
 
+type ReviewBannerProps = {
+  reviewedId: string;
+  reviewedName: string;
+  hasReviewed: boolean;
+};
+
 export default function InfluencerCampaignClient({
   campaignId,
   conversationId,
+  reviewBanner,
 }: {
   campaignId: string;
   conversationId: string | null;
+  reviewBanner: ReviewBannerProps | null;
 }) {
   const { data: session } = useSession();
   const [loading, setLoading] = useState(true);
@@ -215,6 +224,16 @@ export default function InfluencerCampaignClient({
       {activeTab === "Messages" && (
         <CampaignChat
           conversationId={conversationId}
+        />
+      )}
+
+      {/* Review banner */}
+      {reviewBanner && (
+        <ReviewBanner
+          campaignId={campaignId}
+          reviewedId={reviewBanner.reviewedId}
+          reviewedName={reviewBanner.reviewedName}
+          hasReviewed={reviewBanner.hasReviewed}
         />
       )}
     </div>
