@@ -4,6 +4,7 @@ import { useState } from "react";
 import { cn } from "@/components/ui/utils";
 import { AppShell } from "@/components/app-shell";
 import { companyNav } from "../../_nav";
+import { CompanyDeliverablesTab } from "@/components/company-deliverables-tab";
 
 // Prisma-shaped types inferred from schema
 type InfluencerUser = {
@@ -88,9 +89,10 @@ export function CampaignDetailClient({ campaign }: { campaign: Campaign }) {
             <ApplicantsTab participations={campaign.participations} />
           )}
           {activeTab === "Livrables" && (
-            <div className="glass rounded-xl p-6 text-[#64748B]">
-              Livrables — à venir (Tâche 8)
-            </div>
+            <CompanyDeliverablesTab
+              campaignId={campaign.id}
+              participations={campaign.participations}
+            />
           )}
           {activeTab === "Messages" && (
             <div className="glass rounded-xl p-6 text-[#64748B]">
