@@ -85,6 +85,11 @@ export default async function AdminCompaniesPage({
       </div>
 
       <div className="mt-6">
+        {users.length === 0 && (
+          <div className="glass rounded-xl p-8 text-center text-[#64748B]">
+            Aucun résultat{q ? ` pour "${q}"` : ""}.
+          </div>
+        )}
         <Table>
           <THead>
             <TR>

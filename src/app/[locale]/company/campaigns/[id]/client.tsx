@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import { cn } from "@/components/ui/utils";
-import { AppShell } from "@/components/app-shell";
-import { companyNav } from "../../_nav";
 import { CompanyDeliverablesTab } from "@/components/company-deliverables-tab";
 import { CampaignChat } from "@/components/campaign-chat";
 import { ReviewBanner } from "@/components/review-banner";
@@ -72,62 +70,60 @@ export function CampaignDetailClient({
   const [activeTab, setActiveTab] = useState<Tab>("Infos");
 
   return (
-    <AppShell title={campaign.title} nav={companyNav}>
-      <div className="space-y-6">
-        {/* Header */}
-        <div>
-          <h1 className="text-2xl font-bold text-[#E2E8F0]">{campaign.title}</h1>
-          <p className="mt-1 text-[#64748B]">{campaign.description}</p>
-        </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div>
+        <h1 className="text-2xl font-bold text-[#E2E8F0]">{campaign.title}</h1>
+        <p className="mt-1 text-[#64748B]">{campaign.description}</p>
+      </div>
 
-        {/* Tabs */}
-        <div className="flex gap-1 rounded-xl border border-white/[0.08] bg-white/[0.03] p-1">
-          {TABS.map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={cn(
-                "flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-all",
-                activeTab === tab
-                  ? "bg-violet-600 text-white shadow-sm"
-                  : "text-[#64748B] hover:text-[#E2E8F0]",
-              )}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
+      {/* Tabs */}
+      <div className="flex gap-1 rounded-xl border border-white/[0.08] bg-white/[0.03] p-1">
+        {TABS.map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={cn(
+              "flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-all",
+              activeTab === tab
+                ? "bg-violet-600 text-white shadow-sm"
+                : "text-[#64748B] hover:text-[#E2E8F0]",
+            )}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
 
-        {/* Tab content */}
-        <div>
-          {activeTab === "Infos" && <InfosTab campaign={campaign} />}
-          {activeTab === "Candidats" && (
-            <ApplicantsTab participations={campaign.participations} />
-          )}
-          {activeTab === "Livrables" && (
-            <CompanyDeliverablesTab
-              campaignId={campaign.id}
-              participations={campaign.participations}
-            />
-          )}
-          {activeTab === "Messages" && (
-            <CampaignChat
-              conversationId={conversationId}
-            />
-          )}
-        </div>
-
-        {/* Review banner */}
-        {reviewBanner && (
-          <ReviewBanner
+      {/* Tab content */}
+      <div>
+        {activeTab === "Infos" && <InfosTab campaign={campaign} />}
+        {activeTab === "Candidats" && (
+          <ApplicantsTab participations={campaign.participations} />
+        )}
+        {activeTab === "Livrables" && (
+          <CompanyDeliverablesTab
             campaignId={campaign.id}
-            reviewedId={reviewBanner.reviewedId}
-            reviewedName={reviewBanner.reviewedName}
-            hasReviewed={reviewBanner.hasReviewed}
+            participations={campaign.participations}
+          />
+        )}
+        {activeTab === "Messages" && (
+          <CampaignChat
+            conversationId={conversationId}
           />
         )}
       </div>
-    </AppShell>
+
+      {/* Review banner */}
+      {reviewBanner && (
+        <ReviewBanner
+          campaignId={campaign.id}
+          reviewedId={reviewBanner.reviewedId}
+          reviewedName={reviewBanner.reviewedName}
+          hasReviewed={reviewBanner.hasReviewed}
+        />
+      )}
+    </div>
   );
 }
 

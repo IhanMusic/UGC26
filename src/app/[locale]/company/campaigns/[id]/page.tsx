@@ -2,6 +2,8 @@ import { requireRole } from "@/server/guards";
 import { prisma } from "@/server/db";
 import { notFound } from "next/navigation";
 import { CampaignDetailClient } from "./client";
+import { AppShell } from "@/components/app-shell";
+import { companyNav } from "../../_nav";
 
 interface Props {
   params: Promise<{ id: string; locale: string }>;
@@ -69,18 +71,20 @@ export default async function CompanyCampaignDetailPage({ params }: Props) {
   }
 
   return (
-    <CampaignDetailClient
-      campaign={campaign}
-      conversationId={conversation?.id ?? null}
-      reviewBanner={
-        reviewableParticipation
-          ? {
-              reviewedId: reviewableParticipation.influencer.id,
-              reviewedName: `${reviewableParticipation.influencer.firstName} ${reviewableParticipation.influencer.lastName}`,
-              hasReviewed,
-            }
-          : null
-      }
-    />
+    <AppShell title={campaign.title} nav={companyNav}>
+      <CampaignDetailClient
+        campaign={campaign}
+        conversationId={conversation?.id ?? null}
+        reviewBanner={
+          reviewableParticipation
+            ? {
+                reviewedId: reviewableParticipation.influencer.id,
+                reviewedName: `${reviewableParticipation.influencer.firstName} ${reviewableParticipation.influencer.lastName}`,
+                hasReviewed,
+              }
+            : null
+        }
+      />
+    </AppShell>
   );
 }

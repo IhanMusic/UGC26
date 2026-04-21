@@ -129,8 +129,8 @@ export default async function AdminCampaignsPage({
         </Table>
 
         {campaigns.length === 0 && (
-          <div className="py-12 text-center text-sm text-slate-500">
-            No campaigns found.
+          <div className="glass rounded-xl p-8 text-center text-[#64748B]">
+            Aucun résultat{q ? ` pour "${q}"` : ""}.
           </div>
         )}
       </div>
