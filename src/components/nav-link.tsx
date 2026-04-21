@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/i18n/navigation";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/components/ui/utils";
 import type { ReactNode } from "react";
@@ -14,7 +14,7 @@ interface NavLinkProps {
 export function NavLink({ href, icon, label }: NavLinkProps) {
   const pathname = usePathname();
   // Match: pathname ends with href or is exactly href (handle locale prefix)
-  const isActive = pathname === href || pathname.endsWith(href) || pathname.includes(href);
+  const isActive = pathname === href || pathname.startsWith(href + "/");
 
   return (
     <Link
