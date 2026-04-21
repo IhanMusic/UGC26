@@ -9,6 +9,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { NotificationBell } from "@/components/notification-bell";
 import { getTranslations } from "next-intl/server";
 import { VerificationBanner } from "@/components/verification-banner";
+import { NavLink } from "@/components/nav-link";
 
 export async function AppShell({
   title,
@@ -42,14 +43,7 @@ export async function AppShell({
         {/* Navigation */}
         <nav className="mt-8 flex flex-col gap-1" aria-label="Dashboard navigation">
           {nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-[#94A3B8] transition-all duration-200 hover:bg-violet-500/10 hover:text-violet-300 hover:shadow-sm"
-            >
-              <div className="h-1.5 w-1.5 rounded-full bg-slate-600 transition-all duration-200 group-hover:bg-violet-500 group-hover:shadow-sm group-hover:shadow-violet-500/50" />
-              {item.label}
-            </Link>
+            <NavLink key={item.href} href={item.href} label={item.label} />
           ))}
         </nav>
 
