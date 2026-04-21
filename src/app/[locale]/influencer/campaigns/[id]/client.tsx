@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -27,8 +28,8 @@ type ParticipationDto = {
   status: "UPCOMING" | "ONGOING" | "COMPLETED" | "CONFIRMED" | "PAID";
 };
 
-const TABS = ["Détails", "Exécution", "Livrables", "Messages"] as const;
-type Tab = (typeof TABS)[number];
+const TAB_KEYS = ["tabDetails", "tabExecution", "tabDeliverables", "tabMessages"] as const;
+type TabKey = (typeof TAB_KEYS)[number];
 
 type ReviewBannerProps = {
   reviewedId: string;
@@ -45,6 +46,7 @@ export default function InfluencerCampaignClient({
   conversationId: string | null;
   reviewBanner: ReviewBannerProps | null;
 }) {
+  const t = useTranslations("campaignDetail");
   const { data: session } = useSession();
   const [loading, setLoading] = useState(true);
   const [campaign, setCampaign] = useState<CampaignDto | null>(null);
@@ -52,7 +54,7 @@ export default function InfluencerCampaignClient({
   const [proof, setProof] = useState<string | null>(null);
   const [date, setDate] = useState<string>("");
   const [working, setWorking] = useState(false);
-  const [activeTab, setActiveTab] = useState<Tab>("Détails");
+  const [activeTab, setActiveTab] = useState<TabKey>("tabDetails");
   const [showDispute, setShowDispute] = useState(false);
   const [disputeSubmitted, setDisputeSubmitted] = useState(false);
 
@@ -92,24 +94,24 @@ export default function InfluencerCampaignClient({
     <div className="space-y-6">
       {/* Tab bar */}
       <div className="flex gap-1 rounded-xl border border-white/[0.06] bg-white/[0.03] p-1">
-        {TABS.map((tab) => (
+        {TAB_KEYS.map((key) => (
           <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
+            key={key}
+            onClick={() => setActiveTab(key)}
             className={cn(
               "flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors",
-              activeTab === tab
+              activeTab === key
                 ? "bg-violet-600/20 text-violet-300"
                 : "text-[#64748B] hover:text-[#94A3B8]"
             )}
           >
-            {tab}
+            {t(key)}
           </button>
         ))}
       </div>
 
-      {/* Détails tab */}
-      {activeTab === "Détails" && (
+      {/* tabDetails tab */}
+      {activeTab === "tabDetails" && (
         <Card>
           <CardHeader>
             <CardTitle>{campaign.title}</CardTitle>
@@ -126,14 +128,14 @@ export default function InfluencerCampaignClient({
               <div className="pt-2 border-t border-white/[0.06]">
                 {disputeSubmitted ? (
                   <p className="text-xs text-emerald-400 font-medium">
-                    Dispute soumis avec succès. L&apos;équipe UGC26 reviendra vers vous sous 48h.
+                    {t("disputeSubmitted")}
                   </p>
                 ) : (
                   <button
                     onClick={() => setShowDispute(true)}
                     className="rounded-lg border border-[#F43F5E]/40 px-3 py-1.5 text-xs font-semibold text-[#F43F5E] hover:bg-[#F43F5E]/10 transition-colors"
                   >
-                    Ouvrir un dispute
+                    {t("openDispute")}
                   </button>
                 )}
               </div>
@@ -142,8 +144,8 @@ export default function InfluencerCampaignClient({
         </Card>
       )}
 
-      {/* Exécution tab */}
-      {activeTab === "Exécution" && (
+      {/* tabExecution tab */}
+      {activeTab === "tabExecution" && (
         <Card>
           <CardHeader>
             <CardTitle>Execution</CardTitle>
@@ -234,15 +236,15 @@ export default function InfluencerCampaignClient({
         </Card>
       )}
 
-      {/* Livrables tab */}
-      {activeTab === "Livrables" && session?.user?.id && (
+      {/* tabDeliverables tab */}
+      {activeTab === "tabDeliverables" && session?.user?.id && (
         <InfluencerDeliverablesTab
           campaignId={campaign.id}
         />
       )}
 
-      {/* Messages tab */}
-      {activeTab === "Messages" && (
+      {/* tabMessages tab */}
+      {activeTab === "tabMessages" && (
         <CampaignChat
           conversationId={conversationId}
         />

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { cn } from "@/components/ui/utils";
 import { CompanyDeliverablesTab } from "@/components/company-deliverables-tab";
 import { CampaignChat } from "@/components/campaign-chat";
@@ -49,8 +50,8 @@ type Campaign = {
   deliverables: Deliverable[];
 };
 
-const TABS = ["Infos", "Candidats", "Livrables", "Messages"] as const;
-type Tab = (typeof TABS)[number];
+const TAB_KEYS = ["tabInfos", "tabApplicants", "tabDeliverables", "tabMessages"] as const;
+type TabKey = (typeof TAB_KEYS)[number];
 
 type ReviewBannerProps = {
   reviewedId: string;
@@ -67,7 +68,8 @@ export function CampaignDetailClient({
   conversationId: string | null;
   reviewBanner: ReviewBannerProps | null;
 }) {
-  const [activeTab, setActiveTab] = useState<Tab>("Infos");
+  const t = useTranslations("campaignDetail");
+  const [activeTab, setActiveTab] = useState<TabKey>("tabInfos");
 
   return (
     <div className="space-y-6">
@@ -79,35 +81,35 @@ export function CampaignDetailClient({
 
       {/* Tabs */}
       <div className="flex gap-1 rounded-xl border border-white/[0.08] bg-white/[0.03] p-1">
-        {TABS.map((tab) => (
+        {TAB_KEYS.map((key) => (
           <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
+            key={key}
+            onClick={() => setActiveTab(key)}
             className={cn(
               "flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-all",
-              activeTab === tab
+              activeTab === key
                 ? "bg-violet-600 text-white shadow-sm"
                 : "text-[#64748B] hover:text-[#E2E8F0]",
             )}
           >
-            {tab}
+            {t(key)}
           </button>
         ))}
       </div>
 
       {/* Tab content */}
       <div>
-        {activeTab === "Infos" && <InfosTab campaign={campaign} />}
-        {activeTab === "Candidats" && (
-          <ApplicantsTab participations={campaign.participations} />
+        {activeTab === "tabInfos" && <InfosTab campaign={campaign} t={t} />}
+        {activeTab === "tabApplicants" && (
+          <ApplicantsTab participations={campaign.participations} t={t} />
         )}
-        {activeTab === "Livrables" && (
+        {activeTab === "tabDeliverables" && (
           <CompanyDeliverablesTab
             campaignId={campaign.id}
             participations={campaign.participations}
           />
         )}
-        {activeTab === "Messages" && (
+        {activeTab === "tabMessages" && (
           <CampaignChat
             conversationId={conversationId}
           />
@@ -127,35 +129,35 @@ export function CampaignDetailClient({
   );
 }
 
-function InfosTab({ campaign }: { campaign: Campaign }) {
+function InfosTab({ campaign, t }: { campaign: Campaign; t: ReturnType<typeof useTranslations> }) {
   return (
     <div className="glass rounded-xl p-6 space-y-4">
       <div className="grid grid-cols-2 gap-4">
-        <InfoField label="Statut" value={campaign.status} />
-        <InfoField label="Budget" value={`${campaign.priceDinar.toLocaleString()} DZD`} />
+        <InfoField label={t("statusLabel")} value={campaign.status} />
+        <InfoField label={t("budgetLabel")} value={`${campaign.priceDinar.toLocaleString()} DZD`} />
         <InfoField
-          label="Plateformes"
+          label={t("platformsLabel")}
           value={campaign.objectivePlatforms || "—"}
         />
         <InfoField
-          label="Pays cible"
+          label={t("countryLabel")}
           value={campaign.country || "—"}
         />
         <InfoField
-          label="Abonnés min."
+          label={t("minFollowersLabel")}
           value={campaign.minFollowers ? campaign.minFollowers.toLocaleString() : "—"}
         />
         <InfoField
-          label="Tranche d'âge"
+          label={t("ageRangeLabel")}
           value={campaign.ageRange || "—"}
         />
         <InfoField
-          label="Créé le"
+          label={t("createdAtLabel")}
           value={new Date(campaign.createdAt).toLocaleDateString("fr-FR")}
         />
         {campaign.scheduledStartDate && (
           <InfoField
-            label="Début prévu"
+            label={t("scheduledAtLabel")}
             value={new Date(campaign.scheduledStartDate).toLocaleDateString("fr-FR")}
           />
         )}
@@ -163,7 +165,7 @@ function InfosTab({ campaign }: { campaign: Campaign }) {
       {campaign.description && (
         <div>
           <p className="text-xs font-semibold uppercase tracking-widest text-[#475569]">
-            Description
+            {t("descriptionLabel")}
           </p>
           <p className="mt-1 text-[#E2E8F0]">{campaign.description}</p>
         </div>
@@ -183,11 +185,11 @@ function InfoField({ label, value }: { label: string; value: string }) {
   );
 }
 
-function ApplicantsTab({ participations }: { participations: Participation[] }) {
+function ApplicantsTab({ participations, t }: { participations: Participation[]; t: ReturnType<typeof useTranslations> }) {
   if (participations.length === 0) {
     return (
       <div className="glass rounded-xl p-8 text-center text-[#64748B]">
-        Aucun candidat pour l&apos;instant.
+        {t("noApplicants")}
       </div>
     );
   }
@@ -205,14 +207,14 @@ function ApplicantsTab({ participations }: { participations: Participation[] }) 
             </p>
             <p className="text-sm text-[#64748B]">{p.influencer.email}</p>
           </div>
-          <StatusBadge status={p.status} />
+          <StatusBadge status={p.status} t={t} />
         </div>
       ))}
     </div>
   );
 }
 
-function StatusBadge({ status }: { status: string }) {
+function StatusBadge({ status, t }: { status: string; t: ReturnType<typeof useTranslations> }) {
   const colors: Record<string, string> = {
     UPCOMING: "bg-slate-500/20 text-slate-300",
     ONGOING: "bg-blue-500/20 text-blue-300",
@@ -220,6 +222,9 @@ function StatusBadge({ status }: { status: string }) {
     CONFIRMED: "bg-emerald-500/20 text-emerald-300",
     PAID: "bg-amber-500/20 text-amber-300",
   };
+  const label = ["UPCOMING", "ONGOING", "COMPLETED", "CONFIRMED", "PAID"].includes(status)
+    ? t(`participation.${status}` as Parameters<typeof t>[0])
+    : status;
   return (
     <span
       className={cn(
@@ -227,7 +232,7 @@ function StatusBadge({ status }: { status: string }) {
         colors[status] ?? "bg-white/10 text-white/60",
       )}
     >
-      {status}
+      {label}
     </span>
   );
 }
