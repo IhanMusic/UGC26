@@ -3,11 +3,13 @@ import { prisma } from "@/server/db";
 import { AppShell } from "@/components/app-shell";
 import { influencerNav } from "@/app/[locale]/influencer/_nav";
 import { BankDetailsForm } from "./bank-details-form";
+import { getTranslations } from "next-intl/server";
 
 export const metadata = { title: "Paiements" };
 
 export default async function PaymentsPage() {
   const user = await requireRole("INFLUENCER");
+  const t = await getTranslations("payments");
 
   const transactions = await prisma.transaction.findMany({
     where: { paidToId: user.id },
@@ -23,21 +25,21 @@ export default async function PaymentsPage() {
     .reduce((sum, t) => sum + t.amountDinar, 0);
 
   return (
-    <AppShell title="Paiements" nav={influencerNav}>
+    <AppShell title={t("title")} nav={influencerNav}>
       <div className="space-y-8">
         <div>
-          <h1 className="text-2xl font-bold text-[#E2E8F0]">Paiements</h1>
-          <p className="text-[#64748B]">Vos revenus et coordonnées bancaires</p>
+          <h1 className="text-2xl font-bold text-[#E2E8F0]">{t("title")}</h1>
+          <p className="text-[#64748B]">{t("subtitle")}</p>
         </div>
 
         {/* Summary cards */}
         <div className="grid grid-cols-2 gap-4">
           <div className="glass rounded-xl p-5 space-y-1">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#475569]">Total gagné</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#475569]">{t("totalEarned")}</p>
             <p className="text-2xl font-bold text-[#FBBF24]">{totalEarned.toLocaleString("fr-DZ")} DZD</p>
           </div>
           <div className="glass rounded-xl p-5 space-y-1">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#475569]">En attente</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#475569]">{t("pendingAmount")}</p>
             <p className="text-2xl font-bold text-[#94A3B8]">{pendingAmount.toLocaleString("fr-DZ")} DZD</p>
           </div>
         </div>
@@ -45,17 +47,17 @@ export default async function PaymentsPage() {
         {/* Transaction history */}
         <div className="glass rounded-xl overflow-hidden">
           <div className="border-b border-white/[0.08] px-5 py-3">
-            <h2 className="font-semibold text-[#E2E8F0]">Historique</h2>
+            <h2 className="font-semibold text-[#E2E8F0]">{t("historyTitle")}</h2>
           </div>
           {transactions.length === 0 ? (
-            <div className="p-8 text-center text-[#64748B]">Aucune transaction.</div>
+            <div className="p-8 text-center text-[#64748B]">{t("noTransactions")}</div>
           ) : (
             <table className="w-full">
               <thead>
                 <tr className="border-b border-white/[0.08] text-left text-xs text-[#475569]">
-                  <th className="px-5 py-3 font-semibold uppercase tracking-wider">Date</th>
-                  <th className="px-5 py-3 font-semibold uppercase tracking-wider">Montant</th>
-                  <th className="px-5 py-3 font-semibold uppercase tracking-wider">Statut</th>
+                  <th className="px-5 py-3 font-semibold uppercase tracking-wider">{t("colDate")}</th>
+                  <th className="px-5 py-3 font-semibold uppercase tracking-wider">{t("colAmount")}</th>
+                  <th className="px-5 py-3 font-semibold uppercase tracking-wider">{t("colStatus")}</th>
                 </tr>
               </thead>
               <tbody>

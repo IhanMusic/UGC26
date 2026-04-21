@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 interface BankDetails {
   bankName: string;
@@ -9,6 +10,7 @@ interface BankDetails {
 }
 
 export function BankDetailsForm() {
+  const t = useTranslations("payments");
   const [form, setForm] = useState<BankDetails>({ bankName: "", accountHolder: "", iban: "" });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -47,19 +49,19 @@ export function BankDetailsForm() {
     }
   };
 
-  if (loading) return <div className="glass rounded-xl p-6 text-[#64748B]">Chargement...</div>;
+  if (loading) return <div className="glass rounded-xl p-6 text-[#64748B]">{t("loading")}</div>;
 
   return (
     <div className="glass rounded-xl p-6 space-y-4">
-      <h2 className="font-semibold text-[#E2E8F0]">Coordonnées bancaires</h2>
-      <p className="text-sm text-[#64748B]">Ces informations sont utilisées pour vos paiements.</p>
+      <h2 className="font-semibold text-[#E2E8F0]">{t("bankDetailsTitle")}</h2>
+      <p className="text-sm text-[#64748B]">{t("bankDetailsDesc")}</p>
 
       <div className="space-y-3">
         {(
           [
-            { key: "bankName", label: "Nom de la banque", placeholder: "CPA, BNA, BEA..." },
-            { key: "accountHolder", label: "Titulaire du compte", placeholder: "Prénom Nom" },
-            { key: "iban", label: "IBAN / RIB", placeholder: "DZ..." },
+            { key: "bankName", label: t("bankNameLabel"), placeholder: t("bankNamePlaceholder") },
+            { key: "accountHolder", label: t("accountHolderLabel"), placeholder: t("accountHolderPlaceholder") },
+            { key: "iban", label: t("ibanLabel"), placeholder: t("ibanPlaceholder") },
           ] as const
         ).map(({ key, label, placeholder }) => (
           <div key={key} className="space-y-1">
@@ -76,14 +78,14 @@ export function BankDetailsForm() {
       </div>
 
       {error && <p className="text-xs text-[#F43F5E]">{error}</p>}
-      {saved && <p className="text-xs text-emerald-400">Coordonnées sauvegardées ✓</p>}
+      {saved && <p className="text-xs text-emerald-400">{t("savedConfirm")}</p>}
 
       <button
         onClick={handleSave}
         disabled={saving}
         className="rounded-xl bg-gradient-to-r from-amber-600 to-yellow-500 px-4 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
       >
-        {saving ? "Sauvegarde..." : "Sauvegarder"}
+        {saving ? t("saving") : t("saveButton")}
       </button>
     </div>
   );
