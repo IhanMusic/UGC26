@@ -1,0 +1,483 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  INFLUENCER
+  COMPANY
+  ADMIN
+}
+
+enum CampaignRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum CampaignApplicationStatus {
+  APPLIED
+  ACCEPTED
+  REJECTED
+}
+
+enum CampaignStatus {
+  UPCOMING
+  ONGOING
+  COMPLETED
+  CONFIRMED
+  PAID
+}
+
+enum ParticipationStatus {
+  UPCOMING
+  ONGOING
+  COMPLETED
+  CONFIRMED
+  PAID
+}
+
+enum TransactionStatus {
+  PENDING
+  PAID
+  FAILED
+}
+
+enum PaymentProvider {
+  MANUAL
+  STRIPE
+}
+
+model User {
+  id   String   @id @default(cuid())
+  role UserRole
+
+  firstName    String
+  lastName     String
+  email        String  @unique
+  phone        String?
+  passwordHash String
+
+  imageUrl   String?
+  isVerified Boolean @default(false)
+  isBlocked  Boolean @default(false)
+  isDeleted  Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  influencerProfile InfluencerProfile?
+  companyProfile    CompanyProfile?
+
+  campaignRequests   CampaignRequest[]
+  campaignsCreated   Campaign[]            @relation("CampaignCreatedBy")
+  campaignsOwned     Campaign[]            @relation("CampaignCompany")
+  applications       CampaignApplication[]
+  participations     CampaignParticipation[]
+  transactionsPaidBy Transaction[]         @relation("TransactionPaidBy")
+  transactionsPaidTo Transaction[]         @relation("TransactionPaidTo")
+
+  passwordResetTokens     PasswordResetToken[]
+  emailVerificationTokens EmailVerificationToken[]
+
+  notifications          Notification[]
+  conversationMembers    ConversationParticipant[]
+  messagesSent           Message[]
+
+  reviewsGiven     Review[]   @relation("ReviewsGiven")
+  reviewsReceived  Review[]   @relation("ReviewsReceived")
+  favorites        Favorite[]
+  disputes         Dispute[]
+  deliverables     Deliverable[]
+}
+
+model InfluencerProfile {
+  userId String @id
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  dateOfBirth     DateTime?
+  mainAccountLink String?
+  address         String?
+  city            String?
+  country         String?
+
+  // Step2 form
+  ownsComputer              Boolean?
+  emailCheckFrequency       String?
+  internetHabits            String?
+  socialNetworks            String? // comma separated for MVP
+  passion                   String?
+  followersCountRange       String?
+  postFrequency             String?
+  goal                      String?
+  ethicsImportant           Boolean?
+  ethicsTop3Elements        String?
+  trustLevel                String?
+  shareOpinionsImportant    Boolean?
+  brandCommitmentsImportant Boolean?
+
+  categories  InfluencerCategory[]
+  bankDetails Json? // { bankName: string, accountHolder: string, iban: string }
+}
+
+model CompanyProfile {
+  userId String @id
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  position       String?
+  companyName    String?
+  companyDetails String?
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+
+  campaignRequests CampaignRequestCategory[]
+  campaigns        CampaignCategory[]
+  influencers      InfluencerCategory[]
+}
+
+model CampaignRequest {
+  id        String @id @default(cuid())
+  companyId String
+  company   User   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  status CampaignRequestStatus @default(PENDING)
+
+  title       String
+  priceDinar  Int
+  photoUrl    String?
+  description String
+
+  objectivePlatforms String? // e.g. Instagram, YouTube
+
+  // Qualification
+  minFollowers Int?
+  ageRange     String?
+  country      String?
+
+  additionalPhotoUrls String[] @default([])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  categories       CampaignRequestCategory[]
+  approvedCampaign Campaign?
+}
+
+model Campaign {
+  id        String           @id @default(cuid())
+  requestId String?          @unique
+  request   CampaignRequest? @relation(fields: [requestId], references: [id], onDelete: SetNull)
+
+  companyId String
+  company   User   @relation("CampaignCompany", fields: [companyId], references: [id], onDelete: Cascade)
+
+  createdById String
+  createdBy   User   @relation("CampaignCreatedBy", fields: [createdById], references: [id], onDelete: Restrict)
+
+  title               String
+  priceDinar          Int
+  photoUrl            String?
+  description         String
+  objectivePlatforms  String?
+  minFollowers        Int?
+  ageRange            String?
+  country             String?
+  additionalPhotoUrls String[] @default([])
+
+  status             CampaignStatus @default(UPCOMING)
+  scheduledStartDate DateTime?
+  startProofUrl      String?
+  completionProofUrl String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  categories   CampaignCategory[]
+  applications CampaignApplication[]
+  participations CampaignParticipation[]
+
+  transactions Transaction[]
+  conversations Conversation[]
+  reviews       Review[]
+  favorites     Favorite[]
+  disputes      Dispute[]
+  deliverables  Deliverable[]
+}
+
+model CampaignParticipation {
+  id           String              @id @default(cuid())
+  campaignId   String
+  campaign     Campaign            @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  influencerId String
+  influencer   User                @relation(fields: [influencerId], references: [id], onDelete: Cascade)
+
+  status             ParticipationStatus @default(UPCOMING)
+  scheduledStartDate DateTime?
+  startProofUrl      String?
+  completionProofUrl String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([campaignId, influencerId])
+}
+
+model CampaignApplication {
+  id         String   @id @default(cuid())
+  campaignId String
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  influencerId String
+  influencer   User   @relation(fields: [influencerId], references: [id], onDelete: Cascade)
+
+  status CampaignApplicationStatus @default(APPLIED)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([campaignId, influencerId])
+}
+
+model Transaction {
+  id       String @id @default(cuid())
+  paidById String
+  paidBy   User   @relation("TransactionPaidBy", fields: [paidById], references: [id], onDelete: Restrict)
+  paidToId String
+  paidTo   User   @relation("TransactionPaidTo", fields: [paidToId], references: [id], onDelete: Restrict)
+
+  campaignId String?
+  campaign   Campaign? @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+
+  amountDinar Int
+
+  // Stripe-ready fields (kept optional until integration)
+  provider         PaymentProvider @default(MANUAL)
+  currency         String          @default("DZD")
+  providerIntentId String?
+  providerChargeId String?
+  rawPayload       Json?
+
+  status      TransactionStatus @default(PENDING)
+  createdAt   DateTime          @default(now())
+}
+
+enum NotificationType {
+  APPLICATION_ACCEPTED
+  APPLICATION_REJECTED
+  CAMPAIGN_PUBLISHED
+  CAMPAIGN_COMPLETED
+  CAMPAIGN_CONFIRMED
+  PAYMENT_RECEIVED
+  NEW_MESSAGE
+  GENERAL
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type      NotificationType
+  title     String
+  message   String
+  link      String?
+  read      Boolean          @default(false)
+
+  createdAt DateTime         @default(now())
+
+  @@index([userId, read])
+  @@index([userId, createdAt])
+}
+
+model Conversation {
+  id        String   @id @default(cuid())
+
+  campaignId String?
+  campaign   Campaign? @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  participants ConversationParticipant[]
+  messages     Message[]
+}
+
+model ConversationParticipant {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  lastReadAt     DateTime?
+
+  @@unique([conversationId, userId])
+  @@index([userId])
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderId       String
+  sender         User         @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  content        String
+
+  createdAt      DateTime     @default(now())
+
+  @@index([conversationId, createdAt])
+}
+
+model SiteSetting {
+  key   String @id
+  value String
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model EmailVerificationToken {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+// join tables
+model InfluencerCategory {
+  influencerId String
+  influencer   InfluencerProfile @relation(fields: [influencerId], references: [userId], onDelete: Cascade)
+  categoryId   String
+  category     Category          @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([influencerId, categoryId])
+}
+
+model CampaignCategory {
+  campaignId String
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([campaignId, categoryId])
+}
+
+model CampaignRequestCategory {
+  requestId  String
+  request    CampaignRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   Category        @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([requestId, categoryId])
+}
+
+// ── Reviews / Ratings ──────────────────────────────────────────────
+model Review {
+  id         String   @id @default(cuid())
+  rating     Int      // 1-5
+  comment    String?
+
+  reviewerId String
+  reviewer   User     @relation("ReviewsGiven", fields: [reviewerId], references: [id], onDelete: Cascade)
+
+  reviewedId String
+  reviewed   User     @relation("ReviewsReceived", fields: [reviewedId], references: [id], onDelete: Cascade)
+
+  campaignId String
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  createdAt  DateTime @default(now())
+
+  @@unique([reviewerId, campaignId])
+  @@index([reviewedId])
+}
+
+// ── Favorites / Wishlist ───────────────────────────────────────────
+model Favorite {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  campaignId String
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, campaignId])
+  @@index([userId])
+}
+
+// ── Disputes / Mediation ───────────────────────────────────────────
+enum DisputeStatus {
+  OPEN
+  UNDER_REVIEW
+  RESOLVED
+  DISMISSED
+}
+
+model Dispute {
+  id          String        @id @default(cuid())
+  campaignId  String
+  campaign    Campaign      @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  raisedById  String
+  raisedBy    User          @relation(fields: [raisedById], references: [id], onDelete: Cascade)
+  reason      String
+  status      DisputeStatus @default(OPEN)
+  resolution  String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([campaignId])
+}
+
+// ── Deliverables / Structured Briefs ───────────────────────────────
+enum DeliverableStatus {
+  PENDING
+  SUBMITTED
+  APPROVED
+  REJECTED
+}
+
+model Deliverable {
+  id            String            @id @default(cuid())
+  campaignId    String
+  campaign      Campaign          @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  influencerId  String
+  influencer    User              @relation(fields: [influencerId], references: [id], onDelete: Cascade)
+
+  type          String            // e.g. "Instagram Post", "Story", "Reel", "Video"
+  description   String?
+  fileUrl       String?
+  status        DeliverableStatus @default(PENDING)
+  feedback      String?
+
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  @@index([campaignId, influencerId])
+}
