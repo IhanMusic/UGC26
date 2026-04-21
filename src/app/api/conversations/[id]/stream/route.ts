@@ -27,6 +27,15 @@ export async function GET(
 
   const stream = new ReadableStream({
     start(controller) {
+      // Register abort cleanup unconditionally first
+      req.signal.addEventListener("abort", () => {
+        try {
+          controller.close();
+        } catch {
+          // already closed
+        }
+      });
+
       if (!redisUrl) {
         // No Redis — send a single keepalive and leave open for graceful close
         controller.enqueue(new TextEncoder().encode(": keepalive\n\n"));
@@ -57,16 +66,13 @@ export async function GET(
         }
       }, 25_000);
 
-      req.signal.addEventListener("abort", () => {
+      // Redis-specific cleanup
+      const abortHandler = () => {
         clearInterval(keepalive);
         subscriber.unsubscribe(channel);
         subscriber.quit();
-        try {
-          controller.close();
-        } catch {
-          // already closed
-        }
-      });
+      };
+      req.signal.addEventListener("abort", abortHandler);
     },
   });
 

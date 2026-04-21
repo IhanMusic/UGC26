@@ -215,7 +215,6 @@ export default function InfluencerCampaignClient({
       {activeTab === "Messages" && (
         <CampaignChat
           conversationId={conversationId}
-          campaignId={campaign.id}
         />
       )}
     </div>

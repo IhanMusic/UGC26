@@ -104,7 +104,6 @@ export function CampaignDetailClient({
           {activeTab === "Messages" && (
             <CampaignChat
               conversationId={conversationId}
-              campaignId={campaign.id}
             />
           )}
         </div>

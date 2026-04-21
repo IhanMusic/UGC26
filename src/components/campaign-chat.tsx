@@ -13,7 +13,6 @@ interface Message {
 
 interface Props {
   conversationId: string | null;
-  campaignId: string;
 }
 
 export function CampaignChat({ conversationId }: Props) {
@@ -54,7 +53,6 @@ export function CampaignChat({ conversationId }: Props) {
         // ignore malformed events
       }
     };
-    es.onerror = () => es.close();
     return () => es.close();
   }, [conversationId]);
 

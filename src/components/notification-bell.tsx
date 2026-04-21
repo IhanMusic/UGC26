@@ -38,9 +38,6 @@ export function NotificationBell() {
         // malformed event — ignore
       }
     };
-    es.onerror = () => {
-      es.close();
-    };
     return () => es.close();
   }, [session?.user]);
 
