@@ -48,7 +48,25 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   }
 
   // Influencer can submit/update file
-  if (user.role === "INFLUENCER" && deliverable.influencerId === user.id) {
+  if (user.role === "INFLUENCER") {
+    if (deliverable.influencerId !== user.id) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    // Explicit submit action: { action: "submit", fileUrl: string }
+    if (body.action === "submit") {
+      const { fileUrl } = body as { fileUrl?: string };
+      if (!fileUrl || typeof fileUrl !== "string") {
+        return NextResponse.json({ error: "fileUrl is required" }, { status: 400 });
+      }
+      const updated = await prisma.deliverable.update({
+        where: { id },
+        data: { fileUrl, status: "SUBMITTED" as const },
+      });
+      return NextResponse.json(updated);
+    }
+
+    // Legacy: { fileUrl?, description? }
     const { fileUrl, description } = body;
     const updated = await prisma.deliverable.update({
       where: { id },
