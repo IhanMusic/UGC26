@@ -9,12 +9,15 @@ export async function GET(req: NextRequest) {
   }
 
   const hash = createHash("sha256").update(token).digest("hex");
-  const record = await prisma.emailVerificationToken.findUnique({
-    where: { tokenHash: hash },
-  });
 
-  if (!record || record.expiresAt < new Date()) {
-    if (record) await prisma.emailVerificationToken.delete({ where: { tokenHash: hash } });
+  let record;
+  try {
+    record = await prisma.emailVerificationToken.delete({ where: { tokenHash: hash } });
+  } catch {
+    return NextResponse.redirect(new URL("/en/auth/verify-email?error=invalid", req.url));
+  }
+
+  if (record.expiresAt < new Date()) {
     return NextResponse.redirect(new URL("/en/auth/verify-email?error=expired", req.url));
   }
 
@@ -22,7 +25,6 @@ export async function GET(req: NextRequest) {
     where: { id: record.userId },
     data: { isVerified: true },
   });
-  await prisma.emailVerificationToken.delete({ where: { tokenHash: hash } });
 
   return NextResponse.redirect(new URL("/en/dashboard?verified=1", req.url));
 }

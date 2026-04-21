@@ -84,7 +84,12 @@ export async function POST(req: Request) {
 
   const baseUrl = process.env.NEXTAUTH_URL ?? "http://localhost:3000";
   const verifyToken = await createEmailVerificationToken(createdUser.id);
-  await sendVerificationEmail(createdUser.email, verifyToken, baseUrl);
+  try {
+    await sendVerificationEmail(createdUser.email, verifyToken, baseUrl);
+  } catch (err) {
+    console.error("Verification email failed to send:", err);
+    // User created successfully; they can resend via /api/auth/resend-verification
+  }
 
   return NextResponse.json({ ok: true });
 }
