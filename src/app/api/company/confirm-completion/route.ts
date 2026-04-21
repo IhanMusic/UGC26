@@ -31,6 +31,16 @@ export async function POST(req: Request) {
       where: { id: participation.campaignId },
       data: { status: "CONFIRMED" },
     }),
+    prisma.transaction.create({
+      data: {
+        paidById: user.id,
+        paidToId: participation.influencerId,
+        campaignId: participation.campaignId,
+        amountDinar: participation.campaign.priceDinar,
+        status: "PENDING",
+        provider: "MANUAL",
+      },
+    }),
   ]);
 
   await createNotification({
