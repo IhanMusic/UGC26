@@ -28,11 +28,11 @@ export async function POST(req: NextRequest) {
       throw new ApiError("BAD_REQUEST", "Cannot review yourself", 400);
     }
 
-    // Verify campaign is PAID and user participated
+    // Verify campaign is CONFIRMED or PAID and user participated
     const campaign = await prisma.campaign.findUnique({ where: { id: campaignId } });
     if (!campaign) throw new ApiError("NOT_FOUND", "Campaign not found", 404);
-    if (campaign.status !== "PAID") {
-      throw new ApiError("BAD_REQUEST", "Can only review after campaign is paid", 400);
+    if (campaign.status !== "CONFIRMED" && campaign.status !== "PAID") {
+      throw new ApiError("BAD_REQUEST", "Can only review after campaign is confirmed or paid", 400);
     }
 
     // Check reviewer is part of the campaign
@@ -42,6 +42,14 @@ export async function POST(req: NextRequest) {
     });
     if (!isCompany && !isInfluencer) {
       throw new ApiError("FORBIDDEN", "Not part of this campaign", 403);
+    }
+
+    // Check for existing review (before create)
+    const existing = await prisma.review.findFirst({
+      where: { reviewerId: session.user.id, campaignId },
+    });
+    if (existing) {
+      return NextResponse.json({ error: "Vous avez déjà laissé un avis pour cette campagne" }, { status: 409 });
     }
 
     const review = await prisma.review.create({
