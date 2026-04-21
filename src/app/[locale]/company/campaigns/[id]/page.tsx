@@ -3,7 +3,7 @@ import { prisma } from "@/server/db";
 import { notFound } from "next/navigation";
 import { CampaignDetailClient } from "./client";
 import { AppShell } from "@/components/app-shell";
-import { companyNav } from "../../_nav";
+import { getCompanyNav } from "../../_nav";
 
 interface Props {
   params: Promise<{ id: string; locale: string }>;
@@ -71,7 +71,7 @@ export default async function CompanyCampaignDetailPage({ params }: Props) {
   }
 
   return (
-    <AppShell title={campaign.title} nav={companyNav}>
+    <AppShell title={campaign.title} nav={await getCompanyNav()}>
       <CampaignDetailClient
         campaign={campaign}
         conversationId={conversation?.id ?? null}

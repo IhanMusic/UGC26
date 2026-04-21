@@ -3,7 +3,7 @@ import { prisma } from "@/server/db";
 import { requireRole } from "@/server/guards";
 import { pageCount } from "@/server/pagination";
 import { AppShell } from "@/components/app-shell";
-import { adminNav } from "../_nav";
+import { getAdminNav } from "../_nav";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Table, TBody, TD, TH, THead, TR } from "@/components/ui/table";
@@ -29,6 +29,7 @@ export default async function AdminCampaignsPage({
 }) {
   await requireRole("ADMIN");
   const t = await getTranslations("admin");
+  const tNav = await getTranslations("nav");
   const sp = await searchParams;
 
   const q = (sp.q as string | undefined)?.trim() ?? "";
@@ -70,7 +71,7 @@ export default async function AdminCampaignsPage({
   };
 
   return (
-    <AppShell title="Campaigns" nav={adminNav}>
+    <AppShell title={tNav("campaigns")} nav={await getAdminNav()}>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-rose-500 shadow-md shadow-orange-500/25">

@@ -1,8 +1,9 @@
 import { requireRole } from "@/server/guards";
 import { AppShell } from "@/components/app-shell";
-import { influencerNav } from "../../_nav";
+import { getInfluencerNav } from "../../_nav";
 import InfluencerCampaignClient from "./client";
 import { prisma } from "@/server/db";
+import { getTranslations } from "next-intl/server";
 
 export default async function InfluencerCampaignPage({
   params,
@@ -11,6 +12,7 @@ export default async function InfluencerCampaignPage({
 }) {
   const user = await requireRole("INFLUENCER");
   const { id } = await params;
+  const t = await getTranslations("nav");
 
   // Find the conversation for this campaign where this influencer is a participant
   const [conversation, participation] = await Promise.all([
@@ -59,7 +61,7 @@ export default async function InfluencerCampaignPage({
   }
 
   return (
-    <AppShell title="Campaign" nav={influencerNav}>
+    <AppShell title={t("campaignDetail")} nav={await getInfluencerNav()}>
       <InfluencerCampaignClient
         campaignId={id}
         conversationId={conversation?.id ?? null}

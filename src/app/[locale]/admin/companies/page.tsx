@@ -3,7 +3,7 @@ import { prisma } from "@/server/db";
 import { requireRole } from "@/server/guards";
 import { pageCount } from "@/server/pagination";
 import { AppShell } from "@/components/app-shell";
-import { adminNav } from "../_nav";
+import { getAdminNav } from "../_nav";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ActionButton } from "@/components/action-button";
@@ -20,6 +20,7 @@ export default async function AdminCompaniesPage({
 }) {
   await requireRole("ADMIN");
   const t = await getTranslations("admin");
+  const tNav = await getTranslations("nav");
   const sp = await searchParams;
   const q = (sp.q as string | undefined)?.trim() ?? "";
   const page = Math.max(1, Number(sp.page ?? 1) || 1);
@@ -73,7 +74,7 @@ export default async function AdminCompaniesPage({
   };
 
   return (
-    <AppShell title="Companies" nav={adminNav}>
+    <AppShell title={tNav("company")} nav={await getAdminNav()}>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 shadow-md shadow-emerald-500/25">

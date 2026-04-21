@@ -1,7 +1,7 @@
 import { requireRole } from "@/server/guards";
 import { prisma } from "@/server/db";
 import { AppShell } from "@/components/app-shell";
-import { influencerNav } from "@/app/[locale]/influencer/_nav";
+import { getInfluencerNav } from "@/app/[locale]/influencer/_nav";
 import { BankDetailsForm } from "./bank-details-form";
 import { getTranslations } from "next-intl/server";
 
@@ -10,6 +10,7 @@ export const metadata = { title: "Paiements" };
 export default async function PaymentsPage() {
   const user = await requireRole("INFLUENCER");
   const t = await getTranslations("payments");
+  const tNav = await getTranslations("nav");
 
   const transactions = await prisma.transaction.findMany({
     where: { paidToId: user.id },
@@ -25,7 +26,7 @@ export default async function PaymentsPage() {
     .reduce((sum, t) => sum + t.amountDinar, 0);
 
   return (
-    <AppShell title={t("title")} nav={influencerNav}>
+    <AppShell title={tNav("paymentInfo")} nav={await getInfluencerNav()}>
       <div className="space-y-8">
         <div>
           <h1 className="text-2xl font-bold text-[#E2E8F0]">{t("title")}</h1>

@@ -1,13 +1,15 @@
 import { prisma } from "@/server/db";
 import { requireRole } from "@/server/guards";
 import { AppShell } from "@/components/app-shell";
-import { companyNav } from "../_nav";
+import { getCompanyNav } from "../_nav";
 import { Badge } from "@/components/ui/badge";
 import { Table, TBody, TD, TH, THead, TR } from "@/components/ui/table";
 import { Link } from "@/i18n/navigation";
+import { getTranslations } from "next-intl/server";
 
 export default async function CompanyCampaignsPage() {
   const user = await requireRole("COMPANY");
+  const t = await getTranslations("nav");
 
   const [requests, campaigns] = await Promise.all([
     prisma.campaignRequest.findMany({
@@ -35,7 +37,7 @@ export default async function CompanyCampaignsPage() {
   ]);
 
   return (
-    <AppShell title="My campaigns" nav={companyNav}>
+    <AppShell title={t("myCampaigns")} nav={await getCompanyNav()}>
       <div className="space-y-8">
         <div>
           <div className="mb-2 text-sm font-medium text-slate-900">Requests</div>
