@@ -15,24 +15,33 @@ export async function POST(req: Request) {
 
   const participation = await prisma.campaignParticipation.findUnique({
     where: { id: participationId },
-    include: { campaign: true },
-  });
-  if (!participation) return NextResponse.json({ error: "Not found" }, { status: 404 });
-
-  const admin = await prisma.user.findFirst({ where: { role: "ADMIN" } });
-  if (!admin) return NextResponse.json({ error: "Missing admin" }, { status: 500 });
-
-  // Create transaction (manual) for influencer payout
-  await prisma.$transaction([
-    prisma.transaction.create({
-      data: {
-        paidById: admin.id,
-        paidToId: participation.influencerId,
-        campaignId: participation.campaignId,
-        amountDinar: participation.campaign.priceDinar,
-        status: "PAID",
-        provider: "MANUAL",
+    include: {
+      campaign: true,
+      transactions: {
+        where: { status: "PENDING" },
+        take: 1,
+        orderBy: { createdAt: "desc" },
       },
+    },
+  });
+
+  if (!participation) {
+    return NextResponse.json({ error: "Participation not found" }, { status: 404 });
+  }
+
+  const pendingTx = participation.transactions[0];
+  if (!pendingTx) {
+    return NextResponse.json({ error: "No pending transaction found for this participation" }, { status: 404 });
+  }
+
+  if (participation.status === "PAID") {
+    return NextResponse.json({ error: "Already paid" }, { status: 409 });
+  }
+
+  await prisma.$transaction([
+    prisma.transaction.update({
+      where: { id: pendingTx.id },
+      data: { status: "PAID" },
     }),
     prisma.campaignParticipation.update({
       where: { id: participationId },
@@ -48,7 +57,7 @@ export async function POST(req: Request) {
     userId: participation.influencerId,
     type: "PAYMENT_RECEIVED",
     title: "Paiement reçu !",
-    message: `Vous avez reçu ${participation.campaign.priceDinar} DZD pour la campagne "${participation.campaign.title}".`,
+    message: `Vous avez reçu ${pendingTx.netAmountInfluencer.toLocaleString()} DZD pour la campagne "${participation.campaign.title}".`,
     link: "/influencer/payments",
   });
 
