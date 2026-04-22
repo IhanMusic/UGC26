@@ -49,6 +49,7 @@ export type PitchLandingData = {
   sponsorships: { amountDZD: number }[];
   alreadySponsored: boolean;
   backHref: string;
+  readOnly?: boolean;
 };
 
 const TABS = [
@@ -70,6 +71,7 @@ export function PitchLandingPage({ pitch }: { pitch: PitchLandingData }) {
     pitch.maxSponsors + pitch.bonusSponsorSlots - pitch.sponsorships.length
   );
   const canSponsor =
+    !pitch.readOnly &&
     !pitch.alreadySponsored &&
     (pitch.status === "PUBLISHED" || pitch.status === "FUNDED") &&
     pitch.sponsorships.length < pitch.maxSponsors + pitch.bonusSponsorSlots;
@@ -150,7 +152,7 @@ export function PitchLandingPage({ pitch }: { pitch: PitchLandingData }) {
                 💰 Sponsoriser ce projet
               </button>
             )}
-            {pitch.alreadySponsored && (
+            {pitch.alreadySponsored && !pitch.readOnly && (
               <span
                 className="shrink-0 rounded-full px-4 py-2 text-sm font-semibold"
                 style={{
