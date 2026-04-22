@@ -67,7 +67,7 @@ export async function POST(req: Request) {
           ownsComputer: step2Bool("ownsComputer"),
           emailCheckFrequency: step2Str("emailCheckFrequency"),
           internetHabits: step2Str("internetHabits"),
-          socialNetworks: step2Str("socialNetworks"),
+          socialNetworks: (() => { const v = step2Val("socialNetworks"); return Array.isArray(v) ? (v as string[]) : []; })(),
           passion: step2Str("passion"),
           followersCountRange: step2Str("followersCountRange"),
           postFrequency: step2Str("postFrequency"),

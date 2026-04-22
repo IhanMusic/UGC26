@@ -27,8 +27,13 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Participation is not in ONGOING status" }, { status: 409 });
   }
 
-  const { grossAmountDinar, platformFeeCompany, platformFeeInfluencer, netAmountInfluencer } =
-    calcCommissions(participation.campaign.priceDinar);
+  let grossAmountDinar: number, platformFeeCompany: number, platformFeeInfluencer: number, netAmountInfluencer: number;
+  try {
+    ({ grossAmountDinar, platformFeeCompany, platformFeeInfluencer, netAmountInfluencer } =
+      calcCommissions(participation.campaign.priceDinar));
+  } catch {
+    return NextResponse.json({ error: "Invalid campaign price" }, { status: 422 });
+  }
 
   // Check if a PENDING transaction already exists for this participation
   const existingPendingTx = await prisma.transaction.findFirst({

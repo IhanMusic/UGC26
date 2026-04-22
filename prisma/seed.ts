@@ -32,7 +32,7 @@ async function main() {
           mainAccountLink: "https://instagram.com/mina",
           country: "Algeria",
           passion: "Fashion",
-          socialNetworks: "Instagram,TikTok",
+          socialNetworks: ["Instagram", "TikTok"],
           followersCountRange: "10k-50k",
         },
       },

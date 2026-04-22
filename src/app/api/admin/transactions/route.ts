@@ -29,13 +29,13 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Participation not found" }, { status: 404 });
   }
 
+  if (participation.status === "PAID") {
+    return NextResponse.json({ error: "Already paid" }, { status: 409 });
+  }
+
   const pendingTx = participation.transactions[0];
   if (!pendingTx) {
     return NextResponse.json({ error: "No pending transaction found for this participation" }, { status: 404 });
-  }
-
-  if (participation.status === "PAID") {
-    return NextResponse.json({ error: "Already paid" }, { status: 409 });
   }
 
   await prisma.$transaction([
