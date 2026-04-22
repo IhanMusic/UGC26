@@ -14,6 +14,7 @@ export async function PATCH(req: Request) {
         address?: string;
         city?: string;
         country?: string;
+        socialNetworks?: string[];
       }
     | null;
 
@@ -31,6 +32,7 @@ export async function PATCH(req: Request) {
             address: body?.address,
             city: body?.city,
             country: body?.country,
+            socialNetworks: body?.socialNetworks ?? [],
           },
           update: {
             dateOfBirth: body?.dateOfBirth ? new Date(body.dateOfBirth) : undefined,
@@ -38,6 +40,7 @@ export async function PATCH(req: Request) {
             address: body?.address,
             city: body?.city,
             country: body?.country,
+            socialNetworks: body?.socialNetworks ?? [],
           },
         },
       },

@@ -21,6 +21,7 @@ export async function GET() {
       address: u?.influencerProfile?.address ?? "",
       city: u?.influencerProfile?.city ?? "",
       country: u?.influencerProfile?.country ?? "",
+      socialNetworks: u?.influencerProfile?.socialNetworks ?? [],
     },
     selectedCategoryIds: await prisma.influencerCategory
       .findMany({

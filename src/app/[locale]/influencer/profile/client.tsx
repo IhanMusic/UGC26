@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PlatformChips } from "@/components/platform-chips";
 
 export default function InfluencerProfileClient() {
   const [loading, setLoading] = useState(true);
@@ -18,13 +19,19 @@ export default function InfluencerProfileClient() {
     address: "",
     city: "",
     country: "",
+    socialNetworks: [] as string[],
   });
 
   useEffect(() => {
     fetch("/api/influencer/profile-get")
       .then((r) => r.json())
       .then((d) => {
-        setForm(d.profile ?? form);
+        if (d.profile) {
+          setForm({
+            ...d.profile,
+            socialNetworks: Array.isArray(d.profile.socialNetworks) ? d.profile.socialNetworks : [],
+          });
+        }
       })
       .finally(() => setLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -93,6 +100,13 @@ export default function InfluencerProfileClient() {
             <div className="space-y-2">
               <Label>Country</Label>
               <Input value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} />
+            </div>
+            <div className="space-y-2 md:col-span-2">
+              <Label>Plateformes</Label>
+              <PlatformChips
+                value={form.socialNetworks}
+                onChange={(v) => setForm({ ...form, socialNetworks: v })}
+              />
             </div>
             <div className="md:col-span-2">
               <Button disabled={saving} type="submit">
