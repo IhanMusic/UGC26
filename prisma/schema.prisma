@@ -55,6 +55,7 @@ enum TransactionStatus {
 enum PaymentProvider {
   MANUAL
   STRIPE
+  SATIM
 }
 
 model User {
@@ -114,7 +115,7 @@ model InfluencerProfile {
   ownsComputer              Boolean?
   emailCheckFrequency       String?
   internetHabits            String?
-  socialNetworks            String? // comma separated for MVP
+  socialNetworks            String[]
   passion                   String?
   followersCountRange       String?
   postFrequency             String?
@@ -233,6 +234,8 @@ model CampaignParticipation {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  transactions Transaction[]
+
   @@unique([campaignId, influencerId])
 }
 
@@ -244,7 +247,8 @@ model CampaignApplication {
   influencerId String
   influencer   User   @relation(fields: [influencerId], references: [id], onDelete: Cascade)
 
-  status CampaignApplicationStatus @default(APPLIED)
+  status            CampaignApplicationStatus @default(APPLIED)
+  adminPreValidated Boolean                   @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -259,25 +263,31 @@ model Transaction {
   paidToId String
   paidTo   User   @relation("TransactionPaidTo", fields: [paidToId], references: [id], onDelete: Restrict)
 
-  campaignId String?
-  campaign   Campaign? @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+  campaignId      String?
+  campaign        Campaign? @relation(fields: [campaignId], references: [id], onDelete: SetNull)
 
-  amountDinar Int
+  participationId String?
+  participation   CampaignParticipation? @relation(fields: [participationId], references: [id], onDelete: SetNull)
 
-  // Stripe-ready fields (kept optional until integration)
+  grossAmountDinar      Int
+  platformFeeCompany    Int
+  platformFeeInfluencer Int
+  netAmountInfluencer   Int
+
   provider         PaymentProvider @default(MANUAL)
   currency         String          @default("DZD")
   providerIntentId String?
   providerChargeId String?
   rawPayload       Json?
 
-  status      TransactionStatus @default(PENDING)
-  createdAt   DateTime          @default(now())
+  status    TransactionStatus @default(PENDING)
+  createdAt DateTime          @default(now())
 }
 
 enum NotificationType {
   APPLICATION_ACCEPTED
   APPLICATION_REJECTED
+  APPLICATION_PRE_VALIDATED
   CAMPAIGN_PUBLISHED
   CAMPAIGN_COMPLETED
   CAMPAIGN_CONFIRMED
