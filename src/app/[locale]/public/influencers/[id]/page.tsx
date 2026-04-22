@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import Image from "next/image";
 
 function Stars({ rating }: { rating: number }) {
   return (
@@ -151,8 +152,7 @@ export default async function InfluencerPublicProfilePage({ params }: { params: 
                   {user.participations.map((p) => (
                     <div key={p.id} className="flex items-center gap-3 rounded-lg border border-slate-100 p-2">
                       {p.campaign.photoUrl ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img src={p.campaign.photoUrl} alt="" className="h-10 w-10 rounded-lg object-cover" />
+                        <Image src={p.campaign.photoUrl} alt="" width={40} height={40} className="rounded-lg object-cover" />
                       ) : (
                         <div className="h-10 w-10 rounded-lg bg-slate-100" />
                       )}

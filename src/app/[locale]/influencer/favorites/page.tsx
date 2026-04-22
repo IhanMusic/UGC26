@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "@/i18n/navigation";
 import { getTranslations } from "next-intl/server";
+import Image from "next/image";
 
 export default async function FavoritesPage() {
   const user = await requireRole("INFLUENCER");
@@ -35,8 +36,9 @@ export default async function FavoritesPage() {
           {favorites.map((f) => (
             <Card key={f.id} className="group overflow-hidden">
               {f.campaign.photoUrl && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={f.campaign.photoUrl} alt={f.campaign.title} className="h-40 w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <div className="relative h-40 w-full overflow-hidden">
+                  <Image src={f.campaign.photoUrl} alt={f.campaign.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 768px) 100vw, 600px" />
+                </div>
               )}
               <CardHeader>
                 <CardTitle className="text-base">

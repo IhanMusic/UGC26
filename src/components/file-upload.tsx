@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { cn } from "@/components/ui/utils";
 
 interface FileUploadProps {
@@ -50,8 +51,9 @@ export function FileUpload({
         className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-white/20 bg-white/[0.03] px-4 py-6 transition-colors hover:border-violet-500/40 hover:bg-violet-500/5"
       >
         {value ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={value} alt="preview" className="h-24 w-full rounded-lg object-cover" />
+          <div className="relative h-24 w-full overflow-hidden rounded-lg">
+            <Image src={value} alt="preview" fill className="object-cover" sizes="(max-width: 768px) 100vw, 400px" />
+          </div>
         ) : (
           <>
             <svg

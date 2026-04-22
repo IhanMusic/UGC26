@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { ActionButton } from "@/components/action-button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getTranslations } from "next-intl/server";
+import Image from "next/image";
 
 export default async function CompanyCompletionsPage() {
   const user = await requireRole("COMPANY");
@@ -41,8 +42,9 @@ export default async function CompanyCompletionsPage() {
             </CardHeader>
             <CardContent className="space-y-3">
               {p.completionProofUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={p.completionProofUrl} alt="completion proof" className="h-56 w-full rounded-md object-cover" />
+                <div className="relative h-56 w-full overflow-hidden rounded-md">
+                  <Image src={p.completionProofUrl} alt="completion proof" fill className="object-cover" sizes="(max-width: 768px) 100vw, 600px" />
+                </div>
               ) : (
                 <div className="text-sm text-slate-600">No proof uploaded.</div>
               )}

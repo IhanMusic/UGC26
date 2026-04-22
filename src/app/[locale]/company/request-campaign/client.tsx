@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -166,8 +167,14 @@ export default function CompanyRequestCampaignClient() {
                   }}
                 />
                 {photoDataUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={photoDataUrl} alt="preview" className="mt-2 h-32 w-full rounded-xl object-cover" />
+                  photoDataUrl.startsWith("data:") ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={photoDataUrl} alt="preview" className="mt-2 h-32 w-full rounded-xl object-cover" />
+                  ) : (
+                    <div className="relative mt-2 h-32 w-full overflow-hidden rounded-xl">
+                      <Image src={photoDataUrl} alt="preview" fill className="object-cover" sizes="(max-width: 768px) 100vw, 600px" />
+                    </div>
+                  )
                 ) : null}
               </div>
               <div className="space-y-2">
@@ -184,8 +191,14 @@ export default function CompanyRequestCampaignClient() {
                 />
                 <div className="mt-2 grid grid-cols-5 gap-2">
                   {additionalPhotoDataUrls.map((d, idx) => (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img key={idx} src={d} alt="preview" className="h-14 w-full rounded-lg object-cover" />
+                    d.startsWith("data:") ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img key={idx} src={d} alt="preview" className="h-14 w-full rounded-lg object-cover" />
+                    ) : (
+                      <div key={idx} className="relative h-14 w-full overflow-hidden rounded-lg">
+                        <Image src={d} alt="preview" fill className="object-cover" sizes="20vw" />
+                      </div>
+                    )
                   ))}
                 </div>
               </div>

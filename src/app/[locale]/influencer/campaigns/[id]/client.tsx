@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -188,8 +189,14 @@ export default function InfluencerCampaignClient({
                   }}
                 />
                 {proof ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={proof} alt="proof" className="mt-2 h-32 w-full rounded-md object-cover" />
+                  proof.startsWith("data:") ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={proof} alt="proof" className="mt-2 h-32 w-full rounded-md object-cover" />
+                  ) : (
+                    <div className="relative mt-2 h-32 w-full overflow-hidden rounded-md">
+                      <Image src={proof} alt="proof" fill className="object-cover" sizes="(max-width: 768px) 100vw, 600px" />
+                    </div>
+                  )
                 ) : null}
               </div>
             </div>
