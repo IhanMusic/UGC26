@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ThemeProvider } from "next-themes";
 import { AuthSessionProvider } from "@/components/session-provider";
 import { ToastProvider } from "@/components/toast";
 import { ConfirmProvider } from "@/components/confirm-modal";
@@ -69,18 +70,20 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <AuthSessionProvider>
-          <NextIntlClientProvider locale={l} messages={messages}>
-            <ToastProvider>
-              <ConfirmProvider>
-                <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[9999] focus:bg-violet-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-md focus:top-2 focus:left-2">
-                  Skip to content
-                </a>
-                {children}
-              </ConfirmProvider>
-            </ToastProvider>
-          </NextIntlClientProvider>
-        </AuthSessionProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <AuthSessionProvider>
+            <NextIntlClientProvider locale={l} messages={messages}>
+              <ToastProvider>
+                <ConfirmProvider>
+                  <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[9999] focus:bg-violet-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-md focus:top-2 focus:left-2">
+                    Skip to content
+                  </a>
+                  {children}
+                </ConfirmProvider>
+              </ToastProvider>
+            </NextIntlClientProvider>
+          </AuthSessionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
