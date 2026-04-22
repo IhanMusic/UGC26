@@ -8,6 +8,15 @@ const EnvSchema = z.object({
 
   SMTP_URL: z.string().optional(),
   REDIS_URL: z.string().optional(),
+
+  SATIM_TERMINAL_ID: z.string().optional(),
+  SATIM_MERCHANT_ID: z.string().optional(),
+  SATIM_PASSWORD: z.string().optional(),
+  SATIM_BASE_URL: z.string().optional(),
+  NEXT_PUBLIC_APP_URL: z.string().optional(),
+  RESEND_API_KEY: z.string().optional(),
+  EMAIL_FROM: z.string().optional(),
+  TEAM_EMAIL: z.string().optional(),
 });
 
 export type AppEnv = z.infer<typeof EnvSchema>;
@@ -19,4 +28,12 @@ export const env: AppEnv = EnvSchema.parse({
   NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   SMTP_URL: process.env.SMTP_URL,
   REDIS_URL: process.env.REDIS_URL,
+  SATIM_TERMINAL_ID: process.env.SATIM_TERMINAL_ID,
+  SATIM_MERCHANT_ID: process.env.SATIM_MERCHANT_ID,
+  SATIM_PASSWORD: process.env.SATIM_PASSWORD,
+  SATIM_BASE_URL: process.env.SATIM_BASE_URL,
+  NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+  RESEND_API_KEY: process.env.RESEND_API_KEY,
+  EMAIL_FROM: process.env.EMAIL_FROM,
+  TEAM_EMAIL: process.env.TEAM_EMAIL,
 });
