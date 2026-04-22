@@ -5,6 +5,27 @@ import InfluencerCampaignClient from "./client";
 import { prisma } from "@/server/db";
 import { getTranslations } from "next-intl/server";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string; locale: string }>;
+}) {
+  const { id } = await params;
+  const campaign = await prisma.campaign.findUnique({
+    where: { id },
+    select: { title: true, description: true },
+  });
+  if (!campaign) return { title: "Campagne introuvable" };
+  return {
+    title: campaign.title,
+    description: campaign.description?.slice(0, 160),
+    openGraph: {
+      title: campaign.title,
+      description: campaign.description?.slice(0, 160),
+    },
+  };
+}
+
 export default async function InfluencerCampaignPage({
   params,
 }: {
