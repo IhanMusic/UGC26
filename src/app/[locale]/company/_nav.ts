@@ -8,6 +8,7 @@ export async function getCompanyNav() {
     { href: "/company/request-campaign", label: t("requestCampaign") },
     { href: "/company/campaigns", label: t("myCampaigns") },
     { href: "/company/completions", label: t("completions") },
+    { href: "/company/expenses", label: t("expenses") },
     { href: "/public/influencers", label: t("browseInfluencers") },
     { href: "/messages", label: `💬 ${t("messages")}` },
     { href: "/notifications", label: `🔔 ${t("notifications")}` },
