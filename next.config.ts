@@ -5,7 +5,6 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/config.ts");
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
-  transpilePackages: ["resend", "@react-email/components"],
   poweredByHeader: false,
   images: {
     remotePatterns: [
