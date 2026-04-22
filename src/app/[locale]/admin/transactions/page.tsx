@@ -149,7 +149,7 @@ export default async function AdminTransactionsPage({
                     </TD>
                     <TD>{t.paidBy.email}</TD>
                     <TD>{t.paidTo.email}</TD>
-                    <TD>{t.amountDinar.toLocaleString()} DZD</TD>
+                    <TD>{t.grossAmountDinar.toLocaleString()} DZD</TD>
                     <TD>
                       <Badge variant={t.status === "PAID" ? "success" : t.status === "FAILED" ? "danger" : "warning"}>
                         {t.status}

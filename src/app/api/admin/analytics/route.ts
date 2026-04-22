@@ -57,7 +57,7 @@ export async function GET() {
   // Revenue from paid transactions
   const totalRevenue = await prisma.transaction.aggregate({
     where: { status: "PAID" },
-    _sum: { amountDinar: true },
+    _sum: { grossAmountDinar: true },
   });
 
   // Disputes summary
@@ -72,7 +72,7 @@ export async function GET() {
     totalApplications: totalApps,
     acceptedApplications: acceptedApps,
     topInfluencers: topInfluencerDetails,
-    totalRevenue: totalRevenue._sum.amountDinar || 0,
+    totalRevenue: totalRevenue._sum?.grossAmountDinar || 0,
     disputes: { open: openDisputes, resolved: resolvedDisputes },
   });
 }

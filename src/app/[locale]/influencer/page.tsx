@@ -23,11 +23,11 @@ export default async function InfluencerDashboardPage() {
     }),
     prisma.transaction.aggregate({
       where: { paidToId: user.id, status: "PAID" },
-      _sum: { amountDinar: true },
+      _sum: { netAmountInfluencer: true },
     }),
     prisma.transaction.aggregate({
       where: { paidToId: user.id, status: "PENDING" },
-      _sum: { amountDinar: true },
+      _sum: { netAmountInfluencer: true },
     }),
     prisma.favorite.count({ where: { userId: user.id } }),
   ]);
@@ -35,7 +35,7 @@ export default async function InfluencerDashboardPage() {
   // Monthly earnings (last 6 months)
   const transactions = await prisma.transaction.findMany({
     where: { paidToId: user.id, status: "PAID", createdAt: { gte: sixMonthsAgo } },
-    select: { createdAt: true, amountDinar: true },
+    select: { createdAt: true, netAmountInfluencer: true },
   });
   const monthlyEarnings: { month: string; amount: number }[] = [];
   for (let i = 5; i >= 0; i--) {
@@ -43,7 +43,7 @@ export default async function InfluencerDashboardPage() {
     const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
     const total = transactions
       .filter(t => `${t.createdAt.getFullYear()}-${String(t.createdAt.getMonth() + 1).padStart(2, "0")}` === key)
-      .reduce((s, t) => s + t.amountDinar, 0);
+      .reduce((s, t) => s + t.netAmountInfluencer, 0);
     monthlyEarnings.push({ month: key, amount: total });
   }
 
@@ -61,8 +61,8 @@ export default async function InfluencerDashboardPage() {
   const topCategories = Object.entries(catMap).sort((a, b) => b[1] - a[1]).slice(0, 5);
 
   const acceptanceRate = (applied + accepted) > 0 ? Math.round((accepted / (applied + accepted)) * 100) : 0;
-  const earned = totalEarnings._sum.amountDinar || 0;
-  const pending = pendingEarnings._sum.amountDinar || 0;
+  const earned = totalEarnings._sum?.netAmountInfluencer || 0;
+  const pending = pendingEarnings._sum?.netAmountInfluencer || 0;
 
   return (
     <AppShell title={t("influencerDashboard")} nav={await getInfluencerNav()}>

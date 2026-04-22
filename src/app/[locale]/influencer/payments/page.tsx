@@ -19,11 +19,11 @@ export default async function PaymentsPage() {
 
   const totalEarned = transactions
     .filter((t) => t.status === "PAID")
-    .reduce((sum, t) => sum + t.amountDinar, 0);
+    .reduce((sum, t) => sum + t.netAmountInfluencer, 0);
 
   const pendingAmount = transactions
     .filter((t) => t.status === "PENDING")
-    .reduce((sum, t) => sum + t.amountDinar, 0);
+    .reduce((sum, t) => sum + t.netAmountInfluencer, 0);
 
   return (
     <AppShell title={tNav("paymentInfo")} nav={await getInfluencerNav()}>
@@ -68,7 +68,7 @@ export default async function PaymentsPage() {
                       {new Date(t.createdAt).toLocaleDateString("fr-FR")}
                     </td>
                     <td className="px-5 py-3 text-sm font-medium text-[#E2E8F0]">
-                      {t.amountDinar.toLocaleString("fr-DZ")} DZD
+                      {t.netAmountInfluencer.toLocaleString("fr-DZ")} DZD
                     </td>
                     <td className="px-5 py-3">
                       <span

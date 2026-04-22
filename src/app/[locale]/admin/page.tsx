@@ -22,7 +22,7 @@ export default async function AdminDashboardPage() {
       prisma.user.count({ where: { isDeleted: true } }),
       prisma.campaignApplication.count(),
       prisma.campaignApplication.count({ where: { status: "ACCEPTED" } }),
-      prisma.transaction.aggregate({ where: { status: "PAID" }, _sum: { amountDinar: true } }),
+      prisma.transaction.aggregate({ where: { status: "PAID" }, _sum: { grossAmountDinar: true } }),
       prisma.dispute.count({ where: { status: { in: ["OPEN", "UNDER_REVIEW"] } } }),
     ]);
 
@@ -71,7 +71,7 @@ export default async function AdminDashboardPage() {
   });
 
   const conversionRate = totalApps > 0 ? Math.round((acceptedApps / totalApps) * 100) : 0;
-  const revenue = paidRevenue._sum.amountDinar || 0;
+  const revenue = paidRevenue._sum?.grossAmountDinar || 0;
   const maxCampaigns = Math.max(...monthlyData.map(m => m.campaigns), 1);
 
   return (

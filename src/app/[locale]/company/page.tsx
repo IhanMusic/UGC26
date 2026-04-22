@@ -20,11 +20,11 @@ export default async function CompanyDashboardPage() {
     prisma.campaign.count({ where: { companyId: user.id } }),
     prisma.transaction.aggregate({
       where: { paidById: user.id, status: "PAID" },
-      _sum: { amountDinar: true },
+      _sum: { grossAmountDinar: true },
     }),
     prisma.transaction.aggregate({
       where: { paidById: user.id, status: "PENDING" },
-      _sum: { amountDinar: true },
+      _sum: { grossAmountDinar: true },
     }),
     prisma.campaignApplication.count({
       where: { campaign: { companyId: user.id } },
@@ -37,7 +37,7 @@ export default async function CompanyDashboardPage() {
   // Monthly spending
   const txns = await prisma.transaction.findMany({
     where: { paidById: user.id, status: "PAID", createdAt: { gte: sixMonthsAgo } },
-    select: { createdAt: true, amountDinar: true },
+    select: { createdAt: true, grossAmountDinar: true },
   });
   const monthlySpending: { month: string; amount: number }[] = [];
   for (let i = 5; i >= 0; i--) {
@@ -45,7 +45,7 @@ export default async function CompanyDashboardPage() {
     const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
     const total = txns
       .filter(t => `${t.createdAt.getFullYear()}-${String(t.createdAt.getMonth() + 1).padStart(2, "0")}` === key)
-      .reduce((s, t) => s + t.amountDinar, 0);
+      .reduce((s, t) => s + t.grossAmountDinar, 0);
     monthlySpending.push({ month: key, amount: total });
   }
 
@@ -60,8 +60,8 @@ export default async function CompanyDashboardPage() {
     statusMap[s.status] = s._count.id;
   }
 
-  const spent = totalSpent._sum.amountDinar || 0;
-  const pending = pendingSpent._sum.amountDinar || 0;
+  const spent = totalSpent._sum?.grossAmountDinar || 0;
+  const pending = pendingSpent._sum?.grossAmountDinar || 0;
 
   return (
     <AppShell title={t("companyDashboard")} nav={await getCompanyNav()}>
