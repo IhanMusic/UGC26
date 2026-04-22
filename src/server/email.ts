@@ -1,30 +1,39 @@
 import "dotenv/config";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 import { env } from "@/server/env";
+import type { ReactElement } from "react";
+
+let _resend: Resend | null = null;
+
+function getResend(): Resend | null {
+  if (!env.RESEND_API_KEY) return null;
+  if (!_resend) _resend = new Resend(env.RESEND_API_KEY);
+  return _resend;
+}
 
 export async function sendEmail(options: {
   to: string;
   subject: string;
-  html: string;
+  react: ReactElement;
 }) {
-  const smtpUrl = env.SMTP_URL;
+  const resend = getResend();
 
-  // Dev mode: no SMTP configured
-  if (!smtpUrl) {
-    console.log("\n--- EMAIL (dev mode) ---");
+  if (!resend) {
+    console.log("\n--- EMAIL (dev mode, no RESEND_API_KEY) ---");
     console.log("To:", options.to);
     console.log("Subject:", options.subject);
-    console.log(options.html);
     console.log("--- END EMAIL ---\n");
     return;
   }
 
-  const transporter = nodemailer.createTransport(smtpUrl);
-
-  await transporter.sendMail({
-    from: "UGC26 <no-reply@ugc26.local>",
+  const { error } = await resend.emails.send({
+    from: env.EMAIL_FROM ?? "UGC26 <noreply@ugc26.dz>",
     to: options.to,
     subject: options.subject,
-    html: options.html,
+    react: options.react,
   });
+
+  if (error) {
+    console.error("Resend error:", error);
+  }
 }

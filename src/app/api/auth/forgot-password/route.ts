@@ -4,6 +4,8 @@ import { randomToken, sha256 } from "@/server/security";
 import { sendEmail } from "@/server/email";
 import { enqueueEmail } from "@/server/queues/email-queue";
 import { env } from "@/server/env";
+import { ForgotPasswordTemplate } from "@/emails/forgot-password";
+import React from "react";
 
 export async function POST(req: Request) {
   const body = (await req.json().catch(() => null)) as { email?: string } | null;
@@ -29,16 +31,24 @@ export async function POST(req: Request) {
 
   const baseUrl = env.NEXTAUTH_URL ?? "http://localhost:3000";
   const resetUrl = `${baseUrl}/auth/reset-password?token=${token}`;
+  const firstName = user.firstName ?? "là";
+  const subject = "Réinitialisez votre mot de passe — UGC26";
 
-  const payload = {
+  const job = {
+    type: "forgot-password" as const,
     to: email,
-    subject: "Reset your password",
-    html: `Click to reset: <a href="${resetUrl}">${resetUrl}</a>`,
+    subject,
+    firstName,
+    resetUrl,
   };
 
-  const enqueued = await enqueueEmail(payload);
+  const enqueued = await enqueueEmail(job);
   if (!enqueued) {
-    await sendEmail(payload);
+    await sendEmail({
+      to: email,
+      subject,
+      react: React.createElement(ForgotPasswordTemplate, { firstName, resetUrl }),
+    });
   }
 
   return NextResponse.json({ ok: true });

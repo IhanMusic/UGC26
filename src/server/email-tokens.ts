@@ -2,6 +2,8 @@ import { randomBytes, createHash } from "crypto";
 import { prisma } from "@/server/db";
 import { enqueueEmail } from "@/server/queues/email-queue";
 import { sendEmail } from "@/server/email";
+import { VerifyEmailTemplate } from "@/emails/verify-email";
+import React from "react";
 
 export function generateToken(): { raw: string; hash: string } {
   const raw = randomBytes(32).toString("hex");
@@ -25,21 +27,26 @@ export async function createEmailVerificationToken(userId: string): Promise<stri
 export async function sendVerificationEmail(
   email: string,
   token: string,
-  baseUrl: string
+  baseUrl: string,
+  firstName = "là"
 ) {
-  const url = `${baseUrl}/api/auth/verify-email?token=${token}`;
-  const html = `
-    <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:32px;">
-      <h1 style="font-size:24px;font-weight:800;color:#080B18;">Vérifiez votre email</h1>
-      <p style="color:#64748B;margin:16px 0;">Cliquez sur le lien ci-dessous pour activer votre compte UGC26. Ce lien expire dans 24h.</p>
-      <a href="${url}" style="display:inline-block;background:linear-gradient(135deg,#7C3AED,#4F46E5);color:white;text-decoration:none;padding:12px 24px;border-radius:10px;font-weight:600;margin:16px 0;">
-        Vérifier mon email →
-      </a>
-      <p style="color:#94A3B8;font-size:12px;margin-top:24px;">Si vous n'avez pas créé de compte, ignorez cet email.</p>
-    </div>
-  `;
+  const verifyUrl = `${baseUrl}/api/auth/verify-email?token=${token}`;
+  const subject = "Vérifiez votre email — UGC26";
 
-  const job = { to: email, subject: "Vérifiez votre email — UGC26", html };
+  const job = {
+    type: "verify-email" as const,
+    to: email,
+    subject,
+    firstName,
+    verifyUrl,
+  };
+
   const queued = await enqueueEmail(job);
-  if (!queued) await sendEmail(job); // fallback if no Redis
+  if (!queued) {
+    await sendEmail({
+      to: email,
+      subject,
+      react: React.createElement(VerifyEmailTemplate, { firstName, verifyUrl }),
+    });
+  }
 }
