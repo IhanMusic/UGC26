@@ -11,6 +11,7 @@ export async function getAdminNav() {
     { href: "/admin/campaigns", label: t("campaigns") },
     { href: "/admin/transactions", label: t("transactions") },
     { href: "/admin/applications", label: t("preValidation") },
+    { href: "/admin/pitches", label: "🎬 File de validation" },
     { href: "/admin/disputes", label: `⚖️ ${t("disputes")}` },
     { href: "/admin/settings", label: t("settings") },
     { href: "/messages", label: `💬 ${t("messages")}` },
