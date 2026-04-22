@@ -16,7 +16,7 @@ export async function transitionPitchToFunded(pitchId: string): Promise<void> {
 
     if (totalCommitted < pitch.budgetTarget) return;
 
-    // 1. Create the Campaign
+    // Campaign created from pitch — creatorId used as companyId since Campaign requires one
     const campaign = await tx.campaign.create({
       data: {
         title: pitch.title,
@@ -67,17 +67,19 @@ export async function transitionPitchToFunded(pitchId: string): Promise<void> {
 
     // 5. Notify all sponsors
     await Promise.all(
-      pitch.sponsorships.map((s) =>
-        tx.notification.create({
-          data: {
-            userId: s.brandId,
-            type: "PITCH_FUNDED",
-            title: "Projet financé",
-            message: `Le projet "${pitch.title}" que vous sponsorisez est maintenant financé à 100%. La production démarre.`,
-            link: `/company/sponsorships/${pitch.id}`,
-          },
-        })
-      )
+      pitch.sponsorships
+        .filter((s) => s.status === "COMMITTED" || s.status === "PAID")
+        .map((s) =>
+          tx.notification.create({
+            data: {
+              userId: s.brandId,
+              type: "PITCH_FUNDED",
+              title: "Projet financé",
+              message: `Le projet "${pitch.title}" que vous sponsorisez est maintenant financé à 100%. La production démarre.`,
+              link: `/company/sponsorships/${pitch.id}`,
+            },
+          })
+        )
     );
   });
 }
