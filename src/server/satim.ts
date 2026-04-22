@@ -22,8 +22,9 @@ export async function initiateSatimPayment(params: SatimPaymentParams): Promise<
   // TODO: In production, POST to SATIM API using SATIM_TERMINAL_ID, SATIM_MERCHANT_ID, SATIM_PASSWORD
   // Stub: redirect to dev callback
   const base = env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+  const devSecret = env.SATIM_DEV_SECRET ? `&devSecret=${encodeURIComponent(env.SATIM_DEV_SECRET)}` : "";
   return {
-    redirectUrl: `${base}/api/payments/satim/dev-callback?orderId=${encodeURIComponent(params.orderId)}&success=true`,
+    redirectUrl: `${base}/api/payments/satim/dev-callback?orderId=${encodeURIComponent(params.orderId)}&success=true${devSecret}`,
   };
 }
 

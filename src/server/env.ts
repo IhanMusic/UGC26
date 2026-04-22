@@ -6,8 +6,8 @@ const EnvSchema = z.object({
   NEXTAUTH_SECRET: z.string().min(1),
   NEXTAUTH_URL: z.string().url().optional(),
 
-  SMTP_URL: z.string().optional(),
   REDIS_URL: z.string().optional(),
+  SATIM_DEV_SECRET: z.string().optional(),
 
   SATIM_TERMINAL_ID: z.string().optional(),
   SATIM_MERCHANT_ID: z.string().optional(),
@@ -26,8 +26,8 @@ export const env: AppEnv = EnvSchema.parse({
   DATABASE_URL: process.env.DATABASE_URL,
   NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
   NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-  SMTP_URL: process.env.SMTP_URL,
   REDIS_URL: process.env.REDIS_URL,
+  SATIM_DEV_SECRET: process.env.SATIM_DEV_SECRET,
   SATIM_TERMINAL_ID: process.env.SATIM_TERMINAL_ID,
   SATIM_MERCHANT_ID: process.env.SATIM_MERCHANT_ID,
   SATIM_PASSWORD: process.env.SATIM_PASSWORD,

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { sendEmail } from "@/server/email";
+import { enqueueEmail } from "@/server/queues/email-queue";
 import { ContactFormTemplate } from "@/emails/contact-form";
 import { env } from "@/server/env";
 import { z } from "zod";
@@ -27,18 +28,29 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true });
   }
 
-  await sendEmail({
+  const queued = await enqueueEmail({
+    type: "contact-form",
     to: teamEmail,
     subject: `[Contact UGC26] ${subject}`,
-    react: (
-      <ContactFormTemplate
-        senderName={name}
-        senderEmail={email}
-        subject={subject}
-        message={message}
-      />
-    ),
+    senderName: name,
+    senderEmail: email,
+    message,
   });
+
+  if (!queued) {
+    await sendEmail({
+      to: teamEmail,
+      subject: `[Contact UGC26] ${subject}`,
+      react: (
+        <ContactFormTemplate
+          senderName={name}
+          senderEmail={email}
+          subject={subject}
+          message={message}
+        />
+      ),
+    });
+  }
 
   return NextResponse.json({ ok: true });
 }

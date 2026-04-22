@@ -20,7 +20,7 @@ export async function POST(req: Request) {
       }
     | null;
 
-  if (!body?.title || !body.priceDinar || !body.description) {
+  if (!body?.title || !body.priceDinar || body.priceDinar <= 0 || !body.description) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
 

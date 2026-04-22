@@ -10,6 +10,14 @@ export async function GET(req: NextRequest) {
   }
 
   const { searchParams } = new URL(req.url);
+
+  if (env.SATIM_DEV_SECRET) {
+    const secret = searchParams.get("devSecret");
+    if (secret !== env.SATIM_DEV_SECRET) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+  }
+
   const orderId = searchParams.get("orderId"); // this is participationId
   const success = searchParams.get("success") === "true";
 
