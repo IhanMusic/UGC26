@@ -75,11 +75,11 @@ export default async function HomePage() {
                 </Link>
               ) : (
                 <>
-                  <Link href="/auth/login" className="btn-solid-cyan">
-                    {t("home.login")} →
+                  <Link href="/auth/register/influencer" className="btn-solid-cyan">
+                    {t("home.ctaCreator")}
                   </Link>
-                  <Link href="/public/campaigns" className="btn-neon">
-                    {t("home.browseCampaigns")}
+                  <Link href="/auth/register/company" className="btn-neon">
+                    {t("home.ctaBrand")}
                   </Link>
                 </>
               )}
@@ -88,9 +88,9 @@ export default async function HomePage() {
             {/* Stats bar */}
             <div className="animate-fade-in-up delay-400 grid grid-cols-3 gap-px rounded-xl overflow-hidden border border-[var(--border)]">
               {[
-                { value: "5,000+", label: t("about.statCreators") },
-                { value: "500+",   label: t("about.statBrands") },
-                { value: "10K+",   label: t("about.statCampaigns") },
+                { value: "5,000+", label: t("home.statVoices") },
+                { value: "500+",   label: t("home.statBrands") },
+                { value: "10K+",   label: t("home.statContent") },
               ].map((stat, i) => (
                 <div
                   key={i}
@@ -193,7 +193,7 @@ export default async function HomePage() {
                 <span className="tag-neon-purple mb-4 inline-flex">// protocol.roles</span>
                 <h2 className="font-display font-bold text-[var(--foreground)] mt-4"
                     style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}>
-                  {t("home.forInfluencers").split(" ")[0]} · {t("home.forCompanies").split(" ")[0]} · {t("home.forAdmin").split(" ")[0]}
+                  {t("home.forInfluencers")} · {t("home.forCompanies")} · {t("home.forAdmin")}
                 </h2>
               </div>
             </AnimateOnScroll>
@@ -274,6 +274,26 @@ export default async function HomePage() {
           </div>
         </section>
 
+        {/* ── MANIFESTO ────────────────────────────────────────── */}
+        <AnimateOnScroll>
+          <section className="relative py-24 overflow-hidden">
+            <div className="absolute inset-0 bg-mesh" />
+            <div className="orb-purple w-[600px] h-[400px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20" />
+            <div className="relative z-10 mx-auto max-w-3xl px-4 text-center">
+              <span className="tag-neon-purple mb-8 inline-flex">// manifeste</span>
+              <blockquote
+                className="font-display font-bold text-[var(--foreground)] leading-snug mb-8 whitespace-pre-line"
+                style={{ fontSize: "clamp(1.25rem, 3vw, 2rem)" }}
+              >
+                {t("home.manifesto")}
+              </blockquote>
+              <p className="font-mono-accent text-sm text-[var(--primary)] uppercase tracking-widest animate-flicker">
+                — {t("home.manifestoClosing")}
+              </p>
+            </div>
+          </section>
+        </AnimateOnScroll>
+
         {/* ── CTA SECTION ──────────────────────────────────────── */}
         <AnimateOnScroll>
           <section className="relative py-32 overflow-hidden">
@@ -281,17 +301,17 @@ export default async function HomePage() {
             <div className="orb-cyan w-[800px] h-[400px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-40" />
             <div className="relative z-10 mx-auto max-w-3xl px-4 text-center">
               <span className="tag-neon mb-6 inline-flex">// {t("home.trustedBy")}</span>
-              <h2 className="font-display font-bold gradient-text mt-6 mb-10"
-                  style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
-                {t("home.title").split(" ").slice(0, 4).join(" ")}
+              <h2 className="font-display font-bold text-[var(--foreground)] mt-6 mb-6"
+                  style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)" }}>
+                {t("home.ctaFinal")}
               </h2>
               {!session?.user && (
-                <div className="flex flex-wrap items-center justify-center gap-4">
+                <div className="flex flex-wrap items-center justify-center gap-4 mt-10">
                   <Link href="/auth/register/influencer" className="btn-solid-cyan">
-                    {t("auth.registerInfluencer")}
+                    {t("home.ctaCreator")}
                   </Link>
                   <Link href="/auth/register/company" className="btn-neon">
-                    {t("auth.registerCompany")}
+                    {t("home.ctaBrand")}
                   </Link>
                 </div>
               )}

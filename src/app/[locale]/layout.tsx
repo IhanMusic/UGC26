@@ -35,22 +35,22 @@ const spaceMono = Space_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "UGC26 — Influencers Marketplace",
-    template: "%s | UGC26",
+    default: "Adwaa — Le contenu. La lumière.",
+    template: "%s | Adwaa",
   },
-  description: "The leading marketplace for influencer marketing and user-generated content. Connect brands with authentic creators.",
-  keywords: ["influencer marketing", "UGC", "user generated content", "brand collaboration", "content creators", "marketplace"],
-  authors: [{ name: "UGC26" }],
+  description: "Les marques qui gagnent en 2026 ne font plus de publicité. Elles financent du contenu. Adwaa est l'endroit où ça se passe.",
+  keywords: ["contenu", "créateurs", "marques", "collaboration", "content creators", "Algeria", "Algérie", "أضواء"],
+  authors: [{ name: "Adwaa" }],
   openGraph: {
     type: "website",
-    siteName: "UGC26",
-    title: "UGC26 — Influencers Marketplace",
-    description: "The leading marketplace for influencer marketing and user-generated content.",
+    siteName: "Adwaa",
+    title: "Adwaa — Le contenu. La lumière.",
+    description: "Les meilleures pubs ne ressemblent pas à des pubs.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "UGC26 — Influencers Marketplace",
-    description: "The leading marketplace for influencer marketing and user-generated content.",
+    title: "Adwaa — Le contenu. La lumière.",
+    description: "Les meilleures pubs ne ressemblent pas à des pubs.",
   },
   robots: {
     index: true,

@@ -9,6 +9,8 @@ interface ContactFormProps {
     subject: string;
     message: string;
     send: string;
+    successTitle: string;
+    successMessage: string;
   };
 }
 
@@ -46,10 +48,10 @@ export function ContactForm({ labels }: ContactFormProps) {
             ✓
           </div>
           <p className="font-display font-bold text-xl text-[var(--foreground)] mb-2">
-            Message envoyé
+            {labels.successTitle}
           </p>
           <p className="text-sm text-[var(--foreground-muted)]">
-            Nous vous répondrons dans les plus brefs délais.
+            {labels.successMessage}
           </p>
         </div>
       </div>

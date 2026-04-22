@@ -57,7 +57,7 @@ export default async function AboutPage() {
                   className="font-display font-bold text-[var(--foreground)] mb-6 relative z-10"
                   style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)" }}
                 >
-                  {t("mission")}
+                  {t("missionTitle")}
                 </h2>
                 <p className="text-[var(--foreground-muted)] leading-relaxed text-lg relative z-10 max-w-3xl">
                   {t("missionText")}

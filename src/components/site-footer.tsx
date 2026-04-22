@@ -22,9 +22,9 @@ export async function SiteFooter() {
                 className="flex h-8 w-8 items-center justify-center rounded-lg font-display font-black text-sm text-black"
                 style={{ background: "var(--primary)", boxShadow: "0 0 12px var(--primary-glow)" }}
               >
-                U
+                A
               </div>
-              <span className="font-display font-bold text-lg gradient-text-cyber">UGC26</span>
+              <span className="font-display font-bold text-lg gradient-text-cyber">ADWAA</span>
             </div>
             <p className="text-sm text-[var(--foreground-muted)] leading-relaxed">
               {t("footer.description")}
@@ -33,7 +33,7 @@ export async function SiteFooter() {
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-[var(--accent)] animate-pulse-dot" />
               <span className="font-mono-accent text-xs text-[var(--foreground-muted)] uppercase tracking-wider">
-                All systems online
+                {t("footer.statusLabel")}
               </span>
             </div>
           </div>
@@ -114,7 +114,7 @@ export async function SiteFooter() {
         {/* Bottom bar */}
         <div className="flex flex-col items-center justify-between gap-3 border-t border-[var(--border)] pt-6 sm:flex-row">
           <p className="font-mono-accent text-xs text-[var(--foreground-muted)]">
-            © {new Date().getFullYear()} UGC26 · {t("footer.allRightsReserved")}
+            © {new Date().getFullYear()} ADWAA · {t("footer.allRightsReserved")}
           </p>
           <p className="font-mono-accent text-xs text-[var(--foreground-muted)]">
             {t("footer.madeWith")} <span style={{ color: "var(--danger)" }}>♥</span> in Algeria

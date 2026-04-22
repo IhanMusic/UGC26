@@ -80,11 +80,13 @@ export default async function ContactPage() {
               <AnimateOnScroll direction="left">
                 <ContactForm
                   labels={{
-                    name:    t("nameLabel"),
-                    email:   t("emailLabel"),
-                    subject: t("subjectLabel"),
-                    message: t("messageLabel"),
-                    send:    t("send"),
+                    name:           t("nameLabel"),
+                    email:          t("emailLabel"),
+                    subject:        t("subjectLabel"),
+                    message:        t("messageLabel"),
+                    send:           t("send"),
+                    successTitle:   t("successTitle"),
+                    successMessage: t("successMessage"),
                   }}
                 />
               </AnimateOnScroll>

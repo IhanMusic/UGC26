@@ -32,10 +32,10 @@ export async function SiteHeader() {
               boxShadow: "0 0 16px var(--primary-glow)",
             }}
           >
-            U
+            A
           </div>
           <span className="font-display font-bold text-lg tracking-tight gradient-text-cyber">
-            UGC26
+            ADWAA
           </span>
         </Link>
 
