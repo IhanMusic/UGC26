@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
-export default function ErrorPage({
+export default function AdminError({
   error,
   reset,
 }: {
@@ -26,9 +26,14 @@ export default function ErrorPage({
             ? error.message
             : "Veuillez réessayer ou contacter le support."}
         </p>
-        <Button size="lg" onClick={() => reset()}>
-          Réessayer
-        </Button>
+        <div className="flex gap-3 justify-center">
+          <Button size="lg" onClick={() => reset()}>
+            Réessayer
+          </Button>
+          <Button size="lg" variant="outline" asChild>
+            <a href="/admin">Retour à l&apos;espace admin</a>
+          </Button>
+        </div>
       </div>
     </main>
   );
