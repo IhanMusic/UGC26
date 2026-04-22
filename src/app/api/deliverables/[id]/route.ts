@@ -1,6 +1,52 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/server/db";
 import { requireUser } from "@/server/guards";
+import { sendEmail } from "@/server/email";
+import { enqueueEmail } from "@/server/queues/email-queue";
+import { env } from "@/server/env";
+import { DeliverableSubmittedTemplate } from "@/emails/deliverable-submitted";
+import React from "react";
+
+async function sendDeliverableSubmittedEmail(deliverable: {
+  campaign: { title: string; company: { email: string | null; firstName: string | null; id: string } };
+  influencer: { firstName: string | null; lastName: string | null } | null;
+  campaignId: string;
+}) {
+  const { campaign, influencer } = deliverable;
+  if (!campaign.company.email) return;
+  const base = env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+  const companyName = campaign.company.firstName ?? "";
+  const influencerName = influencer
+    ? `${influencer.firstName ?? ""} ${influencer.lastName ?? ""}`.trim()
+    : "";
+  const campaignTitle = campaign.title;
+  const deliverablesUrl = `${base}/company/campaigns/${deliverable.campaignId}/deliverables`;
+  const subject = `Nouveau livrable soumis pour "${campaignTitle}"`;
+
+  const job = {
+    type: "deliverable-submitted" as const,
+    to: campaign.company.email,
+    subject,
+    companyName,
+    influencerName,
+    campaignTitle,
+    deliverablesUrl,
+  };
+
+  const enqueued = await enqueueEmail(job);
+  if (!enqueued) {
+    await sendEmail({
+      to: campaign.company.email,
+      subject,
+      react: React.createElement(DeliverableSubmittedTemplate, {
+        companyName,
+        influencerName,
+        campaignTitle,
+        deliverablesUrl,
+      }),
+    });
+  }
+}
 
 // PATCH /api/deliverables/[id] — company approves/rejects, or influencer updates file
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -11,7 +57,10 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
 
   const deliverable = await prisma.deliverable.findUnique({
     where: { id },
-    include: { campaign: { select: { companyId: true } } },
+    include: {
+      campaign: { include: { company: true } },
+      influencer: { select: { firstName: true, lastName: true } },
+    },
   });
   if (!deliverable) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
@@ -64,6 +113,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
         where: { id },
         data: { fileUrl, status: "SUBMITTED" as const },
       });
+      await sendDeliverableSubmittedEmail(deliverable);
       return NextResponse.json(updated);
     }
 
@@ -76,6 +126,9 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
         ...(description !== undefined && { description }),
       },
     });
+    if (fileUrl !== undefined) {
+      await sendDeliverableSubmittedEmail(deliverable);
+    }
     return NextResponse.json(updated);
   }
 

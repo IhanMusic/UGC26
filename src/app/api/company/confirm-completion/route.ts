@@ -3,6 +3,11 @@ import { prisma } from "@/server/db";
 import { requireRole } from "@/server/guards";
 import { createNotification } from "@/server/notifications";
 import { calcCommissions } from "@/lib/commissions";
+import { sendEmail } from "@/server/email";
+import { enqueueEmail } from "@/server/queues/email-queue";
+import { env } from "@/server/env";
+import { CampaignConfirmedTemplate } from "@/emails/campaign-confirmed";
+import React from "react";
 
 export async function POST(req: Request) {
   const user = await requireRole("COMPANY");
@@ -76,6 +81,40 @@ export async function POST(req: Request) {
     message: `L'entreprise a confirmé l'achèvement de la campagne "${participation.campaign.title}". Vous recevrez ${netAmountInfluencer.toLocaleString()} DZD.`,
     link: "/influencer/campaigns",
   });
+
+  // Send email to influencer
+  const influencer = await prisma.user.findUnique({ where: { id: participation.influencerId } });
+  if (influencer) {
+    const base = env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+    const influencerName = influencer.firstName ?? "";
+    const campaignTitle = participation.campaign.title;
+    const paymentsUrl = `${base}/influencer/payments`;
+    const subject = `Campagne confirmée — "${campaignTitle}"`;
+
+    const job = {
+      type: "campaign-confirmed" as const,
+      to: influencer.email,
+      subject,
+      influencerName,
+      campaignTitle,
+      netAmountDinar: netAmountInfluencer,
+      paymentsUrl,
+    };
+
+    const enqueued = await enqueueEmail(job);
+    if (!enqueued) {
+      await sendEmail({
+        to: influencer.email,
+        subject,
+        react: React.createElement(CampaignConfirmedTemplate, {
+          influencerName,
+          campaignTitle,
+          netAmountDinar: netAmountInfluencer,
+          paymentsUrl,
+        }),
+      });
+    }
+  }
 
   return NextResponse.json({ ok: true });
 }
