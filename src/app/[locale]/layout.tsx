@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import { AuthSessionProvider } from "@/components/session-provider";
 import { ToastProvider } from "@/components/toast";
 import { ConfirmProvider } from "@/components/confirm-modal";
+import { CookieBanner } from "@/components/cookie-banner";
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { getMessages } from "@/i18n/get-messages";
@@ -79,6 +80,7 @@ export default async function LocaleLayout({
                     Skip to content
                   </a>
                   {children}
+                  <CookieBanner />
                 </ConfirmProvider>
               </ToastProvider>
             </NextIntlClientProvider>

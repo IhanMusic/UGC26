@@ -659,6 +659,10 @@
       "PAID": "Payé"
     }
   },
+  "cookies": {
+    "banner": "Ce site utilise des cookies pour améliorer votre expérience et mesurer l'audience.",
+    "accept": "Accepter"
+  },
   "payments": {
     "title": "Paiements",
     "subtitle": "Vos revenus et coordonnées bancaires",

@@ -659,6 +659,10 @@
       "PAID": "Paid"
     }
   },
+  "cookies": {
+    "banner": "This site uses cookies to improve your experience and measure audience.",
+    "accept": "Accept"
+  },
   "payments": {
     "title": "Payments",
     "subtitle": "Your earnings and bank details",
