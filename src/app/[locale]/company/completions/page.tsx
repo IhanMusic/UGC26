@@ -11,6 +11,7 @@ import Image from "next/image";
 export default async function CompanyCompletionsPage() {
   const user = await requireRole("COMPANY");
   const t = await getTranslations("nav");
+  const tComp = await getTranslations("completions");
 
   const participations = await prisma.campaignParticipation.findMany({
     where: {
@@ -46,7 +47,7 @@ export default async function CompanyCompletionsPage() {
                   <Image src={p.completionProofUrl} alt="completion proof" fill className="object-cover" sizes="(max-width: 768px) 100vw, 600px" />
                 </div>
               ) : (
-                <div className="text-sm text-slate-600">No proof uploaded.</div>
+                <div className="text-sm text-slate-600">{tComp("noProof")}</div>
               )}
 
               <div className="flex flex-wrap items-center gap-3">
@@ -56,11 +57,11 @@ export default async function CompanyCompletionsPage() {
                   body={{ participationId: p.id }}
                   disabled={p.status !== "COMPLETED"}
                 >
-                  Confirm completion
+                  {tComp("confirmCompletion")}
                 </ActionButton>
 
                 <div className="text-xs text-slate-600">
-                  Stripe payment UI will be enabled later (Company → Admin).
+                  {tComp("satimNote")}
                 </div>
               </div>
             </CardContent>

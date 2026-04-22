@@ -283,7 +283,7 @@
     "influencerPayout": "Influencer payout",
     "comingSoon": "Coming soon",
     "manualPayNote": "For now, use Transactions screen to mark as paid manually.",
-    "readyToPay": "Ready to pay (manual)",
+    "readyToPay": "Ready to pay",
     "nothingToPay": "Nothing to pay.",
     "markPaid": "Mark paid",
     "stripeConnectNote": "Stripe Connect payout will replace this action later.",
@@ -293,6 +293,13 @@
     "amount": "Amount",
     "from": "From",
     "to": "To",
+    "filter": "Filter",
+    "apply": "Apply",
+    "campaign": "Campaign",
+    "influencer": "Influencer",
+    "action": "Action",
+    "date": "Date",
+    "status": "Status",
     "cancellationTitle": "Cancellation Terms & Conditions",
     "cancellationDesc": "Editable content used in the platform.",
     "categoryName": "Category name",
@@ -314,6 +321,11 @@
     "previousPage": "← Previous",
     "nextPage": "Next →",
     "totalCount": "{count} total"
+  },
+  "completions": {
+    "noProof": "No proof uploaded.",
+    "confirmCompletion": "Confirm completion",
+    "satimNote": "Payment will be processed via SATIM."
   },
   "campaigns": {
     "title": "Campaigns",

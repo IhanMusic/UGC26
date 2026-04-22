@@ -283,9 +283,9 @@
     "influencerPayout": "Paiement influenceur",
     "comingSoon": "Bientôt disponible",
     "manualPayNote": "Pour l'instant, utilisez l'écran Transactions pour marquer comme payé manuellement.",
-    "readyToPay": "Prêt à payer (manuel)",
+    "readyToPay": "Prêts à payer",
     "nothingToPay": "Rien à payer.",
-    "markPaid": "Marquer comme payé",
+    "markPaid": "Marquer payé",
     "stripeConnectNote": "Le paiement Stripe Connect remplacera cette action ultérieurement.",
     "noTransactions": "Aucune transaction.",
     "paidBy": "Payé par",
@@ -293,6 +293,13 @@
     "amount": "Montant",
     "from": "Du",
     "to": "Au",
+    "filter": "Filtrer",
+    "apply": "Appliquer",
+    "campaign": "Campagne",
+    "influencer": "Influenceur",
+    "action": "Action",
+    "date": "Date",
+    "status": "Statut",
     "cancellationTitle": "Conditions d'annulation",
     "cancellationDesc": "Contenu modifiable utilisé sur la plateforme.",
     "categoryName": "Nom de la catégorie",
@@ -314,6 +321,11 @@
     "previousPage": "← Précédent",
     "nextPage": "Suivant →",
     "totalCount": "{count} au total"
+  },
+  "completions": {
+    "noProof": "Aucune preuve soumise.",
+    "confirmCompletion": "Confirmer l'achèvement",
+    "satimNote": "Le paiement sera traité via SATIM."
   },
   "campaigns": {
     "title": "Campagnes",

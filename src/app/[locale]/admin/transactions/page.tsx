@@ -15,6 +15,7 @@ export default async function AdminTransactionsPage({
 }) {
   await requireRole("ADMIN");
   const t = await getTranslations("nav");
+  const tAdmin = await getTranslations("admin");
   const sp = await searchParams;
 
   const from = (sp.from as string | undefined) ?? "";
@@ -61,10 +62,10 @@ export default async function AdminTransactionsPage({
   return (
     <AppShell title={t("transactions")} nav={await getAdminNav()}>
       <div className="mb-8 space-y-3">
-        <div className="text-sm font-medium text-slate-700">Filter</div>
+        <div className="text-sm font-medium text-slate-700">{tAdmin("filter")}</div>
         <form className="flex flex-wrap items-end gap-3" action="/admin/transactions">
           <label className="space-y-1.5 text-sm">
-            <div className="text-xs font-medium text-slate-500">From</div>
+            <div className="text-xs font-medium text-slate-500">{tAdmin("from")}</div>
             <input
               type="date"
               name="from"
@@ -73,7 +74,7 @@ export default async function AdminTransactionsPage({
             />
           </label>
           <label className="space-y-1.5 text-sm">
-            <div className="text-xs font-medium text-slate-500">To</div>
+            <div className="text-xs font-medium text-slate-500">{tAdmin("to")}</div>
             <input
               type="date"
               name="to"
@@ -82,7 +83,7 @@ export default async function AdminTransactionsPage({
             />
           </label>
           <button className="h-10 rounded-xl border border-slate-200/60 bg-white/50 px-5 text-sm font-medium shadow-sm backdrop-blur-sm transition-all hover:bg-violet-50 hover:border-violet-300 hover:text-violet-700">
-            Apply
+            {tAdmin("apply")}
           </button>
         </form>
       </div>
@@ -98,21 +99,21 @@ export default async function AdminTransactionsPage({
 
       <div className="space-y-8">
         <div>
-          <div className="mb-3 text-sm font-semibold text-slate-800">Ready to pay (manual)</div>
+          <div className="mb-3 text-sm font-semibold text-slate-800">{tAdmin("readyToPay")}</div>
           <Table>
             <THead>
               <TR>
-                <TH>Campaign</TH>
-                <TH>Influencer</TH>
-                <TH>Amount</TH>
-                <TH className="text-right">Action</TH>
+                <TH>{tAdmin("campaign")}</TH>
+                <TH>{tAdmin("influencer")}</TH>
+                <TH>{tAdmin("amount")}</TH>
+                <TH className="text-right">{tAdmin("action")}</TH>
               </TR>
             </THead>
             <TBody>
               {toPay.length === 0 ? (
                 <TR>
                   <TD colSpan={4} className="text-center text-slate-400">
-                    Nothing to pay.
+                    {tAdmin("nothingToPay")}
                   </TD>
                 </TR>
               ) : (
@@ -130,7 +131,7 @@ export default async function AdminTransactionsPage({
                         method="POST"
                         body={{ participationId: p.id }}
                       >
-                        Mark paid
+                        {tAdmin("markPaid")}
                       </ActionButton>
                     </TD>
                   </TR>
@@ -144,22 +145,22 @@ export default async function AdminTransactionsPage({
         </div>
 
         <div>
-          <div className="mb-3 text-sm font-semibold text-slate-800">Transactions</div>
+          <div className="mb-3 text-sm font-semibold text-slate-800">{t("transactions")}</div>
           <Table>
             <THead>
               <TR>
-                <TH>Date</TH>
-                <TH>Paid by</TH>
-                <TH>Paid to</TH>
-                <TH>Amount</TH>
-                <TH>Status</TH>
+                <TH>{tAdmin("date")}</TH>
+                <TH>{tAdmin("paidBy")}</TH>
+                <TH>{tAdmin("paidTo")}</TH>
+                <TH>{tAdmin("amount")}</TH>
+                <TH>{tAdmin("status")}</TH>
               </TR>
             </THead>
             <TBody>
               {txs.length === 0 ? (
                 <TR>
                   <TD colSpan={5} className="text-center text-slate-400">
-                    No transactions.
+                    {tAdmin("noTransactions")}
                   </TD>
                 </TR>
               ) : (
