@@ -7,6 +7,7 @@ export async function getInfluencerNav() {
     { href: "/influencer/profile", label: t("profile") },
     { href: "/influencer/categories", label: t("myCategories") },
     { href: "/influencer/campaigns", label: t("myCampaigns") },
+    { href: "/creator/pitches", label: "🎬 Mes Projets" },
     { href: "/public/campaigns", label: t("browseCampaigns") },
     { href: "/public/influencers", label: t("browseInfluencers") },
     { href: "/influencer/favorites", label: `❤️ ${t("favorites")}` },
