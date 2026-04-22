@@ -1,5 +1,6 @@
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { AnimateOnScroll } from "@/components/animate-on-scroll";
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 
@@ -9,45 +10,91 @@ export default async function FaqPage() {
   const t = await getTranslations("faq");
 
   const faqs = [
-    { q: t("q1"), a: t("a1") },
-    { q: t("q2"), a: t("a2") },
-    { q: t("q3"), a: t("a3") },
-    { q: t("q4"), a: t("a4") },
-    { q: t("q5"), a: t("a5") },
-    { q: t("q6"), a: t("a6") },
-    { q: t("q7"), a: t("a7") },
-    { q: t("q8"), a: t("a8") },
+    { q: t("q1"), a: t("a1"), tag: "01" },
+    { q: t("q2"), a: t("a2"), tag: "02" },
+    { q: t("q3"), a: t("a3"), tag: "03" },
+    { q: t("q4"), a: t("a4"), tag: "04" },
+    { q: t("q5"), a: t("a5"), tag: "05" },
+    { q: t("q6"), a: t("a6"), tag: "06" },
+    { q: t("q7"), a: t("a7"), tag: "07" },
+    { q: t("q8"), a: t("a8"), tag: "08" },
   ];
 
   return (
     <>
       <SiteHeader />
-      <main id="main-content" className="flex-1 bg-mesh">
-        <div className="mx-auto max-w-3xl px-4 py-20">
-          <div className="text-center mb-16 animate-fade-in-up">
-            <h1 className="text-4xl font-bold tracking-tight text-slate-900 md:text-5xl">
-              <span className="gradient-text">{t("title")}</span>
-            </h1>
-            <p className="mt-4 text-lg text-slate-500">{t("subtitle")}</p>
-          </div>
+      <main id="main-content" className="flex-1">
 
-          <div className="space-y-4">
-            {faqs.map((faq, i) => (
-              <details
-                key={i}
-                className="group rounded-2xl border border-slate-200/60 bg-white/60 backdrop-blur-sm overflow-hidden animate-fade-in-up"
-              >
-                <summary className="flex cursor-pointer items-center justify-between gap-4 p-5 text-left font-medium text-slate-900 hover:bg-violet-50/50 transition-colors [&::-webkit-details-marker]:hidden">
-                  <span className="text-sm">{faq.q}</span>
-                  <span className="shrink-0 text-violet-500 transition-transform duration-200 group-open:rotate-45 text-lg">+</span>
-                </summary>
-                <div className="px-5 pb-5 text-sm text-slate-600 leading-relaxed border-t border-slate-100">
-                  <p className="pt-4">{faq.a}</p>
-                </div>
-              </details>
-            ))}
+        {/* ── HERO ─────────────────────────────────────── */}
+        <section className="relative py-40 bg-mesh overflow-hidden">
+          <div className="absolute inset-0 bg-grid opacity-30 pointer-events-none" />
+          <div className="orb-purple w-[600px] h-[400px] top-0 right-0 opacity-30" />
+
+          <div className="relative z-10 mx-auto max-w-4xl px-4 text-center">
+            <div className="animate-fade-in-up mb-6">
+              <span className="tag-neon">// {t("title")}</span>
+            </div>
+            <h1
+              className="animate-fade-in-up delay-100 font-display font-bold gradient-text text-balance leading-tight mb-6"
+              style={{ fontSize: "clamp(2.5rem, 7vw, 5.5rem)" }}
+            >
+              {t("title")}
+            </h1>
+            <p className="animate-fade-in-up delay-200 text-[var(--foreground-muted)] text-lg max-w-xl mx-auto">
+              {t("subtitle")}
+            </p>
           </div>
-        </div>
+        </section>
+
+        {/* ── FAQ LIST ─────────────────────────────────── */}
+        <section className="py-24 bg-mesh">
+          <div className="mx-auto max-w-3xl px-4">
+            <div className="space-y-3">
+              {faqs.map((faq, i) => (
+                <AnimateOnScroll key={i} delay={i * 60}>
+                  <details className="faq-item group">
+                    <summary className="flex cursor-pointer items-center gap-4 p-6 [&::-webkit-details-marker]:hidden select-none">
+                      <span className="step-badge shrink-0">{faq.tag}</span>
+                      <span className="flex-1 text-sm font-medium text-[var(--foreground)] leading-snug">
+                        {faq.q}
+                      </span>
+                      <div
+                        className="shrink-0 w-8 h-8 rounded-lg border border-[var(--border)] flex items-center justify-center text-[var(--primary)] transition-all duration-300 group-open:border-[var(--primary)] group-open:bg-[var(--primary-dim)] group-open:rotate-45"
+                        style={{ fontSize: 20 }}
+                      >
+                        +
+                      </div>
+                    </summary>
+                    <div className="px-6 pb-6">
+                      <div className="pt-4 pl-16 border-t border-[var(--border)]">
+                        <p className="text-sm text-[var(--foreground-muted)] leading-relaxed">
+                          {faq.a}
+                        </p>
+                      </div>
+                    </div>
+                  </details>
+                </AnimateOnScroll>
+              ))}
+            </div>
+
+            {/* Bottom CTA */}
+            <AnimateOnScroll delay={200}>
+              <div className="mt-16 card-cyber p-8 text-center relative overflow-hidden">
+                <div className="orb-cyan w-[300px] h-[200px] top-0 left-1/2 -translate-x-1/2 opacity-20" />
+                <p className="text-[var(--foreground-muted)] text-sm mb-4 font-mono-accent uppercase tracking-widest">
+                  Still have questions?
+                </p>
+                <a
+                  href="/contact"
+                  className="btn-solid-cyan inline-flex"
+                >
+                  Contact us →
+                </a>
+              </div>
+            </AnimateOnScroll>
+          </div>
+        </section>
+
       </main>
       <SiteFooter />
     </>

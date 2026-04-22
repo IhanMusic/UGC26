@@ -1,11 +1,10 @@
 import { Link } from "@/i18n/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/server/auth";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getTranslations } from "next-intl/server";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { AnimateOnScroll } from "@/components/animate-on-scroll";
 
 function roleHome(role: string) {
   if (role === "ADMIN") return "/admin";
@@ -22,137 +21,284 @@ export default async function HomePage() {
   return (
     <>
       <SiteHeader />
-      <main id="main-content" className="flex-1 bg-mesh">
-        <div className="mx-auto max-w-6xl px-4 py-20">
-          {/* Hero Section */}
-          <div className="flex flex-col gap-6 animate-fade-in-up">
-            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-violet-200/50 bg-white/70 px-4 py-1.5 text-xs font-medium text-violet-700 shadow-sm backdrop-blur-sm">
-              <span className="h-2 w-2 rounded-full bg-violet-500 animate-pulse-dot" />
-              {t("home.heroTag")}
+      <main id="main-content" className="flex-1">
+
+        {/* ── HERO ─────────────────────────────────────────────── */}
+        <section className="relative min-h-screen flex flex-col justify-center bg-mesh overflow-hidden">
+          {/* Grid dot background */}
+          <div className="absolute inset-0 bg-grid opacity-40 pointer-events-none" />
+
+          {/* Ambient orbs */}
+          <div className="orb-cyan w-[600px] h-[600px] -top-40 -left-40 opacity-60" />
+          <div className="orb-purple w-[500px] h-[500px] -bottom-20 -right-20 opacity-50" />
+          <div className="orb-green w-[300px] h-[300px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-30" />
+
+          {/* Scanline */}
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--primary)] to-transparent opacity-30 animate-scan pointer-events-none" />
+
+          <div className="relative z-10 mx-auto max-w-6xl px-4 py-32">
+            {/* Tag */}
+            <div className="animate-fade-in-up mb-8">
+              <span className="tag-neon animate-flicker">
+                <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)] animate-pulse-dot" />
+                {t("home.heroTag")}
+              </span>
             </div>
-            <h1 className="text-balance text-5xl font-bold tracking-tight text-slate-900 md:text-6xl">
-              <span className="gradient-text">{t("home.title")}</span>
+
+            {/* Headline */}
+            <h1 className="animate-fade-in-up delay-100 font-display font-bold text-balance leading-[0.95] tracking-tight mb-8">
+              <span
+                className="gradient-text-cyber block"
+                style={{ fontSize: "clamp(3rem, 8vw, 7rem)" }}
+              >
+                {t("home.title").split(" ").slice(0, 3).join(" ")}
+              </span>
+              <span
+                className="text-[var(--foreground)] block opacity-90"
+                style={{ fontSize: "clamp(2rem, 5vw, 4.5rem)" }}
+              >
+                {t("home.title").split(" ").slice(3).join(" ")}
+              </span>
             </h1>
-            <p className="max-w-2xl text-pretty text-lg text-slate-500">
+
+            {/* Subtitle */}
+            <p className="animate-fade-in-up delay-200 max-w-2xl text-[var(--foreground-muted)] leading-relaxed mb-10"
+               style={{ fontSize: "clamp(1rem, 1.5vw, 1.2rem)" }}>
               {t("home.subtitle")}
             </p>
 
-            <div className="flex flex-wrap items-center gap-4 pt-2">
+            {/* CTAs */}
+            <div className="animate-fade-in-up delay-300 flex flex-wrap items-center gap-4 mb-20">
               {session?.user ? (
-                <Button asChild size="lg">
-                  <Link href={role ? roleHome(role) : "/"}>{t("common.goToDashboard")} →</Link>
-                </Button>
+                <Link href={role ? roleHome(role) : "/"} className="btn-solid-cyan">
+                  {t("common.goToDashboard")} →
+                </Link>
               ) : (
                 <>
-                  <Button asChild size="lg">
-                    <Link href="/auth/login">{t("home.login")}</Link>
-                  </Button>
-                  <Button variant="outline" asChild size="lg">
-                    <Link href="/public/campaigns">{t("home.browseCampaigns")}</Link>
-                  </Button>
+                  <Link href="/auth/login" className="btn-solid-cyan">
+                    {t("home.login")} →
+                  </Link>
+                  <Link href="/public/campaigns" className="btn-neon">
+                    {t("home.browseCampaigns")}
+                  </Link>
                 </>
               )}
             </div>
-          </div>
 
-          {/* How it works */}
-          <section className="mt-24">
-            <h2 className="text-center text-3xl font-bold tracking-tight text-slate-900 mb-12">
-              {t("home.howItWorks")}
-            </h2>
-            <div className="grid gap-8 md:grid-cols-3">
+            {/* Stats bar */}
+            <div className="animate-fade-in-up delay-400 grid grid-cols-3 gap-px rounded-xl overflow-hidden border border-[var(--border)]">
               {[
-                { step: "01", title: t("home.step1Title"), desc: t("home.step1Desc"), color: "from-violet-500 to-indigo-500" },
-                { step: "02", title: t("home.step2Title"), desc: t("home.step2Desc"), color: "from-emerald-500 to-teal-500" },
-                { step: "03", title: t("home.step3Title"), desc: t("home.step3Desc"), color: "from-amber-500 to-orange-500" },
-              ].map((item) => (
-                <div key={item.step} className="relative flex flex-col items-center text-center p-6 animate-fade-in-up">
-                  <div className={`mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${item.color} shadow-lg text-white text-xl font-bold`}>
-                    {item.step}
-                  </div>
-                  <h3 className="text-lg font-semibold text-slate-900 mb-2">{item.title}</h3>
-                  <p className="text-sm text-slate-500 leading-relaxed">{item.desc}</p>
+                { value: "5,000+", label: t("about.statCreators") },
+                { value: "500+",   label: t("about.statBrands") },
+                { value: "10K+",   label: t("about.statCampaigns") },
+              ].map((stat, i) => (
+                <div
+                  key={i}
+                  className="flex flex-col items-center gap-1 px-6 py-5 bg-[var(--surface)] backdrop-blur-sm"
+                >
+                  <span className="stat-value animate-flicker" style={{ animationDelay: `${i * 0.3}s` }}>
+                    {stat.value}
+                  </span>
+                  <span className="text-xs text-[var(--foreground-muted)] font-mono-accent uppercase tracking-widest">
+                    {stat.label}
+                  </span>
                 </div>
               ))}
             </div>
-          </section>
+          </div>
 
-          {/* Bento Grid */}
-          <section className="mt-24">
-            <div className="grid gap-5 md:grid-cols-4 md:grid-rows-2">
-              {/* Large card - Influencers */}
-              <Card className="md:col-span-2 md:row-span-2 group overflow-hidden animate-fade-in-up">
-                <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 to-indigo-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <CardHeader className="pb-4">
-                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-indigo-500 shadow-lg shadow-violet-500/25">
-                    <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+          {/* Bottom gradient fade */}
+          <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-[var(--background)] to-transparent pointer-events-none" />
+        </section>
+
+        {/* ── HOW IT WORKS ─────────────────────────────────────── */}
+        <section className="relative py-32 bg-mesh">
+          <div className="mx-auto max-w-6xl px-4">
+            <AnimateOnScroll>
+              <div className="text-center mb-20">
+                <span className="tag-neon mb-4 inline-flex">// {t("home.howItWorks")}</span>
+                <h2 className="font-display font-bold text-[var(--foreground)] mt-4"
+                    style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}>
+                  {t("home.howItWorks")}
+                </h2>
+              </div>
+            </AnimateOnScroll>
+
+            <div className="relative grid gap-8 md:grid-cols-3">
+              {/* Connector line on desktop */}
+              <div className="hidden md:block absolute top-10 left-1/4 right-1/4 h-px bg-gradient-to-r from-[var(--primary)] via-[var(--secondary)] to-[var(--accent)] opacity-30" />
+
+              {[
+                {
+                  step: "01",
+                  title: t("home.step1Title"),
+                  desc:  t("home.step1Desc"),
+                  color: "var(--primary)",
+                  glow:  "var(--primary-glow)",
+                  delay: 0,
+                },
+                {
+                  step: "02",
+                  title: t("home.step2Title"),
+                  desc:  t("home.step2Desc"),
+                  color: "var(--secondary)",
+                  glow:  "var(--secondary-glow)",
+                  delay: 150,
+                },
+                {
+                  step: "03",
+                  title: t("home.step3Title"),
+                  desc:  t("home.step3Desc"),
+                  color: "var(--accent)",
+                  glow:  "var(--accent-glow)",
+                  delay: 300,
+                },
+              ].map((item) => (
+                <AnimateOnScroll key={item.step} delay={item.delay}>
+                  <div className="card-cyber p-8 text-center group">
+                    <div
+                      className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6 font-mono-accent font-bold text-xl transition-all duration-300"
+                      style={{
+                        background: `rgba(${item.color === "var(--primary)" ? "0,229,255" : item.color === "var(--secondary)" ? "139,92,246" : "0,255,136"}, 0.1)`,
+                        border: `1px solid ${item.color}`,
+                        color: item.color,
+                        boxShadow: `0 0 20px ${item.glow}`,
+                      }}
+                    >
+                      {item.step}
+                    </div>
+                    <h3
+                      className="font-display font-bold text-[var(--foreground)] text-lg mb-3"
+                      style={{ color: item.color }}
+                    >
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-[var(--foreground-muted)] leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                </AnimateOnScroll>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <div className="section-line mx-auto max-w-6xl px-4" />
+
+        {/* ── ROLE CARDS ────────────────────────────────────────── */}
+        <section className="relative py-32 bg-mesh">
+          <div className="mx-auto max-w-6xl px-4">
+            <AnimateOnScroll>
+              <div className="text-center mb-20">
+                <span className="tag-neon-purple mb-4 inline-flex">// protocol.roles</span>
+                <h2 className="font-display font-bold text-[var(--foreground)] mt-4"
+                    style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}>
+                  {t("home.forInfluencers").split(" ")[0]} · {t("home.forCompanies").split(" ")[0]} · {t("home.forAdmin").split(" ")[0]}
+                </h2>
+              </div>
+            </AnimateOnScroll>
+
+            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {/* Influencer — large */}
+              <AnimateOnScroll delay={0} className="lg:col-span-2 lg:row-span-1">
+                <div className="card-cyber h-full p-8 flex flex-col" style={{ minHeight: 280 }}>
+                  <div className="flex items-start justify-between mb-6">
+                    <span className="tag-neon">01 // {t("home.forInfluencers")}</span>
+                    <svg className="w-8 h-8 opacity-20 text-[var(--primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
                     </svg>
                   </div>
-                  <CardTitle className="text-2xl">{t("home.forInfluencers")}</CardTitle>
-                  <CardDescription className="text-base">
+                  <h3 className="font-display font-bold text-[var(--foreground)] text-2xl mb-3">
+                    {t("home.forInfluencers")}
+                  </h3>
+                  <p className="text-[var(--foreground-muted)] text-sm leading-relaxed mb-8 flex-1">
                     {t("home.forInfluencersDesc")}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="mt-auto">
-                  <Button variant="secondary" asChild className="w-full">
-                    <Link href="/auth/register/influencer">{t("auth.registerInfluencer")}</Link>
-                  </Button>
-                </CardContent>
-              </Card>
+                  </p>
+                  <Link href="/auth/register/influencer" className="btn-neon self-start">
+                    {t("auth.registerInfluencer")} →
+                  </Link>
+                </div>
+              </AnimateOnScroll>
 
-              {/* Medium card - Companies */}
-              <Card className="md:col-span-2 group overflow-hidden animate-fade-in-up">
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <CardHeader>
-                  <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 shadow-lg shadow-emerald-500/25">
-                    <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 0h.008v.008h-.008V7.5z" />
-                    </svg>
-                  </div>
-                  <CardTitle>{t("home.forCompanies")}</CardTitle>
-                  <CardDescription>
+              {/* Company */}
+              <AnimateOnScroll delay={150}>
+                <div className="card-cyber h-full p-8 flex flex-col" style={{ borderColor: "rgba(139,92,246,0.2)" }}>
+                  <span className="tag-neon-purple mb-6 self-start">02 // {t("home.forCompanies")}</span>
+                  <h3 className="font-display font-bold text-[var(--foreground)] text-xl mb-3">
+                    {t("home.forCompanies")}
+                  </h3>
+                  <p className="text-[var(--foreground-muted)] text-sm leading-relaxed mb-8 flex-1">
                     {t("home.forCompaniesDesc")}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button variant="secondary" asChild className="w-full">
-                    <Link href="/auth/register/company">{t("auth.registerCompany")}</Link>
-                  </Button>
-                </CardContent>
-              </Card>
+                  </p>
+                  <Link
+                    href="/auth/register/company"
+                    className="btn-neon self-start"
+                    style={{
+                      borderColor: "var(--secondary)",
+                      background: "var(--secondary-dim)",
+                      color: "var(--secondary)",
+                    }}
+                  >
+                    {t("auth.registerCompany")} →
+                  </Link>
+                </div>
+              </AnimateOnScroll>
 
-              {/* Small card - Admin */}
-              <Card className="md:col-span-2 group overflow-hidden animate-fade-in-up">
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-orange-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <CardHeader>
-                  <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 shadow-lg shadow-amber-500/25">
-                    <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
+              {/* Admin */}
+              <AnimateOnScroll delay={300} className="md:col-span-2 lg:col-span-3">
+                <div
+                  className="card-cyber p-8 flex flex-col md:flex-row items-start md:items-center gap-6"
+                  style={{ borderColor: "rgba(0,255,136,0.15)" }}
+                >
+                  <span className="tag-neon-green shrink-0">03 // {t("home.forAdmin")}</span>
+                  <div className="flex-1">
+                    <h3 className="font-display font-bold text-[var(--foreground)] text-lg mb-1">
+                      {t("home.forAdmin")}
+                    </h3>
+                    <p className="text-[var(--foreground-muted)] text-sm">{t("home.forAdminDesc")}</p>
                   </div>
-                  <CardTitle>{t("home.forAdmin")}</CardTitle>
-                  <CardDescription>
-                    {t("home.forAdminDesc")}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button variant="secondary" asChild className="w-full">
-                    <Link href="/admin">{t("nav.admin")}</Link>
-                  </Button>
-                </CardContent>
-              </Card>
+                  <Link
+                    href="/admin"
+                    className="btn-neon shrink-0"
+                    style={{
+                      borderColor: "var(--accent)",
+                      background: "var(--accent-dim)",
+                      color: "var(--accent)",
+                    }}
+                  >
+                    {t("nav.admin")} →
+                  </Link>
+                </div>
+              </AnimateOnScroll>
+            </div>
+          </div>
+        </section>
+
+        {/* ── CTA SECTION ──────────────────────────────────────── */}
+        <AnimateOnScroll>
+          <section className="relative py-32 overflow-hidden">
+            <div className="absolute inset-0 bg-mesh" />
+            <div className="orb-cyan w-[800px] h-[400px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-40" />
+            <div className="relative z-10 mx-auto max-w-3xl px-4 text-center">
+              <span className="tag-neon mb-6 inline-flex">// {t("home.trustedBy")}</span>
+              <h2 className="font-display font-bold gradient-text mt-6 mb-10"
+                  style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
+                {t("home.title").split(" ").slice(0, 4).join(" ")}
+              </h2>
+              {!session?.user && (
+                <div className="flex flex-wrap items-center justify-center gap-4">
+                  <Link href="/auth/register/influencer" className="btn-solid-cyan">
+                    {t("auth.registerInfluencer")}
+                  </Link>
+                  <Link href="/auth/register/company" className="btn-neon">
+                    {t("auth.registerCompany")}
+                  </Link>
+                </div>
+              )}
             </div>
           </section>
+        </AnimateOnScroll>
 
-          {/* Trust banner */}
-          <section className="mt-24 text-center animate-fade-in-up">
-            <p className="text-sm font-medium text-slate-400 uppercase tracking-wider">
-              {t("home.trustedBy")}
-            </p>
-          </section>
-        </div>
       </main>
       <SiteFooter />
     </>
