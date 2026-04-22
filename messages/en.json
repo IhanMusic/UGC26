@@ -75,7 +75,8 @@
     "transactions": "Transactions",
     "categories": "Categories",
     "disputes": "Disputes",
-    "settings": "Cancellation T&C"
+    "settings": "Cancellation T&C",
+    "preValidation": "Pre-validation"
   },
   "home": {
     "title": "Connect brands with creators.",

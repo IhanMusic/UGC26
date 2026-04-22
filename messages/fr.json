@@ -75,7 +75,8 @@
     "transactions": "Transactions",
     "categories": "Catégories",
     "disputes": "Disputes",
-    "settings": "CGV d'annulation"
+    "settings": "CGV d'annulation",
+    "preValidation": "Pré-validation"
   },
   "home": {
     "title": "Connectez les marques et les créateurs.",

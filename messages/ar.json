@@ -75,7 +75,8 @@
     "transactions": "المعاملات",
     "categories": "الفئات",
     "disputes": "النزاعات",
-    "settings": "شروط الإلغاء"
+    "settings": "شروط الإلغاء",
+    "preValidation": "التحقق المسبق"
   },
   "home": {
     "title": "اربط العلامات التجارية بالمبدعين.",
