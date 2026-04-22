@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import Image from "next/image";
+import { ContactInfluencerButton } from "@/components/contact-influencer-button";
 
 function Stars({ rating }: { rating: number }) {
   return (
@@ -84,20 +85,23 @@ export default async function InfluencerPublicProfilePage({ params }: { params: 
             <div className="md:col-span-3 space-y-6">
               <Card className="animate-fade-in-up">
                 <CardHeader>
-                  <div className="flex items-center gap-4">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-indigo-500 text-2xl font-bold text-white shadow-lg shadow-violet-500/25">
-                      {user.firstName.charAt(0)}
-                    </div>
-                    <div>
-                      <CardTitle className="text-2xl">{user.firstName} {user.lastName}</CardTitle>
-                      <div className="text-sm text-slate-500">
-                        {user.influencerProfile?.city ?? ""}{user.influencerProfile?.city && user.influencerProfile?.country ? ", " : ""}{user.influencerProfile?.country ?? ""}
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-indigo-500 text-2xl font-bold text-white shadow-lg shadow-violet-500/25">
+                        {user.firstName.charAt(0)}
                       </div>
-                      <div className="mt-1 flex items-center gap-2">
-                        <Stars rating={avg} />
-                        <span className="text-sm text-slate-400">{avg.toFixed(1)} ({ratings.length} reviews)</span>
+                      <div>
+                        <CardTitle className="text-2xl">{user.firstName} {user.lastName}</CardTitle>
+                        <div className="text-sm text-slate-500">
+                          {user.influencerProfile?.city ?? ""}{user.influencerProfile?.city && user.influencerProfile?.country ? ", " : ""}{user.influencerProfile?.country ?? ""}
+                        </div>
+                        <div className="mt-1 flex items-center gap-2">
+                          <Stars rating={avg} />
+                          <span className="text-sm text-slate-400">{avg.toFixed(1)} ({ratings.length} reviews)</span>
+                        </div>
                       </div>
                     </div>
+                    <ContactInfluencerButton influencerId={user.id} />
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
