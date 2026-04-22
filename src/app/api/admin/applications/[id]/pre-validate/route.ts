@@ -13,8 +13,8 @@ export async function POST(
   const application = await prisma.campaignApplication.findUnique({
     where: { id },
     include: {
-      campaign: { include: { company: true } },
-      influencer: true,
+      campaign: { select: { id: true, title: true, companyId: true } },
+      influencer: { select: { firstName: true, lastName: true } },
     },
   });
 

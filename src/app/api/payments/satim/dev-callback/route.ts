@@ -28,6 +28,11 @@ export async function GET(req: NextRequest) {
 
   const base = env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 
+  if (participation.status !== "UPCOMING") {
+    // Already processed — redirect to campaign page without error
+    return NextResponse.redirect(`${base}/company/campaigns/${participation.campaignId}`);
+  }
+
   if (!success) {
     return NextResponse.redirect(
       `${base}/company/campaigns/${participation.campaignId}?paymentFailed=true`,

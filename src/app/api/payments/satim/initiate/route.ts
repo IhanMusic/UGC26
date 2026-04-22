@@ -48,6 +48,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Payment already initiated for this influencer" }, { status: 409 });
   }
 
+  // Mark application as accepted when company initiates payment
+  await prisma.campaignApplication.update({
+    where: { id: applicationId },
+    data: { status: "ACCEPTED" },
+  });
+
   const { grossAmountDinar } = calcCommissions(application.campaign.priceDinar);
   const base = env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 

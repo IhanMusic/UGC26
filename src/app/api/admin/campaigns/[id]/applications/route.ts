@@ -21,6 +21,17 @@ export async function PATCH(
 
   const campaign = await prisma.campaign.findUnique({ where: { id: campaignId }, select: { title: true } });
 
+  if (!campaign) {
+    return NextResponse.json({ error: "Campaign not found" }, { status: 404 });
+  }
+
+  const application = await prisma.campaignApplication.findUnique({
+    where: { campaignId_influencerId: { campaignId, influencerId } },
+  });
+  if (!application) {
+    return NextResponse.json({ error: "Application not found" }, { status: 404 });
+  }
+
   if (action === "reject") {
     await prisma.campaignApplication.update({
       where: { campaignId_influencerId: { campaignId, influencerId } },
