@@ -5,6 +5,7 @@ import { getAdminNav } from "../_nav";
 import { Badge } from "@/components/ui/badge";
 import { ActionButton } from "@/components/action-button";
 import { Table, TBody, TD, TH, THead, TR } from "@/components/ui/table";
+import { Pagination } from "@/components/ui/pagination";
 import { getTranslations } from "next-intl/server";
 
 export default async function AdminTransactionsPage({
@@ -21,24 +22,35 @@ export default async function AdminTransactionsPage({
   const fromDate = from ? new Date(from) : null;
   const toDate = to ? new Date(to) : null;
 
-  const txs = await prisma.transaction.findMany({
-    where: {
-      ...(fromDate || toDate
-        ? {
-            createdAt: {
-              ...(fromDate ? { gte: fromDate } : {}),
-              ...(toDate ? { lte: new Date(toDate.getTime() + 24 * 3600 * 1000) } : {}),
-            },
-          }
-        : {}),
-    },
-    orderBy: { createdAt: "desc" },
-    include: {
-      paidBy: true,
-      paidTo: true,
-      campaign: true,
-    },
-  });
+  const pageStr = (sp.page as string | undefined) ?? "1";
+  const page = Math.max(1, parseInt(pageStr, 10));
+  const LIMIT = 50;
+
+  const whereClause = {
+    ...(fromDate || toDate
+      ? {
+          createdAt: {
+            ...(fromDate ? { gte: fromDate } : {}),
+            ...(toDate ? { lte: new Date(toDate.getTime() + 24 * 3600 * 1000) } : {}),
+          },
+        }
+      : {}),
+  };
+
+  const [txs, totalCount] = await Promise.all([
+    prisma.transaction.findMany({
+      where: whereClause,
+      orderBy: { createdAt: "desc" },
+      skip: (page - 1) * LIMIT,
+      take: LIMIT,
+      include: {
+        paidBy: true,
+        paidTo: true,
+        campaign: true,
+      },
+    }),
+    prisma.transaction.count({ where: whereClause }),
+  ]);
 
   const toPay = await prisma.campaignParticipation.findMany({
     where: { status: "CONFIRMED" },
@@ -169,6 +181,13 @@ export default async function AdminTransactionsPage({
               )}
             </TBody>
           </Table>
+          <Pagination
+            page={page}
+            total={totalCount}
+            limit={LIMIT}
+            baseHref="/admin/transactions"
+            existingParams={{ ...(from ? { from } : {}), ...(to ? { to } : {}) }}
+          />
         </div>
       </div>
     </AppShell>
