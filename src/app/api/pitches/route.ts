@@ -46,7 +46,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "title, type, budgetTarget requis" }, { status: 400 });
   }
 
-  const slug = await uniqueSlug(generateSlug(body.title));
+  const baseSlug = generateSlug(body.title);
+  if (!baseSlug) {
+    return NextResponse.json({ error: "Le titre doit contenir au moins un caractère alphanumérique" }, { status: 400 });
+  }
+  const slug = await uniqueSlug(baseSlug);
 
   const pitch = await prisma.creatorPitch.create({
     data: {

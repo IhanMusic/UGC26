@@ -78,7 +78,7 @@ export async function PATCH(
     "title", "synopsis", "targetAudience", "platforms", "ageRange", "country",
     "contentDuration", "timeline", "teamDescription", "references",
     "budgetTarget", "maxSponsors", "bonusSponsorSlots",
-    "storyboardUrls", "pitchDocumentUrl", "coverImageUrl", "visibility",
+    "storyboardUrls", "pitchDocumentUrl", "coverImageUrl", "visibility", "type",
   ];
 
   const data: Record<string, unknown> = {};
