@@ -16,6 +16,23 @@ function Stars({ rating }: { rating: number }) {
   );
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string; locale?: string }>;
+}) {
+  const { id } = await params;
+  const user = await prisma.user.findUnique({
+    where: { id },
+    select: { firstName: true, lastName: true },
+  });
+  if (!user) return { title: "Profil introuvable" };
+  return {
+    title: `${user.firstName} ${user.lastName} — UGC26`,
+    description: `Découvrez le profil de ${user.firstName} ${user.lastName} sur UGC26.`,
+  };
+}
+
 export default async function InfluencerPublicProfilePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
