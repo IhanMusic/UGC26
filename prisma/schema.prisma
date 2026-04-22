@@ -290,6 +290,8 @@ model Transaction {
 
   status    TransactionStatus @default(PENDING)
   createdAt DateTime          @default(now())
+
+  @@index([pitchId])
 }
 
 enum NotificationType {
@@ -578,7 +580,7 @@ model CreatorPitch {
   status            PitchStatus     @default(DRAFT)
   completenessScore Int             @default(0)
   campaignId        String?         @unique
-  campaign          Campaign?       @relation("PitchCampaign", fields: [campaignId], references: [id])
+  campaign          Campaign?       @relation("PitchCampaign", fields: [campaignId], references: [id], onDelete: SetNull)
   sponsorships      PitchSponsorship[]
   pitchDeliverables PitchDeliverable[]
   categories        PitchCategory[]
@@ -616,6 +618,8 @@ model PitchDeliverable {
   description       String
   type              PitchDeliverableType
   minSponsorshipDZD Int?
+
+  @@index([pitchId])
 }
 
 model PitchCategory {
