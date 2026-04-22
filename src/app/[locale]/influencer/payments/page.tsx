@@ -89,6 +89,7 @@ export default async function PaymentsPage() {
             </table>
           )}
         </div>
+        <p className="mt-2 text-xs text-slate-500">* Montant après déduction des frais de service (5%)</p>
 
         {/* Bank details form */}
         <BankDetailsForm />
