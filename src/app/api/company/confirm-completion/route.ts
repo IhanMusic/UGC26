@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/server/db";
 import { requireRole } from "@/server/guards";
 import { createNotification } from "@/server/notifications";
+import { calcCommissions } from "@/lib/commissions";
 
 export async function POST(req: Request) {
   const user = await requireRole("COMPANY");
@@ -22,6 +23,35 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
+  if (participation.status !== "ONGOING") {
+    return NextResponse.json({ error: "Participation is not in ONGOING status" }, { status: 409 });
+  }
+
+  const { grossAmountDinar, platformFeeCompany, platformFeeInfluencer, netAmountInfluencer } =
+    calcCommissions(participation.campaign.priceDinar);
+
+  // Check if a PENDING transaction already exists for this participation
+  const existingPendingTx = await prisma.transaction.findFirst({
+    where: { participationId, status: "PENDING" },
+  });
+
+  const transactionOps = existingPendingTx ? [] : [
+    prisma.transaction.create({
+      data: {
+        paidById: user.id,
+        paidToId: participation.influencerId,
+        campaignId: participation.campaignId,
+        participationId,
+        grossAmountDinar,
+        platformFeeCompany,
+        platformFeeInfluencer,
+        netAmountInfluencer,
+        status: "PENDING",
+        provider: "MANUAL",
+      },
+    }),
+  ];
+
   await prisma.$transaction([
     prisma.campaignParticipation.update({
       where: { id: participationId },
@@ -31,23 +61,14 @@ export async function POST(req: Request) {
       where: { id: participation.campaignId },
       data: { status: "CONFIRMED" },
     }),
-    prisma.transaction.create({
-      data: {
-        paidById: user.id,
-        paidToId: participation.influencerId,
-        campaignId: participation.campaignId,
-        amountDinar: participation.campaign.priceDinar,
-        status: "PENDING",
-        provider: "MANUAL",
-      },
-    }),
+    ...transactionOps,
   ]);
 
   await createNotification({
     userId: participation.influencerId,
     type: "CAMPAIGN_CONFIRMED",
     title: "Campagne confirmée",
-    message: `L'entreprise a confirmé l'achèvement de la campagne "${participation.campaign.title}". Paiement en cours de traitement.`,
+    message: `L'entreprise a confirmé l'achèvement de la campagne "${participation.campaign.title}". Vous recevrez ${netAmountInfluencer.toLocaleString()} DZD.`,
     link: "/influencer/campaigns",
   });
 
