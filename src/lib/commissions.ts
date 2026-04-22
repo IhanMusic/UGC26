@@ -8,6 +8,9 @@ export interface CommissionBreakdown {
 }
 
 export function calcCommissions(priceDinar: number): CommissionBreakdown {
+  if (!Number.isFinite(priceDinar) || priceDinar <= 0) {
+    throw new RangeError(`priceDinar must be a positive finite number, got ${priceDinar}`);
+  }
   const platformFeeCompany = Math.round(priceDinar * 0.10);
   const platformFeeInfluencer = Math.round(priceDinar * 0.05);
   const grossAmountDinar = priceDinar + platformFeeCompany;

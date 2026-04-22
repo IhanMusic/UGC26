@@ -1,4 +1,4 @@
-// src/lib/satim.ts
+// src/server/satim.ts
 import { env } from "@/server/env";
 
 export interface SatimPaymentParams {
@@ -23,12 +23,13 @@ export async function initiateSatimPayment(params: SatimPaymentParams): Promise<
   // Stub: redirect to dev callback
   const base = env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
   return {
-    redirectUrl: `${base}/api/payments/satim/dev-callback?orderId=${params.orderId}&success=true`,
+    redirectUrl: `${base}/api/payments/satim/dev-callback?orderId=${encodeURIComponent(params.orderId)}&success=true`,
   };
 }
 
 export async function verifySatimPayment(orderId: string): Promise<SatimVerifyResult> {
-  // TODO: In production, call SATIM getOrderStatus endpoint
-  // Stub: always succeeds in dev
+  if (env.NODE_ENV === "production") {
+    throw new Error("SATIM stub must not run in production — implement real SATIM API call");
+  }
   return { success: true, transactionId: `SATIM-DEV-${orderId}` };
 }
