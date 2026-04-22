@@ -99,6 +99,9 @@ model User {
   favorites        Favorite[]
   disputes         Dispute[]
   deliverables     Deliverable[]
+
+  creatorPitches    CreatorPitch[]     @relation("CreatorPitches")
+  brandSponsorships PitchSponsorship[] @relation("BrandSponsorships")
 }
 
 model InfluencerProfile {
@@ -147,6 +150,7 @@ model Category {
   campaignRequests CampaignRequestCategory[]
   campaigns        CampaignCategory[]
   influencers      InfluencerCategory[]
+  pitchCategories  PitchCategory[] @relation("PitchCategories")
 }
 
 model CampaignRequest {
@@ -216,6 +220,7 @@ model Campaign {
   favorites     Favorite[]
   disputes      Dispute[]
   deliverables  Deliverable[]
+  pitch         CreatorPitch? @relation("PitchCampaign")
 }
 
 model CampaignParticipation {
@@ -269,6 +274,9 @@ model Transaction {
   participationId String?
   participation   CampaignParticipation? @relation(fields: [participationId], references: [id], onDelete: SetNull)
 
+  pitchId         String?
+  pitch           CreatorPitch? @relation(fields: [pitchId], references: [id], onDelete: SetNull)
+
   grossAmountDinar      Int
   platformFeeCompany    Int
   platformFeeInfluencer Int
@@ -294,6 +302,13 @@ enum NotificationType {
   PAYMENT_RECEIVED
   NEW_MESSAGE
   GENERAL
+  PITCH_SUBMITTED
+  PITCH_VALIDATED
+  PITCH_REJECTED
+  PITCH_FUNDED
+  SPONSOR_JOINED
+  PITCH_FIRST_PAYMENT
+  PITCH_FINAL_PAYMENT
 }
 
 model Notification {
@@ -490,4 +505,124 @@ model Deliverable {
   updatedAt     DateTime          @updatedAt
 
   @@index([campaignId, influencerId])
+}
+
+// ── Creator Pitch ───────────────────────────────────────────────────
+
+enum PitchType {
+  MINI_FILM
+  SERIE
+  SHOOTING
+  PODCAST
+  REPORTAGE
+  CLIP_MUSICAL
+  DOCUMENTAIRE
+  AUTRE
+}
+
+enum PitchVisibility {
+  PUBLIC
+  PRIVATE
+}
+
+enum PitchStatus {
+  DRAFT
+  PENDING_REVIEW
+  PUBLISHED
+  FUNDED
+  IN_PRODUCTION
+  COMPLETED
+  CLOSED
+  REJECTED
+}
+
+enum SponsorshipStatus {
+  INTERESTED
+  COMMITTED
+  PAID
+  REFUNDED
+}
+
+enum PitchDeliverableType {
+  MENTION
+  LOGO_PLACEMENT
+  PRODUCT_INTEGRATION
+  EXCLUSIVE_RIGHTS
+  CUSTOM
+}
+
+model CreatorPitch {
+  id                String          @id @default(cuid())
+  creatorId         String
+  creator           User            @relation("CreatorPitches", fields: [creatorId], references: [id], onDelete: Cascade)
+  title             String
+  slug              String          @unique
+  secretToken       String          @unique @default(cuid())
+  type              PitchType
+  synopsis          String
+  targetAudience    String?
+  platforms         String[]
+  ageRange          String?
+  country           String?
+  contentDuration   String?
+  timeline          Json?
+  teamDescription   String?
+  references        String[]
+  budgetTarget      Int
+  maxSponsors       Int             @default(4)
+  bonusSponsorSlots Int             @default(2)
+  storyboardUrls    String[]
+  pitchDocumentUrl  String?
+  coverImageUrl     String?
+  visibility        PitchVisibility @default(PUBLIC)
+  status            PitchStatus     @default(DRAFT)
+  completenessScore Int             @default(0)
+  campaignId        String?         @unique
+  campaign          Campaign?       @relation("PitchCampaign", fields: [campaignId], references: [id])
+  sponsorships      PitchSponsorship[]
+  pitchDeliverables PitchDeliverable[]
+  categories        PitchCategory[]
+  transactions      Transaction[]
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  @@index([creatorId])
+  @@index([status])
+}
+
+model PitchSponsorship {
+  id              String            @id @default(cuid())
+  pitchId         String
+  pitch           CreatorPitch      @relation(fields: [pitchId], references: [id], onDelete: Cascade)
+  brandId         String
+  brand           User              @relation("BrandSponsorships", fields: [brandId], references: [id], onDelete: Cascade)
+  amountDZD       Int
+  percentageShare Float             @default(0)
+  isBonus         Boolean           @default(false)
+  status          SponsorshipStatus @default(COMMITTED)
+  satimIntentId   String?
+  brandMessage    String?
+  createdAt       DateTime          @default(now())
+
+  @@unique([pitchId, brandId])
+  @@index([pitchId])
+  @@index([brandId])
+}
+
+model PitchDeliverable {
+  id                String               @id @default(cuid())
+  pitchId           String
+  pitch             CreatorPitch         @relation(fields: [pitchId], references: [id], onDelete: Cascade)
+  description       String
+  type              PitchDeliverableType
+  minSponsorshipDZD Int?
+}
+
+model PitchCategory {
+  pitchId    String
+  categoryId String
+  pitch      CreatorPitch @relation(fields: [pitchId], references: [id], onDelete: Cascade)
+  category   Category     @relation("PitchCategories", fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([pitchId, categoryId])
 }
