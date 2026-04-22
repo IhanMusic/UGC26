@@ -38,12 +38,6 @@ export async function PATCH(
 
   // accept
   await prisma.$transaction(async (tx) => {
-    // Accept one influencer and reject other applicants (simplifies lifecycle)
-    await tx.campaignApplication.updateMany({
-      where: { campaignId, influencerId: { not: influencerId } },
-      data: { status: "REJECTED" },
-    });
-
     await tx.campaignApplication.update({
       where: { campaignId_influencerId: { campaignId, influencerId } },
       data: { status: "ACCEPTED" },
