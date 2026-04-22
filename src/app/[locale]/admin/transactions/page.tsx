@@ -75,6 +75,15 @@ export default async function AdminTransactionsPage({
         </form>
       </div>
 
+      <div className="mb-4 flex justify-end">
+        <a
+          href="/api/admin/transactions/export"
+          className="rounded-xl border border-slate-200/60 bg-white/50 dark:bg-slate-900/50 dark:border-slate-700 px-4 py-2 text-sm font-medium shadow-sm hover:bg-violet-50 dark:hover:bg-violet-900/20 hover:border-violet-300 hover:text-violet-700 dark:hover:text-violet-300 transition-all"
+        >
+          Exporter CSV
+        </a>
+      </div>
+
       <div className="space-y-8">
         <div>
           <div className="mb-3 text-sm font-semibold text-slate-800">Ready to pay (manual)</div>
