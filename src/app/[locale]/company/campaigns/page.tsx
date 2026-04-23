@@ -40,7 +40,7 @@ export default async function CompanyCampaignsPage() {
     <AppShell title={t("myCampaigns")} nav={await getCompanyNav()}>
       <div className="space-y-8">
         <div>
-          <div className="mb-2 text-sm font-medium text-slate-900">Requests</div>
+          <div className="mb-2 text-sm font-medium text-[var(--foreground)]">Requests</div>
           <Table>
             <THead>
               <TR>
@@ -53,7 +53,7 @@ export default async function CompanyCampaignsPage() {
               {requests.map((r) => (
                 <TR key={r.id}>
                   <TD className="font-medium">{r.title}</TD>
-                  <TD className="text-slate-700">{r.priceDinar.toLocaleString()} DZD</TD>
+                  <TD className="text-[var(--foreground-muted)]">{r.priceDinar.toLocaleString()} DZD</TD>
                   <TD>
                     {r.status === "PENDING" ? (
                       <Badge variant="warning">Pending</Badge>
@@ -70,7 +70,7 @@ export default async function CompanyCampaignsPage() {
         </div>
 
         <div>
-          <div className="mb-2 text-sm font-medium text-slate-900">Published campaigns</div>
+          <div className="mb-2 text-sm font-medium text-[var(--foreground)]">Published campaigns</div>
           <Table>
             <THead>
               <TR>
@@ -84,14 +84,14 @@ export default async function CompanyCampaignsPage() {
               {campaigns.map((c) => (
                 <TR key={c.id}>
                   <TD className="font-medium">{c.title}</TD>
-                  <TD className="text-slate-700">{c.priceDinar.toLocaleString()} DZD</TD>
+                  <TD className="text-[var(--foreground-muted)]">{c.priceDinar.toLocaleString()} DZD</TD>
                   <TD>
                     <Badge variant={c.status === "PAID" ? "success" : "secondary"}>{c.status}</Badge>
                   </TD>
                   <TD>
                     <Link
                       href={`/company/campaigns/${c.id}`}
-                      className="text-sm text-violet-400 hover:text-violet-300"
+                      className="text-sm text-[var(--primary)] hover:text-[var(--primary)]"
                     >
                       Voir →
                     </Link>

@@ -32,7 +32,7 @@ export default async function CompanyExpensesPage() {
             <CardDescription>Total payé (PAID)</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold tracking-tight text-amber-600">
+            <div className="text-3xl font-bold tracking-tight text-[var(--gold)]">
               {totalPaid.toLocaleString()} DZD
             </div>
           </CardContent>
@@ -59,7 +59,7 @@ export default async function CompanyExpensesPage() {
             <TBody>
               {transactions.length === 0 ? (
                 <TR>
-                  <TD colSpan={7} className="text-center text-slate-400">
+                  <TD colSpan={7} className="text-center text-[var(--foreground-muted)]">
                     Aucune dépense.
                   </TD>
                 </TR>
@@ -68,17 +68,17 @@ export default async function CompanyExpensesPage() {
                   const base = tx.grossAmountDinar - tx.platformFeeCompany;
                   return (
                     <TR key={tx.id}>
-                      <TD className="text-xs text-slate-500 whitespace-nowrap">
+                      <TD className="text-xs text-[var(--foreground-muted)] whitespace-nowrap">
                         {tx.createdAt.toLocaleDateString("fr-DZ")}
                       </TD>
-                      <TD className="font-medium text-slate-900">
+                      <TD className="font-medium text-[var(--foreground)]">
                         {tx.campaign?.title ?? "—"}
                       </TD>
                       <TD>
                         {tx.paidTo.firstName} {tx.paidTo.lastName}
                       </TD>
                       <TD>{base.toLocaleString()} DZD</TD>
-                      <TD className="text-amber-600">
+                      <TD className="text-[var(--gold)]">
                         {tx.platformFeeCompany.toLocaleString()} DZD
                       </TD>
                       <TD className="font-semibold">

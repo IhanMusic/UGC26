@@ -75,21 +75,22 @@ export function CampaignDetailClient({
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-[#E2E8F0]">{campaign.title}</h1>
-        <p className="mt-1 text-[#64748B]">{campaign.description}</p>
+        <h1 className="text-2xl font-bold text-[var(--foreground)]">{campaign.title}</h1>
+        <p className="mt-1 text-[var(--foreground-muted)]">{campaign.description}</p>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 rounded-xl border border-white/[0.08] bg-white/[0.03] p-1">
+      <div className="flex gap-1 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] p-1">
         {TAB_KEYS.map((key) => (
           <button
             key={key}
+            type="button"
             onClick={() => setActiveTab(key)}
             className={cn(
               "flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-all",
               activeTab === key
-                ? "bg-violet-600 text-white shadow-sm"
-                : "text-[#64748B] hover:text-[#E2E8F0]",
+                ? "bg-[var(--primary)] text-[var(--background)] shadow-sm"
+                : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]",
             )}
           >
             {t(key)}
@@ -164,10 +165,10 @@ function InfosTab({ campaign, t }: { campaign: Campaign; t: ReturnType<typeof us
       </div>
       {campaign.description && (
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#475569]">
+          <p className="text-xs font-semibold uppercase tracking-widest text-[var(--foreground-muted)]">
             {t("descriptionLabel")}
           </p>
-          <p className="mt-1 text-[#E2E8F0]">{campaign.description}</p>
+          <p className="mt-1 text-[var(--foreground)]">{campaign.description}</p>
         </div>
       )}
     </div>
@@ -177,10 +178,10 @@ function InfosTab({ campaign, t }: { campaign: Campaign; t: ReturnType<typeof us
 function InfoField({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <p className="text-xs font-semibold uppercase tracking-widest text-[#475569]">
+      <p className="text-xs font-semibold uppercase tracking-widest text-[var(--foreground-muted)]">
         {label}
       </p>
-      <p className="mt-1 text-[#E2E8F0]">{value}</p>
+      <p className="mt-1 text-[var(--foreground)]">{value}</p>
     </div>
   );
 }
@@ -188,7 +189,7 @@ function InfoField({ label, value }: { label: string; value: string }) {
 function ApplicantsTab({ participations, t }: { participations: Participation[]; t: ReturnType<typeof useTranslations> }) {
   if (participations.length === 0) {
     return (
-      <div className="glass rounded-xl p-8 text-center text-[#64748B]">
+      <div className="glass rounded-xl p-8 text-center text-[var(--foreground-muted)]">
         {t("noApplicants")}
       </div>
     );
@@ -202,10 +203,10 @@ function ApplicantsTab({ participations, t }: { participations: Participation[];
           className="glass rounded-xl p-4 flex items-center justify-between"
         >
           <div>
-            <p className="font-medium text-[#E2E8F0]">
+            <p className="font-medium text-[var(--foreground)]">
               {p.influencer.firstName} {p.influencer.lastName}
             </p>
-            <p className="text-sm text-[#64748B]">{p.influencer.email}</p>
+            <p className="text-sm text-[var(--foreground-muted)]">{p.influencer.email}</p>
           </div>
           <StatusBadge status={p.status} t={t} />
         </div>
@@ -216,11 +217,11 @@ function ApplicantsTab({ participations, t }: { participations: Participation[];
 
 function StatusBadge({ status, t }: { status: string; t: ReturnType<typeof useTranslations> }) {
   const colors: Record<string, string> = {
-    UPCOMING: "bg-slate-500/20 text-slate-300",
-    ONGOING: "bg-blue-500/20 text-blue-300",
-    COMPLETED: "bg-violet-500/20 text-violet-300",
-    CONFIRMED: "bg-emerald-500/20 text-emerald-300",
-    PAID: "bg-amber-500/20 text-amber-300",
+    UPCOMING: "bg-[var(--surface-mid)] text-[var(--foreground-muted)]",
+    ONGOING: "bg-[var(--primary-dim)] text-[var(--primary)]",
+    COMPLETED: "bg-[var(--primary-dim)] text-[var(--primary)]",
+    CONFIRMED: "bg-[var(--surface-mid)] text-[var(--success)]",
+    PAID: "bg-[var(--surface-mid)] text-[var(--gold)]",
   };
   const label = ["UPCOMING", "ONGOING", "COMPLETED", "CONFIRMED", "PAID"].includes(status)
     ? t(`participation.${status}` as Parameters<typeof t>[0])
@@ -229,7 +230,7 @@ function StatusBadge({ status, t }: { status: string; t: ReturnType<typeof useTr
     <span
       className={cn(
         "rounded-full px-3 py-1 text-xs font-medium",
-        colors[status] ?? "bg-white/10 text-white/60",
+        colors[status] ?? "bg-[var(--surface-mid)] text-[var(--foreground-muted)]",
       )}
     >
       {label}

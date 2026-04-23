@@ -46,8 +46,8 @@ export default function CompanyRequestCampaignClient() {
   return (
     <Card>
       <CardHeader>
-        <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-indigo-500 shadow-lg shadow-violet-500/25">
-          <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] shadow-lg shadow-[var(--primary-glow)]">
+          <svg className="h-5 w-5 text-[var(--background)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
           </svg>
         </div>
@@ -59,8 +59,8 @@ export default function CompanyRequestCampaignClient() {
       <CardContent>
         {loading ? (
           <div className="space-y-3">
-            <div className="animate-shimmer h-11 rounded-xl bg-slate-100" />
-            <div className="animate-shimmer h-11 rounded-xl bg-slate-100" />
+            <div className="animate-shimmer h-11 rounded-xl bg-[var(--surface-mid)]" />
+            <div className="animate-shimmer h-11 rounded-xl bg-[var(--surface-mid)]" />
           </div>
         ) : (
           <form
@@ -135,8 +135,8 @@ export default function CompanyRequestCampaignClient() {
                     key={c.id}
                     className={`flex items-center gap-3 rounded-xl border px-4 py-3 text-sm transition-all duration-200 cursor-pointer ${
                       selected[c.id]
-                        ? "border-violet-300 bg-violet-50/80 text-violet-700 shadow-sm"
-                        : "border-slate-200/60 bg-white/50 text-slate-700 hover:bg-violet-50/50 hover:border-violet-200"
+                        ? "border-[var(--primary)] bg-[var(--primary-dim)] text-[var(--primary)] shadow-sm"
+                        : "border-[var(--border)] bg-[var(--surface-high)] text-[var(--foreground-muted)] hover:bg-[var(--primary-dim)] hover:border-[var(--primary)]"
                     }`}
                   >
                     <Checkbox

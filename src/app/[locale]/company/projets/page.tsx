@@ -138,8 +138,8 @@ export default async function CompanyProjetsPage() {
                               width: `${pct}%`,
                               background:
                                 pct >= 100
-                                  ? "linear-gradient(90deg, var(--accent), #67FFB2)"
-                                  : "linear-gradient(90deg, var(--primary), #67F0FF)",
+                                  ? "linear-gradient(90deg, var(--accent), var(--success))"
+                                  : "linear-gradient(90deg, var(--primary), var(--secondary))",
                             }}
                           />
                         </div>

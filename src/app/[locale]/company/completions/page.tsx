@@ -47,7 +47,7 @@ export default async function CompanyCompletionsPage() {
                   <Image src={p.completionProofUrl} alt="completion proof" fill className="object-cover" sizes="(max-width: 768px) 100vw, 600px" />
                 </div>
               ) : (
-                <div className="text-sm text-slate-600">{tComp("noProof")}</div>
+                <div className="text-sm text-[var(--foreground-muted)]">{tComp("noProof")}</div>
               )}
 
               <div className="flex flex-wrap items-center gap-3">
@@ -60,7 +60,7 @@ export default async function CompanyCompletionsPage() {
                   {tComp("confirmCompletion")}
                 </ActionButton>
 
-                <div className="text-xs text-slate-600">
+                <div className="text-xs text-[var(--foreground-muted)]">
                   {tComp("satimNote")}
                 </div>
               </div>

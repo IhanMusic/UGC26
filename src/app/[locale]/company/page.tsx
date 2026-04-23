@@ -68,13 +68,13 @@ export default async function CompanyDashboardPage() {
       <div className="grid gap-4 md:grid-cols-4">
         <Card className="md:col-span-2 group">
           <CardHeader>
-            <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 text-xl font-bold text-white shadow-lg shadow-emerald-500/25">
+            <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--secondary)] to-[var(--secondary)] text-xl font-bold text-[var(--background)] shadow-lg shadow-[var(--primary-glow)]">
               {session?.user?.email?.charAt(0).toUpperCase()}
             </div>
             <CardTitle>Welcome back</CardTitle>
             <CardDescription>{session?.user?.email}</CardDescription>
           </CardHeader>
-          <CardContent className="text-sm text-slate-500">
+          <CardContent className="text-sm text-[var(--foreground-muted)]">
             Request campaigns, review deliverables, and manage your influencer collaborations.
           </CardContent>
         </Card>
@@ -84,8 +84,8 @@ export default async function CompanyDashboardPage() {
             <CardDescription>Total Spent</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold tracking-tight text-amber-600">{spent.toLocaleString()} DZD</div>
-            <div className="text-xs text-slate-400 mt-1">Pending: {pending.toLocaleString()} DZD</div>
+            <div className="text-3xl font-bold tracking-tight text-[var(--gold)]">{spent.toLocaleString()} DZD</div>
+            <div className="text-xs text-[var(--foreground-muted)] mt-1">Pending: {pending.toLocaleString()} DZD</div>
           </CardContent>
         </Card>
 
@@ -94,8 +94,8 @@ export default async function CompanyDashboardPage() {
             <CardDescription>Applications</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold tracking-tight text-violet-600">{applicationsReceived}</div>
-            <div className="text-xs text-slate-400 mt-1">{acceptedApps} accepted</div>
+            <div className="text-3xl font-bold tracking-tight text-[var(--primary)]">{applicationsReceived}</div>
+            <div className="text-xs text-[var(--foreground-muted)] mt-1">{acceptedApps} accepted</div>
           </CardContent>
         </Card>
       </div>
@@ -107,14 +107,14 @@ export default async function CompanyDashboardPage() {
         </Card>
         <Card>
           <CardHeader className="pb-2"><CardDescription>Published Campaigns</CardDescription></CardHeader>
-          <CardContent><div className="text-3xl font-bold text-emerald-600">{campaignCount}</div></CardContent>
+          <CardContent><div className="text-3xl font-bold text-[var(--success)]">{campaignCount}</div></CardContent>
         </Card>
         <Card>
           <CardHeader className="pb-2"><CardDescription>Campaign Status</CardDescription></CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2 text-xs">
               {["UPCOMING", "ONGOING", "COMPLETED", "CONFIRMED", "PAID"].map(s => (
-                <span key={s} className="rounded-full bg-slate-100 px-2 py-0.5">
+                <span key={s} className="rounded-full bg-[var(--surface-mid)] px-2 py-0.5">
                   {s}: <span className="font-bold">{statusMap[s] || 0}</span>
                 </span>
               ))}
@@ -132,8 +132,8 @@ export default async function CompanyDashboardPage() {
             <div className="grid grid-cols-6 gap-3">
               {monthlySpending.map((m) => (
                 <div key={m.month} className="text-center">
-                  <div className="text-lg font-bold text-amber-600">{m.amount.toLocaleString()}</div>
-                  <div className="text-[10px] text-slate-400">{m.month}</div>
+                  <div className="text-lg font-bold text-[var(--gold)]">{m.amount.toLocaleString()}</div>
+                  <div className="text-[10px] text-[var(--foreground-muted)]">{m.month}</div>
                 </div>
               ))}
             </div>

@@ -38,39 +38,39 @@ export default async function CampaignApplicantsPage({
   return (
     <AppShell title={`Candidats — ${campaign.title}`} nav={await getCompanyNav()}>
       {applications.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-slate-300 dark:border-slate-700 p-12 text-center">
-          <p className="text-slate-500">Aucun candidat validé par l&apos;admin pour l&apos;instant.</p>
-          <p className="mt-1 text-xs text-slate-400">L&apos;admin doit d&apos;abord pré-valider les candidatures.</p>
+        <div className="rounded-xl border border-dashed border-[var(--border)] p-12 text-center">
+          <p className="text-[var(--foreground-muted)]">Aucun candidat validé par l&apos;admin pour l&apos;instant.</p>
+          <p className="mt-1 text-xs text-[var(--foreground-muted)]">L&apos;admin doit d&apos;abord pré-valider les candidatures.</p>
         </div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {applications.map((app) => {
             const isSelected = selectedIds.has(app.influencerId);
             return (
-              <div key={app.id} className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-5 space-y-3">
+              <div key={app.id} className="rounded-xl border border-[var(--border)] bg-[var(--surface-high)] p-5 space-y-3">
                 <div className="flex items-start justify-between">
                   <div>
-                    <div className="font-semibold text-slate-900 dark:text-slate-100">
+                    <div className="font-semibold text-[var(--foreground)]">
                       {app.influencer.firstName} {app.influencer.lastName}
                     </div>
-                    <div className="text-xs text-slate-400">{app.influencer.email}</div>
+                    <div className="text-xs text-[var(--foreground-muted)]">{app.influencer.email}</div>
                   </div>
                   {isSelected && (
-                    <span className="rounded-full bg-green-100 dark:bg-green-900/30 px-2 py-0.5 text-xs text-green-700 dark:text-green-300">
+                    <span className="rounded-full bg-[var(--surface-mid)] px-2 py-0.5 text-xs text-[var(--success)]">
                       Sélectionné
                     </span>
                   )}
                 </div>
 
                 {app.influencer.influencerProfile?.followersCountRange && (
-                  <div className="text-sm text-slate-600 dark:text-slate-400">
+                  <div className="text-sm text-[var(--foreground-muted)]">
                     Abonnés : {app.influencer.influencerProfile.followersCountRange}
                   </div>
                 )}
 
                 <div className="flex flex-wrap gap-1">
                   {(app.influencer.influencerProfile?.socialNetworks ?? []).map((p) => (
-                    <span key={p} className="rounded-full bg-violet-100 dark:bg-violet-900/30 px-2 py-0.5 text-xs text-violet-700 dark:text-violet-300">
+                    <span key={p} className="rounded-full bg-[var(--primary-dim)] px-2 py-0.5 text-xs text-[var(--primary)]">
                       {p}
                     </span>
                   ))}

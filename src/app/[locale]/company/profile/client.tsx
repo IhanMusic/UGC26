@@ -32,8 +32,8 @@ export default function CompanyProfileClient() {
   return (
     <Card>
       <CardHeader>
-        <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 shadow-lg shadow-emerald-500/25">
-          <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--secondary)] to-[var(--secondary)] shadow-lg shadow-[var(--primary-glow)]">
+          <svg className="h-5 w-5 text-[var(--background)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 0h.008v.008h-.008V7.5z" />
           </svg>
         </div>
@@ -43,8 +43,8 @@ export default function CompanyProfileClient() {
       <CardContent>
         {loading ? (
           <div className="space-y-3">
-            <div className="animate-shimmer h-11 rounded-xl bg-slate-100" />
-            <div className="animate-shimmer h-11 rounded-xl bg-slate-100" />
+            <div className="animate-shimmer h-11 rounded-xl bg-[var(--surface-mid)]" />
+            <div className="animate-shimmer h-11 rounded-xl bg-[var(--surface-mid)]" />
           </div>
         ) : (
           <form

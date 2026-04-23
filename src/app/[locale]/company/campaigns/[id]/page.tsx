@@ -97,7 +97,7 @@ export default async function CompanyCampaignDetailPage({ params }: Props) {
       <div className="mb-4 flex justify-end">
         <Link
           href={`/company/campaigns/${campaign.id}/applicants`}
-          className="inline-flex items-center gap-2 rounded-lg bg-violet-600 px-4 py-2 text-sm font-medium text-white hover:bg-violet-700"
+          className="inline-flex items-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--background)] hover:bg-[var(--primary)]"
         >
           Voir les candidats
         </Link>
