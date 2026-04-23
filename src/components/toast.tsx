@@ -59,7 +59,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               variantStyles[t.variant]
             )}
           >
-            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/50 text-xs font-bold">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--surface-high)] text-xs font-bold">
               {icons[t.variant]}
             </span>
             <span className="flex-1">{t.message}</span>
