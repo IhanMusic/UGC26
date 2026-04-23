@@ -89,7 +89,7 @@ export function CampaignChat({ conversationId }: Props) {
 
   if (!conversationId) {
     return (
-      <div className="glass rounded-xl p-8 text-center text-[#64748B]">
+      <div className="glass rounded-xl p-8 text-center text-[var(--foreground-muted)]">
         {t("noConversation")}
       </div>
     );
@@ -100,7 +100,7 @@ export function CampaignChat({ conversationId }: Props) {
       {/* Messages list */}
       <div className="flex-1 overflow-y-auto p-4 space-y-3">
         {messages.length === 0 && (
-          <p className="text-center text-sm text-[#64748B]">
+          <p className="text-center text-sm text-[var(--foreground-muted)]">
             {t("noMessages")}
           </p>
         )}

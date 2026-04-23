@@ -49,13 +49,13 @@ export function ReviewModal({ reviewedId, reviewedName, campaignId, onSuccess, o
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
       <div className="glass w-full max-w-md rounded-2xl p-6 space-y-5">
         <div>
-          <h2 className="text-lg font-bold text-[#E2E8F0]">{t("leaveReview")}</h2>
-          <p className="text-sm text-[#64748B]">{t("yourExperience", { name: reviewedName })}</p>
+          <h2 className="text-lg font-bold text-[var(--foreground)]">{t("leaveReview")}</h2>
+          <p className="text-sm text-[var(--foreground-muted)]">{t("yourExperience", { name: reviewedName })}</p>
         </div>
 
         {/* Star rating */}
         <div className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#475569]">
+          <p className="text-xs font-semibold uppercase tracking-widest text-[var(--foreground-muted)]">
             {t("noteLabel")} <span className="text-[#F43F5E]">{t("required")}</span>
           </p>
           <div className="flex gap-1">
@@ -77,7 +77,7 @@ export function ReviewModal({ reviewedId, reviewedName, campaignId, onSuccess, o
 
         {/* Comment */}
         <div className="space-y-1">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#475569]">
+          <p className="text-xs font-semibold uppercase tracking-widest text-[var(--foreground-muted)]">
             {t("commentLabel")} <span className="text-[#94A3B8]">{t("optional")}</span>
           </p>
           <textarea
@@ -101,7 +101,7 @@ export function ReviewModal({ reviewedId, reviewedName, campaignId, onSuccess, o
           <button
             onClick={handleSubmit}
             disabled={loading || !rating}
-            className="rounded-xl bg-gradient-to-r from-amber-600 to-yellow-500 px-4 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
+            className="rounded-xl bg-gradient-to-r from-[var(--gold)] to-[var(--gold-light)] px-4 py-2 text-sm font-semibold text-[var(--background)] hover:opacity-90 disabled:opacity-50"
           >
             {loading ? t("publishing") : t("publishButton")}
           </button>
