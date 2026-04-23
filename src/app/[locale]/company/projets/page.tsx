@@ -107,7 +107,7 @@ export default async function CompanyProjetsPage() {
                             style={{
                               background: "var(--accent-dim)",
                               color: "var(--accent)",
-                              border: "1px solid rgba(0,255,136,0.3)",
+                              border: "1px solid var(--accent-glow)",
                             }}
                           >
                             Sponsor
