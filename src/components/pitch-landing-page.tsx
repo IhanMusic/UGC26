@@ -228,7 +228,7 @@ export function PitchLandingPage({ pitch }: { pitch: PitchLandingData }) {
                 {(pitch.ageRange || pitch.country) && (
                   <div className="mt-2 flex flex-wrap gap-2">
                     {pitch.ageRange && <span className="tag-neon text-xs">{pitch.ageRange}</span>}
-                    {pitch.country && <span className="tag-neon-purple text-xs">{pitch.country}</span>}
+                    {pitch.country && <span className="tag-neon-pink text-xs">{pitch.country}</span>}
                   </div>
                 )}
               </div>
@@ -302,7 +302,7 @@ export function PitchLandingPage({ pitch }: { pitch: PitchLandingData }) {
                     style={{
                       background: "var(--secondary-dim)",
                       color: "var(--secondary)",
-                      border: "1px solid rgba(139,92,246,0.3)",
+                      border: "1px solid rgba(255,45,120,0.3)",
                     }}
                   >
                     {DELIVERABLE_TYPE_LABELS[d.type] ?? d.type}

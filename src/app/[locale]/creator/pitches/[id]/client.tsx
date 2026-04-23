@@ -107,7 +107,7 @@ const STATUS_CONFIG: Record<
     label: "En production",
     color: "var(--secondary)",
     bg: "var(--secondary-dim)",
-    border: "rgba(139,92,246,0.3)",
+    border: "rgba(255,45,120,0.3)",
   },
   COMPLETED: {
     label: "Terminé",
@@ -217,7 +217,7 @@ export default function CreatorPitchDetailClient({
               {pitch.title}
             </h1>
             <div className="mt-2 flex items-center gap-2 flex-wrap">
-              <span className="tag-neon-purple">{TYPE_LABELS[pitch.type]}</span>
+              <span className="tag-neon-pink">{TYPE_LABELS[pitch.type]}</span>
               <span
                 className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold"
                 style={{
@@ -378,7 +378,7 @@ export default function CreatorPitchDetailClient({
                       style={{
                         background: "var(--secondary-dim)",
                         color: "var(--secondary)",
-                        border: "1px solid rgba(139,92,246,0.3)",
+                        border: "1px solid rgba(255,45,120,0.3)",
                       }}
                     >
                       {sp.brand.firstName.charAt(0)}

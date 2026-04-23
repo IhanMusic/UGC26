@@ -153,7 +153,7 @@ export default function AdminPitchReviewClient({ pitch }: { pitch: Pitch }) {
                 <p className="text-sm" style={{ color: "var(--foreground)" }}>{pitch.targetAudience}</p>
                 <div className="mt-2 flex flex-wrap gap-1">
                   {pitch.ageRange && <span className="tag-neon text-xs">{pitch.ageRange}</span>}
-                  {pitch.country && <span className="tag-neon-purple text-xs">{pitch.country}</span>}
+                  {pitch.country && <span className="tag-neon-pink text-xs">{pitch.country}</span>}
                 </div>
               </div>
             )}
@@ -228,7 +228,7 @@ export default function AdminPitchReviewClient({ pitch }: { pitch: Pitch }) {
                       style={{
                         background: "var(--secondary-dim)",
                         color: "var(--secondary)",
-                        border: "1px solid rgba(139,92,246,0.3)",
+                        border: "1px solid rgba(255,45,120,0.3)",
                       }}
                     >
                       {DELIVERABLE_TYPE_LABELS[d.type] ?? d.type}
@@ -290,7 +290,7 @@ export default function AdminPitchReviewClient({ pitch }: { pitch: Pitch }) {
               {pitch.categories.length > 0 && (
                 <div className="flex flex-wrap gap-1">
                   {pitch.categories.map(({ category }) => (
-                    <span key={category.id} className="tag-neon-purple text-xs">{category.name}</span>
+                    <span key={category.id} className="tag-neon-pink text-xs">{category.name}</span>
                   ))}
                 </div>
               )}

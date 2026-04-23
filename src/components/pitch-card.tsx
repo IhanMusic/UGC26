@@ -69,7 +69,7 @@ const STATUS_CONFIG: Record<
     label: "En production",
     color: "var(--secondary)",
     bg: "var(--secondary-dim)",
-    border: "rgba(139,92,246,0.3)",
+    border: "rgba(255,45,120,0.3)",
   },
   COMPLETED: {
     label: "Terminé",
@@ -135,7 +135,7 @@ export function PitchCard({
             {title}
           </Link>
           <div className="mt-1.5 flex items-center gap-2 flex-wrap">
-            <span className="tag-neon-purple text-[10px]">{TYPE_LABELS[type]}</span>
+            <span className="tag-neon-pink text-[10px]">{TYPE_LABELS[type]}</span>
             <span
               className="inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider"
               style={{
@@ -192,7 +192,7 @@ export function PitchCard({
             style={{
               color: "var(--secondary)",
               background: "var(--secondary-dim)",
-              border: "1px solid rgba(139,92,246,0.3)",
+              border: "1px solid rgba(255,45,120,0.3)",
             }}
           >
             Modifier

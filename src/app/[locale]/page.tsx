@@ -30,7 +30,7 @@ export default async function HomePage() {
 
           {/* Ambient orbs */}
           <div className="orb-cyan w-[600px] h-[600px] -top-40 -left-40 opacity-60" />
-          <div className="orb-purple w-[500px] h-[500px] -bottom-20 -right-20 opacity-50" />
+          <div className="orb-pink w-[500px] h-[500px] -bottom-20 -right-20 opacity-50" />
           <div className="orb-green w-[300px] h-[300px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-30" />
 
           {/* Scanline */}
@@ -159,7 +159,7 @@ export default async function HomePage() {
                     <div
                       className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6 font-mono-accent font-bold text-xl transition-all duration-300"
                       style={{
-                        background: `rgba(${item.color === "var(--primary)" ? "0,229,255" : item.color === "var(--secondary)" ? "139,92,246" : "0,255,136"}, 0.1)`,
+                        background: `rgba(${item.color === "var(--primary)" ? "0,229,255" : item.color === "var(--secondary)" ? "255,45,120" : "0,255,136"}, 0.1)`,
                         border: `1px solid ${item.color}`,
                         color: item.color,
                         boxShadow: `0 0 20px ${item.glow}`,
@@ -190,7 +190,7 @@ export default async function HomePage() {
           <div className="mx-auto max-w-6xl px-4">
             <AnimateOnScroll>
               <div className="text-center mb-20">
-                <span className="tag-neon-purple mb-4 inline-flex">// protocol.roles</span>
+                <span className="tag-neon-pink mb-4 inline-flex">// protocol.roles</span>
                 <h2 className="font-display font-bold text-[var(--foreground)] mt-4"
                     style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}>
                   {t("home.forInfluencers")} · {t("home.forCompanies")} · {t("home.forAdmin")}
@@ -222,8 +222,8 @@ export default async function HomePage() {
 
               {/* Company */}
               <AnimateOnScroll delay={150}>
-                <div className="card-cyber h-full p-8 flex flex-col" style={{ borderColor: "rgba(139,92,246,0.2)" }}>
-                  <span className="tag-neon-purple mb-6 self-start">02 // {t("home.forCompanies")}</span>
+                <div className="card-cyber h-full p-8 flex flex-col" style={{ borderColor: "rgba(255,45,120,0.2)" }}>
+                  <span className="tag-neon-pink mb-6 self-start">02 // {t("home.forCompanies")}</span>
                   <h3 className="font-display font-bold text-[var(--foreground)] text-xl mb-3">
                     {t("home.forCompanies")}
                   </h3>
@@ -278,9 +278,9 @@ export default async function HomePage() {
         <AnimateOnScroll>
           <section className="relative py-24 overflow-hidden">
             <div className="absolute inset-0 bg-mesh" />
-            <div className="orb-purple w-[600px] h-[400px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20" />
+            <div className="orb-pink w-[600px] h-[400px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20" />
             <div className="relative z-10 mx-auto max-w-3xl px-4 text-center">
-              <span className="tag-neon-purple mb-8 inline-flex">// manifeste</span>
+              <span className="tag-neon-pink mb-8 inline-flex">// manifeste</span>
               <blockquote
                 className="font-display font-bold text-[var(--foreground)] leading-snug mb-8 whitespace-pre-line"
                 style={{ fontSize: "clamp(1.25rem, 3vw, 2rem)" }}

@@ -47,7 +47,7 @@ export function NavLink({ href, icon, label }: NavLinkProps) {
       )}
       <span>{label}</span>
       {isActive && (
-        <span className="ml-auto h-1.5 w-1.5 rounded-full bg-violet-500 shadow-[0_0_6px_rgba(139,92,246,0.6)]" />
+        <span className="ml-auto h-1.5 w-1.5 rounded-full bg-rose-500 shadow-[0_0_6px_rgba(255,45,120,0.6)]" />
       )}
     </Link>
   );

@@ -66,9 +66,9 @@ export default async function AboutPage() {
             </AnimateOnScroll>
 
             <AnimateOnScroll delay={150} className="mt-8">
-              <div className="card-cyber p-10 md:p-16 relative overflow-hidden" style={{ borderColor: "rgba(139,92,246,0.2)" }}>
-                <div className="orb-purple w-[300px] h-[300px] -bottom-20 -left-20 opacity-20" />
-                <span className="tag-neon-purple mb-6 inline-flex">// {t("whatWeDo")}</span>
+              <div className="card-cyber p-10 md:p-16 relative overflow-hidden" style={{ borderColor: "rgba(255,45,120,0.2)" }}>
+                <div className="orb-pink w-[300px] h-[300px] -bottom-20 -left-20 opacity-20" />
+                <span className="tag-neon-pink mb-6 inline-flex">// {t("whatWeDo")}</span>
                 <h2
                   className="font-display font-bold text-[var(--foreground)] mb-6 relative z-10"
                   style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)" }}
@@ -124,7 +124,7 @@ export default async function AboutPage() {
           <div className="mx-auto max-w-5xl px-4">
             <AnimateOnScroll>
               <div className="text-center mb-16">
-                <span className="tag-neon-purple mb-4 inline-flex">// {t("values")}</span>
+                <span className="tag-neon-pink mb-4 inline-flex">// {t("values")}</span>
                 <h2
                   className="font-display font-bold text-[var(--foreground)] mt-4"
                   style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)" }}
