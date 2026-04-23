@@ -79,9 +79,9 @@ export function InfluencerDeliverablesTab({ campaignId }: Props) {
             <span className="text-[#94A3B8]">{t("progressLabel")}</span>
             <span className="font-medium text-[#E2E8F0]">{t("approvedCount", { approved, total })}</span>
           </div>
-          <div className="h-2 rounded-full bg-white/[0.08]">
+          <div className="h-2 rounded-full bg-[var(--surface-mid)]">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-violet-600 to-emerald-500 transition-all"
+              className="h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] transition-all"
               style={{ width: total > 0 ? `${(approved / total) * 100}%` : "0%" }}
             />
           </div>
@@ -136,12 +136,12 @@ export function InfluencerDeliverablesTab({ campaignId }: Props) {
                       placeholder={t("linkPlaceholder")}
                       value={links[d.id] ?? ""}
                       onChange={(e) => setLinks((l) => ({ ...l, [d.id]: e.target.value }))}
-                      className="flex-1 rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-[#E2E8F0] placeholder-[#64748B] focus:border-violet-500/40 focus:outline-none"
+                      className="flex-1 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--foreground)] placeholder-[var(--foreground-muted)] focus:border-[var(--primary)] focus:outline-none"
                     />
                     <button
                       onClick={() => void handleSubmit(d.id)}
                       disabled={submitting === d.id}
-                      className="rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
+                      className="rounded-xl bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
                     >
                       {submitting === d.id ? t("submitting") : t("submitButton")}
                     </button>
@@ -152,7 +152,7 @@ export function InfluencerDeliverablesTab({ campaignId }: Props) {
 
               {/* Submitted state — locked */}
               {d.status === "SUBMITTED" && d.fileUrl && (
-                <a href={d.fileUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-violet-400 hover:underline">
+                <a href={d.fileUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-[var(--primary)] hover:underline">
                   {t("viewSubmission")}
                 </a>
               )}

@@ -48,7 +48,7 @@ export function FileUpload({
     <div className={cn("space-y-2", className)}>
       <div
         onClick={() => inputRef.current?.click()}
-        className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-white/20 bg-white/[0.03] px-4 py-6 transition-colors hover:border-violet-500/40 hover:bg-violet-500/5"
+        className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-[var(--border)] bg-[var(--surface)] px-4 py-6 hover:border-[var(--primary)] hover:bg-[var(--primary-dim)] transition-all duration-200"
       >
         {value ? (
           <div className="relative h-24 w-full overflow-hidden rounded-lg">
@@ -57,7 +57,7 @@ export function FileUpload({
         ) : (
           <>
             <svg
-              className="h-8 w-8 text-[#64748B]"
+              className="h-8 w-8 text-[var(--foreground-muted)]"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -69,7 +69,7 @@ export function FileUpload({
                 d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
               />
             </svg>
-            <span className="text-sm text-[#64748B]">
+            <span className="text-sm text-[var(--foreground-muted)]">
               {uploading ? t("uploading") : displayLabel}
             </span>
           </>

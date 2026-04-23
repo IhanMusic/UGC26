@@ -43,7 +43,7 @@ export function AdminStatusFilter({ paramName = "status" }: Props) {
         value={current}
         onChange={(e) => handleChange(e.target.value)}
         disabled={isPending}
-        className="rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-2 pr-8 text-sm text-[#E2E8F0] focus:border-violet-500/40 focus:outline-none disabled:opacity-60 appearance-none"
+        className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 pr-8 text-sm text-[var(--foreground)] focus:border-[var(--primary)] focus:outline-none disabled:opacity-60 appearance-none"
       >
         <option value="">All statuses</option>
         {CAMPAIGN_STATUSES.map((s) => (
@@ -53,7 +53,7 @@ export function AdminStatusFilter({ paramName = "status" }: Props) {
         ))}
       </select>
       <svg
-        className="pointer-events-none absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 text-[#64748B]"
+        className="pointer-events-none absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--foreground-muted)]"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"

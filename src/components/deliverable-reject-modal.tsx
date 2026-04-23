@@ -62,7 +62,7 @@ export function DeliverableRejectModal({ deliverableId, onSuccess, onClose }: Pr
                 value={r}
                 checked={reason === r}
                 onChange={() => setReason(r)}
-                className="accent-violet-500"
+                className="accent-[var(--primary)]"
               />
               <span className="text-sm text-[#E2E8F0]">{r}</span>
             </label>
@@ -78,7 +78,7 @@ export function DeliverableRejectModal({ deliverableId, onSuccess, onClose }: Pr
             onChange={(e) => setFeedback(e.target.value)}
             rows={4}
             placeholder={t("debriefPlaceholder")}
-            className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-[#E2E8F0] placeholder-[#64748B] focus:border-violet-500/40 focus:outline-none focus:ring-1 focus:ring-violet-500/20"
+            className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--foreground)] placeholder-[var(--foreground-muted)] focus:border-[var(--primary)] focus:outline-none focus:ring-1 focus:ring-[var(--primary)]"
           />
           {error && <p className="text-xs text-[#F43F5E]">{error}</p>}
         </div>
@@ -86,7 +86,7 @@ export function DeliverableRejectModal({ deliverableId, onSuccess, onClose }: Pr
         <div className="flex justify-end gap-2">
           <button
             onClick={onClose}
-            className="rounded-lg border border-white/[0.08] px-4 py-2 text-sm text-[#94A3B8] hover:bg-white/[0.05]"
+            className="rounded-lg border border-[var(--border)] px-4 py-2 text-sm text-[var(--foreground-muted)] hover:bg-[var(--surface-hover)]"
           >
             {tc("cancel")}
           </button>

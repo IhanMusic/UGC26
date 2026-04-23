@@ -39,8 +39,8 @@ export function PlatformChips({ value, onChange, disabled }: PlatformChipsProps)
             disabled={disabled}
             className={`rounded-full px-3 py-1.5 text-sm font-medium border transition-colors
               ${selected
-                ? "bg-violet-600 border-violet-600 text-white"
-                : "border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-400 hover:border-violet-400 dark:hover:border-violet-500"
+                ? "bg-[var(--primary)] border-[var(--primary)] text-white"
+                : "border-[var(--border)] text-[var(--foreground-muted)] hover:border-[var(--primary)]"
               }
               ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
           >

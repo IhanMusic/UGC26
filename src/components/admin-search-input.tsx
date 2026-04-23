@@ -41,10 +41,10 @@ export function AdminSearchInput({ placeholder, paramName = "q" }: Props) {
         value={value}
         onChange={(e) => handleSearch(e.target.value)}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-2 pl-9 text-sm text-[#E2E8F0] placeholder-[#64748B] focus:border-violet-500/40 focus:outline-none"
+        className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-2 pl-9 text-sm text-[var(--foreground)] placeholder-[var(--foreground-muted)] focus:border-[var(--primary)] focus:outline-none"
       />
       <svg
-        className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#64748B]"
+        className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--foreground-muted)]"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -57,7 +57,7 @@ export function AdminSearchInput({ placeholder, paramName = "q" }: Props) {
         />
       </svg>
       {isPending && (
-        <div className="absolute right-3 top-1/2 -translate-y-1/2 h-3 w-3 animate-spin rounded-full border border-violet-500 border-t-transparent" />
+        <div className="absolute right-3 top-1/2 -translate-y-1/2 h-3 w-3 animate-spin rounded-full border border-[var(--primary)] border-t-transparent" />
       )}
     </div>
   );

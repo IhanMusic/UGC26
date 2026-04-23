@@ -139,7 +139,7 @@ export function CompanyDeliverablesTab({ campaignId, participations }: Props) {
             <select
               value={type}
               onChange={(e) => setType(e.target.value)}
-              className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-[#E2E8F0] focus:border-violet-500/40 focus:outline-none"
+              className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--foreground)] focus:border-[var(--primary)] focus:outline-none"
             >
               {DELIVERABLE_TYPE_VALUES.map((value) => (
                 <option key={value} value={value} className="bg-[#0D0F1C]">
@@ -155,7 +155,7 @@ export function CompanyDeliverablesTab({ campaignId, participations }: Props) {
             <select
               value={influencerId}
               onChange={(e) => setInfluencerId(e.target.value)}
-              className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-[#E2E8F0] focus:border-violet-500/40 focus:outline-none"
+              className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--foreground)] focus:border-[var(--primary)] focus:outline-none"
             >
               <option value="" className="bg-[#0D0F1C]">
                 {t("allInfluencers")}
@@ -177,14 +177,14 @@ export function CompanyDeliverablesTab({ campaignId, participations }: Props) {
             onChange={(e) => setDescription(e.target.value)}
             rows={3}
             placeholder={t("briefPlaceholder")}
-            className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-[#E2E8F0] placeholder-[#64748B] focus:border-violet-500/40 focus:outline-none"
+            className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--foreground)] placeholder-[var(--foreground-muted)] focus:border-[var(--primary)] focus:outline-none"
           />
         </div>
         {error && <p className="text-xs text-[#F43F5E]">{error}</p>}
         <button
           onClick={handleCreate}
           disabled={submitting}
-          className="rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
+          className="rounded-xl bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
         >
           {submitting ? t("creating") : t("createButton")}
         </button>
@@ -226,7 +226,7 @@ export function CompanyDeliverablesTab({ campaignId, participations }: Props) {
                   href={d.fileUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-violet-400 hover:underline"
+                  className="text-xs text-[var(--primary)] hover:underline"
                 >
                   {t("viewPublicationLink")}
                 </a>

@@ -114,14 +114,14 @@ export function CampaignChat({ conversationId }: Props) {
               <div
                 className={`max-w-xs rounded-2xl px-3 py-2 text-sm ${
                   isMe
-                    ? "bg-violet-600 text-white"
-                    : "bg-white/[0.06] text-[#E2E8F0]"
+                    ? "bg-[var(--primary-dim)] border border-[var(--border)] text-[var(--foreground)]"
+                    : "bg-[var(--surface-mid)] text-[var(--foreground)]"
                 }`}
               >
                 {msg.content}
                 <div
                   className={`mt-1 text-[10px] ${
-                    isMe ? "text-white/60" : "text-[#64748B]"
+                    isMe ? "text-[var(--foreground-muted)]" : "text-[var(--foreground-muted)]"
                   }`}
                 >
                   {new Date(msg.createdAt).toLocaleTimeString([], {
@@ -137,7 +137,7 @@ export function CampaignChat({ conversationId }: Props) {
       </div>
 
       {/* Input */}
-      <div className="border-t border-white/[0.08] p-3 flex gap-2">
+      <div className="border-t border-[var(--border)] p-3 flex gap-2">
         <input
           type="text"
           value={input}
@@ -149,12 +149,12 @@ export function CampaignChat({ conversationId }: Props) {
             }
           }}
           placeholder={t("typePlaceholder")}
-          className="flex-1 rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-[#E2E8F0] placeholder-[#64748B] focus:border-violet-500/40 focus:outline-none"
+          className="flex-1 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--foreground)] placeholder-[var(--foreground-muted)] focus:border-[var(--primary)] focus:outline-none"
         />
         <button
           onClick={() => void handleSend()}
           disabled={sending || !input.trim()}
-          className="rounded-xl bg-violet-600 px-4 py-2 text-sm font-medium text-white hover:bg-violet-500 disabled:opacity-50 transition-colors"
+          className="rounded-xl bg-[var(--primary)] px-4 py-2 text-sm font-medium text-white hover:bg-[var(--surface-mid)] disabled:opacity-50 transition-colors"
         >
           {t("sendButton")}
         </button>
