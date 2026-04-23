@@ -12,7 +12,9 @@ export function ThemeToggle() {
   if (!mounted) {
     return (
       <button
-        className="flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)]"
+        type="button"
+        disabled
+        className="flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] cursor-pointer"
         aria-label="Toggle theme"
       >
         <div className="h-4 w-4" />

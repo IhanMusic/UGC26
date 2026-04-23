@@ -25,7 +25,7 @@ export function CookieBanner() {
     <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-[var(--border)] bg-[var(--surface-high)] backdrop-blur-2xl px-4 py-3">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-4">
         <p className="text-sm text-[var(--foreground-muted)]">{t("banner")}</p>
-        <Button onClick={accept} size="sm" className="shrink-0">
+        <Button type="button" onClick={accept} size="sm" className="shrink-0">
           {t("accept")}
         </Button>
       </div>
