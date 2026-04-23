@@ -4,20 +4,22 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "./utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ring-offset-background cursor-pointer",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)] disabled:pointer-events-none disabled:opacity-50 cursor-pointer",
   {
     variants: {
       variant: {
         default:
-          "bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md shadow-violet-500/25 hover:shadow-lg hover:shadow-violet-500/30 hover:brightness-110 active:scale-[0.98]",
+          "bg-[var(--primary)] text-[var(--background)] shadow-[0_0_16px_var(--primary-glow)] hover:brightness-110 hover:shadow-[0_0_24px_var(--primary-glow)] active:scale-[0.98]",
         secondary:
-          "bg-white/80 text-slate-900 border border-slate-200/60 shadow-sm backdrop-blur-sm hover:bg-violet-50 hover:border-violet-200 hover:text-violet-700",
+          "bg-[var(--secondary-dim)] text-[var(--secondary)] border border-[var(--secondary)] hover:bg-[var(--secondary)] hover:text-white active:scale-[0.98]",
         outline:
-          "border border-slate-200/60 bg-white/50 text-slate-700 backdrop-blur-sm hover:bg-violet-50 hover:border-violet-300 hover:text-violet-700",
+          "border border-[var(--border)] bg-transparent text-[var(--foreground-muted)] hover:border-[var(--border-hover)] hover:text-[var(--foreground)] hover:bg-[var(--surface)]",
         ghost:
-          "text-slate-700 hover:bg-violet-50 hover:text-violet-700",
+          "text-[var(--foreground-muted)] hover:bg-[var(--surface-mid)] hover:text-[var(--foreground)]",
         destructive:
-          "bg-gradient-to-r from-red-500 to-rose-500 text-white shadow-md shadow-red-500/25 hover:shadow-lg hover:shadow-red-500/30 hover:brightness-110 active:scale-[0.98]",
+          "bg-[var(--danger)] text-white shadow-[0_0_12px_rgba(255,59,92,0.3)] hover:brightness-110 active:scale-[0.98]",
+        neon:
+          "border border-[var(--primary)] text-[var(--primary)] bg-[var(--primary-dim)] hover:bg-[var(--primary)] hover:text-[var(--background)] hover:shadow-[0_0_20px_var(--primary-glow)] active:scale-[0.98]",
       },
       size: {
         default: "h-10 px-5 py-2",
