@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
 
 export function CookieBanner() {
   const [visible, setVisible] = useState(false);
@@ -21,15 +22,12 @@ export function CookieBanner() {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 shadow-lg">
+    <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-[var(--border)] bg-[var(--surface-high)] backdrop-blur-2xl px-4 py-3">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-4">
-        <p className="text-sm text-slate-600 dark:text-slate-400">{t("banner")}</p>
-        <button
-          onClick={accept}
-          className="shrink-0 rounded-lg bg-violet-600 px-4 py-2 text-sm font-medium text-white hover:bg-violet-700 transition-colors"
-        >
+        <p className="text-sm text-[var(--foreground-muted)]">{t("banner")}</p>
+        <Button onClick={accept} size="sm" className="shrink-0">
           {t("accept")}
-        </button>
+        </Button>
       </div>
     </div>
   );

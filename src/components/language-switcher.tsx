@@ -4,11 +4,7 @@ import { usePathname } from "@/i18n/navigation";
 import { locales, type AppLocale } from "@/i18n/routing";
 import { useLocale } from "next-intl";
 
-const labels: Record<AppLocale, string> = {
-  fr: "FR",
-  en: "EN",
-  ar: "AR",
-};
+const labels: Record<AppLocale, string> = { fr: "FR", en: "EN", ar: "AR" };
 
 export function LanguageSwitcher() {
   const locale = useLocale() as AppLocale;
@@ -20,15 +16,15 @@ export function LanguageSwitcher() {
   };
 
   return (
-    <div className="flex items-center gap-1 rounded-xl border border-slate-200/60 bg-white/50 p-1 backdrop-blur-sm">
+    <div className="flex items-center gap-1 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1">
       {locales.map((l) => (
         <button
           key={l}
           onClick={() => switchLocale(l)}
-          className={`rounded-lg px-2.5 py-1 text-xs font-medium transition-all duration-200 ${
+          className={`rounded-lg px-2.5 py-1 text-xs font-medium transition-all duration-200 cursor-pointer ${
             l === locale
-              ? "bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-sm"
-              : "text-slate-600 hover:bg-violet-50 hover:text-violet-700"
+              ? "bg-[var(--primary)] text-[var(--background)] shadow-[0_0_8px_var(--primary-glow)]"
+              : "text-[var(--foreground-muted)] hover:bg-[var(--surface-mid)] hover:text-[var(--foreground)]"
           }`}
           aria-label={`Switch to ${l}`}
           aria-current={l === locale ? "true" : undefined}

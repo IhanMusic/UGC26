@@ -63,12 +63,11 @@ export async function SiteHeader() {
           <LanguageSwitcher />
 
           {session?.user ? (
-            <Link
-              href={roleHome(session.user.role ?? "")}
-              className="btn-solid-cyan !py-2 !px-4 !text-xs"
-            >
-              {t("common.dashboard")}
-            </Link>
+            <Button size="sm" asChild>
+              <Link href={roleHome(session.user.role ?? "")}>
+                {t("common.dashboard")}
+              </Link>
+            </Button>
           ) : (
             <div className="flex items-center gap-2">
               <Button variant="ghost" size="sm" asChild>
@@ -79,12 +78,11 @@ export async function SiteHeader() {
                   {t("nav.login")}
                 </Link>
               </Button>
-              <Link
-                href="/auth/register/influencer"
-                className="btn-neon !py-2 !px-4 !text-xs"
-              >
-                {t("nav.register")}
-              </Link>
+              <Button variant="neon" size="sm" asChild>
+                <Link href="/auth/register/influencer">
+                  {t("nav.register")}
+                </Link>
+              </Button>
             </div>
           )}
         </div>
