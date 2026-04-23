@@ -18,7 +18,7 @@ const badgeVariants = cva(
         warning:
           "border-[var(--gold)] bg-[var(--gold-dim)] text-[var(--gold)]",
         danger:
-          "border-[var(--danger)] bg-[rgba(255,59,92,0.1)] text-[var(--danger)]",
+          "border-[var(--danger)] bg-[var(--danger-dim)] text-[var(--danger)]",
       },
     },
     defaultVariants: {

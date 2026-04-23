@@ -29,6 +29,7 @@
 
   --success:          #00FF88;
   --danger:           #FF3B5C;
+  --danger-dim:       rgba(255, 59, 92, 0.10);
 
   --surface:          rgba(0, 229, 255, 0.03);
   --surface-mid:      rgba(0, 229, 255, 0.06);
@@ -70,6 +71,7 @@ html:not(.dark) {
   --success:            #047857;
 
   --danger:             #DC2626;
+  --danger-dim:         rgba(220, 38, 38, 0.10);
 
   --surface:            rgba(255, 255, 255, 0.60);
   --surface-mid:        rgba(255, 255, 255, 0.75);
