@@ -28,7 +28,7 @@ export default async function FaqPage() {
         {/* ── HERO ─────────────────────────────────────── */}
         <section className="relative py-40 bg-mesh overflow-hidden">
           <div className="absolute inset-0 bg-grid opacity-30 pointer-events-none" />
-          <div className="orb-purple w-[600px] h-[400px] top-0 right-0 opacity-30" />
+          <div className="orb-pink w-[600px] h-[400px] top-0 right-0 opacity-30" />
 
           <div className="relative z-10 mx-auto max-w-4xl px-4 text-center">
             <div className="animate-fade-in-up mb-6">
