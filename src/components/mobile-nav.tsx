@@ -76,7 +76,7 @@ export function MobileNav({
                 <NavLink
                   key={item.type === "link" ? item.href : `section-${i}`}
                   item={item}
-                  onClick={() => item.type === "link" && setOpen(false)}
+                  onClick={item.type === "link" ? () => setOpen(false) : undefined}
                 />
               ))}
             </div>
