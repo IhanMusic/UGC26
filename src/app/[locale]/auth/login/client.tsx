@@ -25,20 +25,20 @@ export default function LoginClient() {
         <div className="grid w-full gap-10 md:grid-cols-2">
           {/* Left side - Info */}
           <div className="space-y-6 animate-fade-in-up">
-            <div className="inline-flex items-center gap-2 rounded-full border border-violet-200/50 bg-white/70 px-4 py-1.5 text-xs font-medium text-violet-700 shadow-sm backdrop-blur-sm">
-              <span className="h-2 w-2 rounded-full bg-violet-500 animate-pulse-dot" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface-high)] px-4 py-1.5 text-xs font-medium text-[var(--primary)] shadow-sm backdrop-blur-sm">
+              <span className="h-2 w-2 rounded-full bg-[var(--primary)] animate-pulse-dot" />
               UGC26 • Influencers Marketplace
             </div>
             <h1 className="text-4xl font-bold tracking-tight md:text-5xl">
               <span className="gradient-text">Login to continue</span>
             </h1>
-            <p className="max-w-prose text-slate-500">
+            <p className="max-w-prose text-[var(--foreground-muted)]">
               Use the seeded accounts for demo:
               <br />
-              <span className="font-medium text-slate-700">admin@ugc26.local</span>,
-              <span className="font-medium text-slate-700"> influencer@ugc26.local</span>,
-              <span className="font-medium text-slate-700"> company@ugc26.local</span>
-              <br />Password: <span className="font-medium text-slate-700">Password123!</span>
+              <span className="font-medium text-[var(--foreground)]">admin@ugc26.local</span>,
+              <span className="font-medium text-[var(--foreground)]"> influencer@ugc26.local</span>,
+              <span className="font-medium text-[var(--foreground)]"> company@ugc26.local</span>
+              <br />Password: <span className="font-medium text-[var(--foreground)]">Password123!</span>
             </p>
             <div className="flex flex-wrap gap-3">
               <Button
@@ -131,7 +131,7 @@ export default function LoginClient() {
                     <Label htmlFor="password">Password</Label>
                     <Link
                       href="/auth/forgot-password"
-                      className="text-xs text-violet-600 underline-offset-4 hover:underline"
+                      className="text-xs text-[var(--primary)] underline-offset-4 hover:underline"
                     >
                       Forgot password?
                     </Link>
@@ -146,7 +146,7 @@ export default function LoginClient() {
                   />
                 </div>
                 {error ? (
-                  <div className="rounded-xl border border-red-200/50 bg-red-50/80 px-4 py-3 text-sm text-red-700 backdrop-blur-sm">
+                  <div role="alert" className="rounded-xl border border-red-200/50 bg-red-50/80 px-4 py-3 text-sm text-red-700 backdrop-blur-sm">
                     {error}
                   </div>
                 ) : null}

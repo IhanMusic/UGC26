@@ -11,18 +11,18 @@ export default async function VerifyEmailPage({ searchParams }: Props) {
   const hasError = !!params.error;
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#080B18] px-4">
+    <div className="flex min-h-screen items-center justify-center bg-[var(--background)] px-4">
       <div className="glass w-full max-w-md rounded-2xl p-8 text-center">
         <div className="mb-6 text-5xl">{hasError ? "❌" : "📧"}</div>
-        <h1 className="mb-3 text-2xl font-bold text-[#E2E8F0]">
+        <h1 className="mb-3 text-2xl font-bold text-[var(--foreground)]">
           {hasError ? t("invalidTitle") : t("verifyTitle")}
         </h1>
-        <p className="text-[#94A3B8]">
+        <p className="text-[var(--foreground-muted)]">
           {hasError ? t("invalidDesc") : t("verifyDesc")}
         </p>
         <Link
           href="/auth/login"
-          className="mt-6 inline-block rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-6 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+          className="mt-6 inline-block rounded-xl bg-[var(--primary)] px-6 py-2.5 text-sm font-semibold text-[var(--background)] transition-opacity hover:opacity-90"
         >
           {t("backToLogin")}
         </Link>

@@ -52,7 +52,7 @@ export default async function PublicCampaignsPage({
           <h1 className="text-4xl font-bold tracking-tight">
             <span className="gradient-text">Campaigns</span>
           </h1>
-          <p className="mt-2 text-slate-500">
+          <p className="mt-2 text-[var(--foreground-muted)]">
             Browse the latest campaigns. Log in as influencer to apply.
           </p>
         </div>
@@ -60,12 +60,12 @@ export default async function PublicCampaignsPage({
         {/* Advanced Filters */}
         <form className="mt-8 flex flex-wrap items-end gap-3 animate-fade-in-up" action="">
           <div className="space-y-1">
-            <label className="text-xs font-medium text-slate-500">Search</label>
-            <input name="q" defaultValue={q} placeholder="Campaign title…" className="h-10 rounded-xl border border-slate-200/60 bg-white/50 px-4 text-sm shadow-sm backdrop-blur-sm focus:border-violet-300 focus:outline-none focus:ring-2 focus:ring-violet-400/50" />
+            <label className="text-xs font-medium text-[var(--foreground-muted)]">Search</label>
+            <input name="q" defaultValue={q} placeholder="Campaign title…" className="h-10 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 text-sm shadow-sm backdrop-blur-sm focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]" />
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-medium text-slate-500">Category</label>
-            <select name="category" defaultValue={category} className="h-10 rounded-xl border border-slate-200/60 bg-white/50 px-4 text-sm shadow-sm backdrop-blur-sm focus:border-violet-300 focus:outline-none focus:ring-2 focus:ring-violet-400/50">
+            <label className="text-xs font-medium text-[var(--foreground-muted)]">Category</label>
+            <select name="category" defaultValue={category} className="h-10 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 text-sm shadow-sm backdrop-blur-sm focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]">
               <option value="">All</option>
               {categories.map((c) => (
                 <option key={c.id} value={c.name}>{c.name}</option>
@@ -73,38 +73,38 @@ export default async function PublicCampaignsPage({
             </select>
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-medium text-slate-500">Country</label>
-            <input name="country" defaultValue={country} placeholder="Country…" className="h-10 w-28 rounded-xl border border-slate-200/60 bg-white/50 px-4 text-sm shadow-sm backdrop-blur-sm focus:border-violet-300 focus:outline-none focus:ring-2 focus:ring-violet-400/50" />
+            <label className="text-xs font-medium text-[var(--foreground-muted)]">Country</label>
+            <input name="country" defaultValue={country} placeholder="Country…" className="h-10 w-28 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 text-sm shadow-sm backdrop-blur-sm focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]" />
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-medium text-slate-500">Platform</label>
-            <input name="platform" defaultValue={platform} placeholder="Instagram…" className="h-10 w-28 rounded-xl border border-slate-200/60 bg-white/50 px-4 text-sm shadow-sm backdrop-blur-sm focus:border-violet-300 focus:outline-none focus:ring-2 focus:ring-violet-400/50" />
+            <label className="text-xs font-medium text-[var(--foreground-muted)]">Platform</label>
+            <input name="platform" defaultValue={platform} placeholder="Instagram…" className="h-10 w-28 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 text-sm shadow-sm backdrop-blur-sm focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]" />
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-medium text-slate-500">Min price</label>
-            <input name="minPrice" type="number" defaultValue={minPrice || ""} placeholder="0" className="h-10 w-24 rounded-xl border border-slate-200/60 bg-white/50 px-4 text-sm shadow-sm backdrop-blur-sm focus:border-violet-300 focus:outline-none focus:ring-2 focus:ring-violet-400/50" />
+            <label className="text-xs font-medium text-[var(--foreground-muted)]">Min price</label>
+            <input name="minPrice" type="number" defaultValue={minPrice || ""} placeholder="0" className="h-10 w-24 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 text-sm shadow-sm backdrop-blur-sm focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]" />
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-medium text-slate-500">Max price</label>
-            <input name="maxPrice" type="number" defaultValue={maxPrice || ""} placeholder="999999" className="h-10 w-24 rounded-xl border border-slate-200/60 bg-white/50 px-4 text-sm shadow-sm backdrop-blur-sm focus:border-violet-300 focus:outline-none focus:ring-2 focus:ring-violet-400/50" />
+            <label className="text-xs font-medium text-[var(--foreground-muted)]">Max price</label>
+            <input name="maxPrice" type="number" defaultValue={maxPrice || ""} placeholder="999999" className="h-10 w-24 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 text-sm shadow-sm backdrop-blur-sm focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]" />
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-medium text-slate-500">Sort</label>
-            <select name="sort" defaultValue={sort} className="h-10 rounded-xl border border-slate-200/60 bg-white/50 px-4 text-sm shadow-sm backdrop-blur-sm focus:border-violet-300 focus:outline-none focus:ring-2 focus:ring-violet-400/50">
+            <label className="text-xs font-medium text-[var(--foreground-muted)]">Sort</label>
+            <select name="sort" defaultValue={sort} className="h-10 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 text-sm shadow-sm backdrop-blur-sm focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]">
               <option value="newest">Newest</option>
               <option value="oldest">Oldest</option>
               <option value="price_asc">Price ↑</option>
               <option value="price_desc">Price ↓</option>
             </select>
           </div>
-          <button type="submit" className="h-10 rounded-xl border border-slate-200/60 bg-white/50 px-5 text-sm font-medium shadow-sm backdrop-blur-sm transition-all hover:bg-violet-50 hover:border-violet-300 hover:text-violet-700">
+          <button type="submit" className="h-10 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-5 text-sm font-medium shadow-sm backdrop-blur-sm transition-all hover:bg-[var(--primary-dim)] hover:border-[var(--primary)] hover:text-[var(--primary)]">
             Filter
           </button>
         </form>
 
         <div className="mt-10 grid gap-5 md:grid-cols-3">
           {campaigns.length === 0 && (
-            <div className="col-span-full text-center text-slate-400 py-12">No campaigns found.</div>
+            <div className="col-span-full text-center text-[var(--foreground-muted)] py-12">No campaigns found.</div>
           )}
           {campaigns.map((c, i) => (
             <Card key={c.id} className={`group overflow-hidden animate-fade-in-up ${i === 0 ? "md:col-span-2 md:row-span-2" : ""}`}>
@@ -116,7 +116,7 @@ export default async function PublicCampaignsPage({
                   className={`w-full object-cover transition-transform duration-500 group-hover:scale-105 ${i === 0 ? "h-64" : "h-40"}`}
                 />
               ) : (
-                <div className={`w-full bg-gradient-to-br from-violet-100 to-indigo-100 ${i === 0 ? "h-32" : "h-20"}`} />
+                <div className={`w-full bg-[var(--primary-dim)] ${i === 0 ? "h-32" : "h-20"}`} />
               )}
               <CardHeader>
                 <CardTitle className={`line-clamp-1 ${i === 0 ? "text-2xl" : ""}`}>{c.title}</CardTitle>
@@ -136,13 +136,13 @@ export default async function PublicCampaignsPage({
                 <div className="flex items-center justify-between">
                   <Link
                     href={`/public/campaigns/${c.id}`}
-                    className="inline-flex items-center gap-1 text-sm font-medium text-violet-600 underline-offset-4 hover:underline"
+                    className="inline-flex items-center gap-1 text-sm font-medium text-[var(--primary)] underline-offset-4 hover:underline"
                   >
                     View details →
                   </Link>
                   <Link
                     href={`/public/companies/${c.company.id}`}
-                    className="text-xs text-slate-400 hover:text-violet-600 hover:underline"
+                    className="text-xs text-[var(--foreground-muted)] hover:text-[var(--primary)] hover:underline"
                   >
                     {c.company.companyProfile?.companyName ?? `${c.company.firstName} ${c.company.lastName}`}
                   </Link>

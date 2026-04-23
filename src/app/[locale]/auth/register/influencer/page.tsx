@@ -47,7 +47,7 @@ export default function InfluencerRegisterPage() {
         <Card className="w-full animate-fade-in-up">
           <CardHeader>
             <div className="mb-2 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-indigo-500 text-sm font-bold text-white shadow-lg shadow-violet-500/25">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--primary)] text-sm font-bold text-[var(--background)] shadow-lg shadow-[var(--primary-glow)]">
                 {step}
               </div>
               <div>
@@ -58,9 +58,9 @@ export default function InfluencerRegisterPage() {
               </div>
             </div>
             {/* Progress bar */}
-            <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+            <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-[var(--border)]">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 transition-all duration-500"
+                className="h-full rounded-full bg-[var(--primary)] transition-all duration-500"
                 style={{ width: step === 1 ? "50%" : "100%" }}
               />
             </div>
@@ -103,18 +103,18 @@ export default function InfluencerRegisterPage() {
                   <Label>Password</Label>
                   <Input type="password" value={step1.password} onChange={(e) => setStep1({ ...step1, password: e.target.value })} required />
                 </div>
-                <label className="md:col-span-2 flex items-center gap-3 rounded-xl border border-slate-200/60 bg-white/50 px-4 py-3 text-sm text-slate-700 backdrop-blur-sm transition-colors hover:bg-violet-50/50">
+                <label className="md:col-span-2 flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 py-3 text-sm text-[var(--foreground)] backdrop-blur-sm transition-colors hover:bg-[var(--primary-dim)]">
                   <input
                     type="checkbox"
                     checked={step1.acceptTos}
                     onChange={(e) => setStep1({ ...step1, acceptTos: e.target.checked })}
-                    className="h-4 w-4 rounded-md border-slate-300 text-violet-600"
+                    className="h-4 w-4 rounded-md border-[var(--border)] text-[var(--primary)]"
                   />
                   I accept the Terms & Conditions.
                 </label>
 
                 {error ? (
-                  <div className="md:col-span-2 rounded-xl border border-red-200/50 bg-red-50/80 px-4 py-3 text-sm text-red-700 backdrop-blur-sm">
+                  <div role="alert" className="md:col-span-2 rounded-xl border border-red-200/50 bg-red-50/80 px-4 py-3 text-sm text-red-700 backdrop-blur-sm">
                     {error}
                   </div>
                 ) : null}
@@ -191,7 +191,7 @@ export default function InfluencerRegisterPage() {
                 </div>
 
                 {error ? (
-                  <div className="rounded-xl border border-red-200/50 bg-red-50/80 px-4 py-3 text-sm text-red-700 backdrop-blur-sm">
+                  <div role="alert" className="rounded-xl border border-red-200/50 bg-red-50/80 px-4 py-3 text-sm text-red-700 backdrop-blur-sm">
                     {error}
                   </div>
                 ) : null}

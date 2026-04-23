@@ -95,13 +95,13 @@ export default function CompanyRegisterPage() {
                 <Input type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required />
               </div>
 
-              <label className="md:col-span-2 flex items-center gap-3 rounded-xl border border-slate-200/60 bg-white/50 px-4 py-3 text-sm text-slate-700 backdrop-blur-sm transition-colors hover:bg-violet-50/50">
-                <input type="checkbox" checked={form.acceptTos} onChange={(e) => setForm({ ...form, acceptTos: e.target.checked })} className="h-4 w-4 rounded-md border-slate-300 text-violet-600" />
+              <label className="md:col-span-2 flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 py-3 text-sm text-[var(--foreground)] backdrop-blur-sm transition-colors hover:bg-[var(--primary-dim)]">
+                <input type="checkbox" checked={form.acceptTos} onChange={(e) => setForm({ ...form, acceptTos: e.target.checked })} className="h-4 w-4 rounded-md border-[var(--border)] text-[var(--primary)]" />
                 I accept the Terms & Conditions.
               </label>
 
               {error ? (
-                <div className="md:col-span-2 rounded-xl border border-red-200/50 bg-red-50/80 px-4 py-3 text-sm text-red-700 backdrop-blur-sm">
+                <div role="alert" className="md:col-span-2 rounded-xl border border-red-200/50 bg-red-50/80 px-4 py-3 text-sm text-red-700 backdrop-blur-sm">
                   {error}
                 </div>
               ) : null}

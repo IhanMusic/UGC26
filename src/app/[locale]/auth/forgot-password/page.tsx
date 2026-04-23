@@ -61,8 +61,8 @@ export default function ForgotPasswordPage() {
                 <Button className="w-full" disabled={loading} type="submit">
                   {loading ? "Sending…" : "Send reset link"}
                 </Button>
-                <div className="text-center text-sm text-slate-500">
-                  <Link href="/auth/login" className="text-violet-600 underline underline-offset-4">
+                <div className="text-center text-sm text-[var(--foreground-muted)]">
+                  <Link href="/auth/login" className="text-[var(--primary)] underline underline-offset-4">
                     Back to login
                   </Link>
                 </div>

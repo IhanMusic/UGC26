@@ -31,7 +31,7 @@ export default async function CampaignDetailPage({
   if (!campaign) {
     return (
       <main className="flex-1 bg-mesh">
-        <div className="mx-auto max-w-3xl px-4 py-16 text-slate-500">
+        <div className="mx-auto max-w-3xl px-4 py-16 text-[var(--foreground-muted)]">
           Campaign not found.
         </div>
       </main>
@@ -60,8 +60,8 @@ export default async function CampaignDetailPage({
                 <CardTitle className="text-2xl">{campaign.title}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="text-sm text-slate-500">
-                  Price: <span className="font-semibold text-slate-900">{campaign.priceDinar.toLocaleString()} DZD</span>
+                <div className="text-sm text-[var(--foreground-muted)]">
+                  Price: <span className="font-semibold text-[var(--foreground)]">{campaign.priceDinar.toLocaleString()} DZD</span>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {campaign.categories.map((c) => (
@@ -70,7 +70,7 @@ export default async function CampaignDetailPage({
                     </Badge>
                   ))}
                 </div>
-                <div className="text-sm text-slate-600 whitespace-pre-wrap">
+                <div className="text-sm text-[var(--foreground-muted)] whitespace-pre-wrap">
                   {campaign.description}
                 </div>
               </CardContent>
@@ -82,11 +82,11 @@ export default async function CampaignDetailPage({
               <CardHeader>
                 <CardTitle>Qualifications</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-2 text-sm text-slate-600">
-                <div className="flex justify-between"><span>Min followers</span><span className="font-medium text-slate-800">{campaign.minFollowers ?? "—"}</span></div>
-                <div className="flex justify-between"><span>Age range</span><span className="font-medium text-slate-800">{campaign.ageRange ?? "—"}</span></div>
-                <div className="flex justify-between"><span>Country</span><span className="font-medium text-slate-800">{campaign.country ?? "—"}</span></div>
-                <div className="flex justify-between"><span>Objective</span><span className="font-medium text-slate-800">{campaign.objectivePlatforms ?? "—"}</span></div>
+              <CardContent className="space-y-2 text-sm text-[var(--foreground-muted)]">
+                <div className="flex justify-between"><span>Min followers</span><span className="font-medium text-[var(--foreground)]">{campaign.minFollowers ?? "—"}</span></div>
+                <div className="flex justify-between"><span>Age range</span><span className="font-medium text-[var(--foreground)]">{campaign.ageRange ?? "—"}</span></div>
+                <div className="flex justify-between"><span>Country</span><span className="font-medium text-[var(--foreground)]">{campaign.country ?? "—"}</span></div>
+                <div className="flex justify-between"><span>Objective</span><span className="font-medium text-[var(--foreground)]">{campaign.objectivePlatforms ?? "—"}</span></div>
               </CardContent>
             </Card>
 
@@ -95,11 +95,11 @@ export default async function CampaignDetailPage({
                 <CardTitle>Company</CardTitle>
               </CardHeader>
               <CardContent className="space-y-2 text-sm">
-                <div className="font-medium text-slate-800">
+                <div className="font-medium text-[var(--foreground)]">
                   {campaign.company.companyProfile?.companyName ??
                     `${campaign.company.firstName} ${campaign.company.lastName}`}
                 </div>
-                <div className="text-slate-500">
+                <div className="text-[var(--foreground-muted)]">
                   {campaign.company.companyProfile?.companyDetails ?? "—"}
                 </div>
               </CardContent>
@@ -108,14 +108,14 @@ export default async function CampaignDetailPage({
             <div className="space-y-2">
               {session?.user?.role === "INFLUENCER" ? (
                 existing ? (
-                  <div className="rounded-xl border border-white/20 bg-white/70 px-4 py-3 text-sm text-slate-600 backdrop-blur-xl">
-                    You already applied: <span className="font-semibold text-violet-700">{existing.status}</span>
+                  <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 py-3 text-sm text-[var(--foreground-muted)] backdrop-blur-xl">
+                    You already applied: <span className="font-semibold text-[var(--primary)]">{existing.status}</span>
                   </div>
                 ) : (
                   <CampaignApplyButton campaignId={campaign.id} />
                 )
               ) : (
-                <div className="rounded-xl border border-white/20 bg-white/70 px-4 py-3 text-sm text-slate-600 backdrop-blur-xl">
+                <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 py-3 text-sm text-[var(--foreground-muted)] backdrop-blur-xl">
                   Login as influencer to apply.
                 </div>
               )}

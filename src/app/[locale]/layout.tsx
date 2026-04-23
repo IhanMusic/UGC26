@@ -88,7 +88,7 @@ export default async function LocaleLayout({
             <NextIntlClientProvider locale={l} messages={messages}>
               <ToastProvider>
                 <ConfirmProvider>
-                  <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[9999] focus:bg-violet-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-md focus:top-2 focus:left-2">
+                  <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[9999] focus:bg-[var(--primary)] focus:text-[var(--foreground)] focus:px-4 focus:py-2 focus:rounded-md focus:top-2 focus:left-2">
                     Skip to content
                   </a>
                   {children}
