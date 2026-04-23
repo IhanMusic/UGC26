@@ -77,7 +77,24 @@
     "disputes": "Disputes",
     "settings": "Cancellation T&C",
     "preValidation": "Pre-validation",
-    "expenses": "My expenses"
+    "expenses": "My expenses",
+    "navSection": {
+      "mySpace": "My Space",
+      "activity": "Activity",
+      "explore": "Explore",
+      "myCompany": "My Company",
+      "campaigns": "Campaigns",
+      "creatorsProjects": "Creators & Projects",
+      "finance": "Finance",
+      "users": "Users",
+      "validation": "Validation",
+      "operations": "Operations",
+      "system": "System"
+    },
+    "myPitches": "My Projects (Pitches)",
+    "pitchQueue": "Pitch Queue",
+    "creatorProjects": "Creator Projects",
+    "sponsorships": "My Sponsorships"
   },
   "home": {
     "heroTag": "Adwaa — Real content. Real light.",

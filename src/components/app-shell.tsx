@@ -10,6 +10,8 @@ import { NotificationBell } from "@/components/notification-bell";
 import { getTranslations } from "next-intl/server";
 import { VerificationBanner } from "@/components/verification-banner";
 import { NavLink } from "@/components/nav-link";
+import { MessageSquare } from "lucide-react";
+import type { NavItem } from "@/app/[locale]/influencer/_nav";
 
 export async function AppShell({
   title,
@@ -17,7 +19,7 @@ export async function AppShell({
   children,
 }: {
   title: string;
-  nav: Array<{ href: string; label: string }>;
+  nav: NavItem[];
   children: React.ReactNode;
 }) {
   const session = await getServerSession(authOptions);
@@ -26,14 +28,17 @@ export async function AppShell({
   return (
     <div className="flex min-h-[calc(100vh-0px)] flex-1 bg-mesh">
       {/* ── Sidebar (desktop) ── */}
-      <aside className="hidden w-72 flex-col border-r border-black/[0.08] bg-white/90 p-5 backdrop-blur-2xl dark:border-white/[0.08] dark:bg-[#0D0F1C]/80 md:flex">
+      <aside className="hidden w-72 flex-col border-r border-[var(--border)] bg-[var(--surface-high)] backdrop-blur-2xl md:flex" style={{ padding: "20px" }}>
         {/* Logo */}
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 shadow-md shadow-violet-500/25">
-              <span className="text-xs font-bold text-white">U</span>
+            <div
+              className="flex h-8 w-8 items-center justify-center rounded-lg font-bold text-sm text-black"
+              style={{ background: "var(--primary)", boxShadow: "0 0 12px var(--primary-glow)" }}
+            >
+              A
             </div>
-            <span className="text-lg font-bold tracking-tight gradient-text">UGC26</span>
+            <span className="text-lg font-bold gradient-text-cyber">ADWAA</span>
           </Link>
           {session?.user ? (
             <Badge variant="secondary">{session.user.role}</Badge>
@@ -42,24 +47,27 @@ export async function AppShell({
 
         {/* Navigation */}
         <nav className="mt-8 flex flex-col gap-1" aria-label="Dashboard navigation">
-          {nav.map((item) => (
-            <NavLink key={item.href} href={item.href} label={item.label} />
+          {nav.map((item, i) => (
+            <NavLink key={item.type === "link" ? item.href : `section-${i}`} item={item} />
           ))}
         </nav>
 
         {/* User info */}
         <div className="mt-auto pt-6">
           {session?.user ? (
-            <div className="space-y-3 rounded-xl border border-black/[0.08] bg-black/[0.03] p-4 backdrop-blur-sm dark:border-white/[0.08] dark:bg-white/[0.03]">
+            <div className="space-y-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4">
               <div className="flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-indigo-500 text-xs font-bold text-white shadow-md shadow-violet-500/25">
+                <div
+                  className="flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold text-black"
+                  style={{ background: "var(--primary)", boxShadow: "0 0 10px var(--primary-glow)" }}
+                >
                   {session.user.email?.charAt(0).toUpperCase()}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="truncate text-xs font-medium text-slate-800 dark:text-[#E2E8F0]">
+                  <div className="truncate text-xs font-medium text-[var(--foreground)]">
                     {session.user.email}
                   </div>
-                  <div className="text-[10px] text-[#64748B]">
+                  <div className="text-[10px] text-[var(--foreground-muted)]">
                     {t("common.signedInAs")}
                   </div>
                 </div>
@@ -78,17 +86,24 @@ export async function AppShell({
         <VerificationBanner />
 
         {/* Header */}
-        <header className="border-b border-black/[0.08] bg-white/80 px-4 py-4 backdrop-blur-2xl dark:border-white/[0.08] dark:bg-[#0D0F1C]/60">
+        <header className="border-b border-[var(--border)] bg-[var(--surface-high)] px-4 py-4 backdrop-blur-2xl">
           <div className="mx-auto flex max-w-6xl items-center justify-between">
             <div>
-              <div className="text-[10px] font-medium uppercase tracking-widest text-violet-600 dark:text-violet-500">
+              <div className="text-[10px] font-medium uppercase tracking-widest text-[var(--primary)]">
                 {t("common.dashboard")}
               </div>
-              <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-[#E2E8F0]">
+              <h1 className="text-xl font-bold tracking-tight text-[var(--foreground)]">
                 {title}
               </h1>
             </div>
             <div className="flex items-center gap-3">
+              <Link
+                href="/messages"
+                className="flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] text-[var(--foreground-muted)] transition-all duration-200 hover:border-[var(--border-hover)] hover:text-[var(--primary)]"
+                aria-label={t("nav.messages")}
+              >
+                <MessageSquare className="h-4 w-4" />
+              </Link>
               <NotificationBell />
               <ThemeToggle />
               <LanguageSwitcher />

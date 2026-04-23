@@ -1,18 +1,21 @@
 import { getTranslations } from "next-intl/server";
+import type { NavItem } from "../influencer/_nav";
 
-export async function getCompanyNav() {
+export async function getCompanyNav(): Promise<NavItem[]> {
   const t = await getTranslations("nav");
   return [
-    { href: "/company", label: t("dashboard") },
-    { href: "/company/profile", label: t("profile") },
-    { href: "/company/request-campaign", label: t("requestCampaign") },
-    { href: "/company/campaigns", label: t("myCampaigns") },
-    { href: "/company/projets", label: "🎬 Projets créateurs" },
-    { href: "/company/sponsorships", label: "💰 Mes Sponsorisations" },
-    { href: "/company/completions", label: t("completions") },
-    { href: "/company/expenses", label: t("expenses") },
-    { href: "/public/influencers", label: t("browseInfluencers") },
-    { href: "/messages", label: `💬 ${t("messages")}` },
-    { href: "/notifications", label: `🔔 ${t("notifications")}` },
+    { type: "link",    href: "/company",                 label: t("dashboard") },
+    { type: "section", label: t("navSection.myCompany") },
+    { type: "link",    href: "/company/profile",         label: t("profile") },
+    { type: "section", label: t("navSection.campaigns") },
+    { type: "link",    href: "/company/request-campaign", label: t("requestCampaign") },
+    { type: "link",    href: "/company/campaigns",       label: t("myCampaigns") },
+    { type: "link",    href: "/company/completions",     label: t("completions") },
+    { type: "section", label: t("navSection.creatorsProjects") },
+    { type: "link",    href: "/company/projets",         label: t("creatorProjects") },
+    { type: "link",    href: "/company/sponsorships",    label: t("sponsorships") },
+    { type: "link",    href: "/public/influencers",      label: t("browseInfluencers") },
+    { type: "section", label: t("navSection.finance") },
+    { type: "link",    href: "/company/expenses",        label: t("expenses") },
   ];
 }

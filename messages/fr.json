@@ -77,7 +77,24 @@
     "disputes": "Disputes",
     "settings": "CGV d'annulation",
     "preValidation": "Pré-validation",
-    "expenses": "Mes dépenses"
+    "expenses": "Mes dépenses",
+    "navSection": {
+      "mySpace": "Mon Espace",
+      "activity": "Activité",
+      "explore": "Explorer",
+      "myCompany": "Mon Entreprise",
+      "campaigns": "Campagnes",
+      "creatorsProjects": "Créateurs & Projets",
+      "finance": "Finance",
+      "users": "Utilisateurs",
+      "validation": "Validation",
+      "operations": "Opérations",
+      "system": "Système"
+    },
+    "myPitches": "Mes Projets (Pitchs)",
+    "pitchQueue": "File Pitchs",
+    "creatorProjects": "Projets Créateurs",
+    "sponsorships": "Mes Sponsorisations"
   },
   "home": {
     "heroTag": "Adwaa — Le contenu. La lumière.",

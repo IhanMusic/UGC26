@@ -77,7 +77,24 @@
     "disputes": "النزاعات",
     "settings": "شروط الإلغاء",
     "preValidation": "التحقق المسبق",
-    "expenses": "مصاريفي"
+    "expenses": "مصاريفي",
+    "navSection": {
+      "mySpace": "مساحتي",
+      "activity": "النشاط",
+      "explore": "استكشاف",
+      "myCompany": "شركتي",
+      "campaigns": "الحملات",
+      "creatorsProjects": "المنشئون والمشاريع",
+      "finance": "المالية",
+      "users": "المستخدمون",
+      "validation": "التحقق",
+      "operations": "العمليات",
+      "system": "النظام"
+    },
+    "myPitches": "مشاريعي (العروض)",
+    "pitchQueue": "قائمة انتظار العروض",
+    "creatorProjects": "مشاريع المنشئين",
+    "sponsorships": "رعاياتي"
   },
   "home": {
     "heroTag": "أضواء — المحتوى الحقيقي",
