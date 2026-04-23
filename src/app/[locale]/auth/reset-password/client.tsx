@@ -28,7 +28,7 @@ export default function ResetPasswordClient() {
           <CardContent>
             {!token ? (
               <div className="space-y-4">
-                <div className="rounded-xl border border-red-200/50 bg-red-50/80 px-4 py-3 text-sm text-red-700 backdrop-blur-sm">
+                <div className="rounded-xl border border-[var(--danger)] bg-[var(--danger-dim)] px-4 py-3 text-sm text-[var(--danger)] backdrop-blur-sm">
                   Missing token.
                 </div>
                 <Button asChild variant="outline" className="w-full">
@@ -70,7 +70,7 @@ export default function ResetPasswordClient() {
                   />
                 </div>
                 {error ? (
-                  <div className="rounded-xl border border-red-200/50 bg-red-50/80 px-4 py-3 text-sm text-red-700 backdrop-blur-sm">
+                  <div className="rounded-xl border border-[var(--danger)] bg-[var(--danger-dim)] px-4 py-3 text-sm text-[var(--danger)] backdrop-blur-sm">
                     {error}
                   </div>
                 ) : null}

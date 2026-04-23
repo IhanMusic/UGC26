@@ -24,20 +24,20 @@ export default async function PrivacyPage() {
       <main id="main-content" className="flex-1 bg-mesh">
         <div className="mx-auto max-w-3xl px-4 py-20">
           <div className="mb-12 animate-fade-in-up">
-            <h1 className="text-4xl font-bold tracking-tight text-slate-900 md:text-5xl">
+            <h1 className="text-4xl font-bold tracking-tight text-[var(--foreground)] md:text-5xl">
               <span className="gradient-text">{t("title")}</span>
             </h1>
-            <p className="mt-3 text-sm text-slate-400">{t("lastUpdated")}</p>
-            <p className="mt-6 text-lg text-slate-600 leading-relaxed">{t("intro")}</p>
+            <p className="mt-3 text-sm text-[var(--foreground-muted)]">{t("lastUpdated")}</p>
+            <p className="mt-6 text-lg text-[var(--foreground-muted)] leading-relaxed">{t("intro")}</p>
           </div>
 
           <div className="space-y-10">
             {sections.map((s, i) => (
               <section key={i} className="animate-fade-in-up">
-                <h2 className="text-xl font-semibold text-slate-900 mb-3">
+                <h2 className="text-xl font-semibold text-[var(--foreground)] mb-3">
                   {i + 1}. {s.title}
                 </h2>
-                <p className="text-slate-600 leading-relaxed">{s.text}</p>
+                <p className="text-[var(--foreground-muted)] leading-relaxed">{s.text}</p>
               </section>
             ))}
           </div>

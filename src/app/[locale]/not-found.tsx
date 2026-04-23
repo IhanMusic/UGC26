@@ -6,10 +6,10 @@ export default function NotFound() {
     <main className="flex flex-1 flex-col items-center justify-center bg-mesh px-4 py-20 text-center">
       <div className="animate-fade-in-up">
         <div className="mb-6 text-8xl font-bold gradient-text">404</div>
-        <h1 className="mb-3 text-2xl font-bold text-slate-900 dark:text-slate-100">
+        <h1 className="mb-3 text-2xl font-bold text-[var(--foreground)]">
           Page introuvable
         </h1>
-        <p className="mb-8 max-w-md text-slate-500">
+        <p className="mb-8 max-w-md text-[var(--foreground-muted)]">
           Cette page n&apos;existe pas ou a été déplacée.
         </p>
         <Button asChild size="lg">
