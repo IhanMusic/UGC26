@@ -66,7 +66,7 @@ export default async function CompanyPublicProfilePage({ params }: { params: Pro
               <Card className="animate-fade-in-up">
                 <CardHeader>
                   <div className="flex items-center gap-4">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 text-2xl font-bold text-white shadow-lg shadow-emerald-500/25">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[var(--secondary)] to-[var(--primary)] text-2xl font-bold text-[var(--background)] shadow-lg shadow-[var(--primary-glow)]">
                       {companyName.charAt(0)}
                     </div>
                     <div>

@@ -61,11 +61,11 @@ export default async function PublicCampaignsPage({
         <form className="mt-8 flex flex-wrap items-end gap-3 animate-fade-in-up" action="">
           <div className="space-y-1">
             <label className="text-xs font-medium text-[var(--foreground-muted)]">Search</label>
-            <input name="q" defaultValue={q} placeholder="Campaign title…" className="h-10 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 text-sm shadow-sm backdrop-blur-sm focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]" />
+            <input name="q" defaultValue={q} placeholder="Campaign title…" className="h-10 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 text-sm shadow-sm backdrop-blur-sm focus-visible:border-[var(--primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]" />
           </div>
           <div className="space-y-1">
             <label className="text-xs font-medium text-[var(--foreground-muted)]">Category</label>
-            <select name="category" defaultValue={category} className="h-10 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 text-sm shadow-sm backdrop-blur-sm focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]">
+            <select name="category" defaultValue={category} className="h-10 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 text-sm shadow-sm backdrop-blur-sm focus-visible:border-[var(--primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]">
               <option value="">All</option>
               {categories.map((c) => (
                 <option key={c.id} value={c.name}>{c.name}</option>
@@ -74,23 +74,23 @@ export default async function PublicCampaignsPage({
           </div>
           <div className="space-y-1">
             <label className="text-xs font-medium text-[var(--foreground-muted)]">Country</label>
-            <input name="country" defaultValue={country} placeholder="Country…" className="h-10 w-28 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 text-sm shadow-sm backdrop-blur-sm focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]" />
+            <input name="country" defaultValue={country} placeholder="Country…" className="h-10 w-28 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 text-sm shadow-sm backdrop-blur-sm focus-visible:border-[var(--primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]" />
           </div>
           <div className="space-y-1">
             <label className="text-xs font-medium text-[var(--foreground-muted)]">Platform</label>
-            <input name="platform" defaultValue={platform} placeholder="Instagram…" className="h-10 w-28 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 text-sm shadow-sm backdrop-blur-sm focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]" />
+            <input name="platform" defaultValue={platform} placeholder="Instagram…" className="h-10 w-28 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 text-sm shadow-sm backdrop-blur-sm focus-visible:border-[var(--primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]" />
           </div>
           <div className="space-y-1">
             <label className="text-xs font-medium text-[var(--foreground-muted)]">Min price</label>
-            <input name="minPrice" type="number" defaultValue={minPrice || ""} placeholder="0" className="h-10 w-24 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 text-sm shadow-sm backdrop-blur-sm focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]" />
+            <input name="minPrice" type="number" defaultValue={minPrice || ""} placeholder="0" className="h-10 w-24 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 text-sm shadow-sm backdrop-blur-sm focus-visible:border-[var(--primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]" />
           </div>
           <div className="space-y-1">
             <label className="text-xs font-medium text-[var(--foreground-muted)]">Max price</label>
-            <input name="maxPrice" type="number" defaultValue={maxPrice || ""} placeholder="999999" className="h-10 w-24 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 text-sm shadow-sm backdrop-blur-sm focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]" />
+            <input name="maxPrice" type="number" defaultValue={maxPrice || ""} placeholder="999999" className="h-10 w-24 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 text-sm shadow-sm backdrop-blur-sm focus-visible:border-[var(--primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]" />
           </div>
           <div className="space-y-1">
             <label className="text-xs font-medium text-[var(--foreground-muted)]">Sort</label>
-            <select name="sort" defaultValue={sort} className="h-10 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 text-sm shadow-sm backdrop-blur-sm focus:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]">
+            <select name="sort" defaultValue={sort} className="h-10 rounded-xl border border-[var(--border)] bg-[var(--surface-high)] px-4 text-sm shadow-sm backdrop-blur-sm focus-visible:border-[var(--primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]">
               <option value="newest">Newest</option>
               <option value="oldest">Oldest</option>
               <option value="price_asc">Price ↑</option>
