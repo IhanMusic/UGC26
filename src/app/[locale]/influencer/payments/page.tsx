@@ -47,7 +47,7 @@ export default async function PaymentsPage() {
 
         {/* Transaction history */}
         <div className="glass rounded-xl overflow-hidden">
-          <div className="border-b border-white/[0.08] px-5 py-3">
+          <div className="border-b border-[var(--border)] px-5 py-3">
             <h2 className="font-semibold text-[var(--foreground)]">{t("historyTitle")}</h2>
           </div>
           {transactions.length === 0 ? (
@@ -55,7 +55,7 @@ export default async function PaymentsPage() {
           ) : (
             <table className="w-full">
               <thead>
-                <tr className="border-b border-white/[0.08] text-left text-xs text-[var(--foreground-muted)]">
+                <tr className="border-b border-[var(--border)] text-left text-xs text-[var(--foreground-muted)]">
                   <th className="px-5 py-3 font-semibold uppercase tracking-wider">{t("colDate")}</th>
                   <th className="px-5 py-3 font-semibold uppercase tracking-wider">{t("colAmount")}</th>
                   <th className="px-5 py-3 font-semibold uppercase tracking-wider">{t("colStatus")}</th>
@@ -63,7 +63,7 @@ export default async function PaymentsPage() {
               </thead>
               <tbody>
                 {transactions.map((t) => (
-                  <tr key={t.id} className="border-b border-white/[0.04] hover:bg-white/[0.02]">
+                  <tr key={t.id} className="border-b border-[var(--border)] hover:bg-[var(--surface-hover)]">
                     <td className="px-5 py-3 text-sm text-[var(--foreground-muted)]">
                       {new Date(t.createdAt).toLocaleDateString("fr-FR")}
                     </td>
@@ -77,7 +77,7 @@ export default async function PaymentsPage() {
                             ? "bg-[var(--surface-mid)] text-[var(--success)]"
                             : t.status === "PENDING"
                               ? "bg-[var(--surface-mid)] text-[var(--gold)]"
-                              : "bg-white/10 text-white/60"
+                              : "bg-[var(--surface-mid)] text-[var(--foreground-muted)]"
                         }`}
                       >
                         {t.status}

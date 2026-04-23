@@ -94,10 +94,11 @@ export default function InfluencerCampaignClient({
   return (
     <div className="space-y-6">
       {/* Tab bar */}
-      <div className="flex gap-1 rounded-xl border border-white/[0.06] bg-white/[0.03] p-1">
+      <div className="flex gap-1 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1">
         {TAB_KEYS.map((key) => (
           <button
             key={key}
+            type="button"
             onClick={() => setActiveTab(key)}
             className={cn(
               "flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors",
@@ -126,13 +127,14 @@ export default function InfluencerCampaignClient({
 
             {/* Dispute button — visible for ONGOING or COMPLETED participations */}
             {(status === "ONGOING" || status === "COMPLETED") && (
-              <div className="pt-2 border-t border-white/[0.06]">
+              <div className="pt-2 border-t border-[var(--border)]">
                 {disputeSubmitted ? (
                   <p className="text-xs text-[var(--success)] font-medium">
                     {t("disputeSubmitted")}
                   </p>
                 ) : (
                   <button
+                    type="button"
                     onClick={() => setShowDispute(true)}
                     className="rounded-lg border border-[var(--danger)]/40 px-3 py-1.5 text-xs font-semibold text-[var(--danger)] hover:bg-[var(--danger-dim)] transition-colors"
                   >

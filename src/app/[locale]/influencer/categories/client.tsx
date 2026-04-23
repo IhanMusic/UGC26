@@ -76,6 +76,7 @@ export default function InfluencerCategoriesClient() {
         )}
 
         <Button
+          type="button"
           disabled={saving || loading}
           onClick={async () => {
             setSaving(true);

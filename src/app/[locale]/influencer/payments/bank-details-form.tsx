@@ -71,7 +71,7 @@ export function BankDetailsForm() {
               value={form[key]}
               onChange={(e) => setForm((f) => ({ ...f, [key]: e.target.value }))}
               placeholder={placeholder}
-              className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-[var(--foreground)] placeholder-[var(--foreground-muted)] focus-visible:border-[var(--primary)]/40 focus-visible:outline-none"
+              className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--foreground)] placeholder-[var(--foreground-muted)] focus-visible:border-[var(--primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]"
             />
           </div>
         ))}
@@ -81,6 +81,7 @@ export function BankDetailsForm() {
       {saved && <p className="text-xs text-[var(--success)]">{t("savedConfirm")}</p>}
 
       <button
+        type="button"
         onClick={handleSave}
         disabled={saving}
         className="rounded-xl bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] px-4 py-2 text-sm font-semibold text-[var(--background)] hover:opacity-90 disabled:opacity-50"
