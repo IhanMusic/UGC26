@@ -256,6 +256,7 @@ export default function CreatorPitchDetailClient({
             )}
             {canSubmit && (
               <button
+                type="button"
                 onClick={() => handleAction("submit")}
                 disabled={working}
                 className="inline-flex items-center rounded-lg px-3 py-1.5 text-xs font-semibold transition-all disabled:opacity-50 btn-neon"
@@ -265,6 +266,7 @@ export default function CreatorPitchDetailClient({
             )}
             {canClose && (
               <button
+                type="button"
                 onClick={() => handleAction("close")}
                 disabled={working}
                 className="inline-flex items-center rounded-lg border px-3 py-1.5 text-xs font-medium transition-all disabled:opacity-50"
