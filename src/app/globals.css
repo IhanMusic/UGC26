@@ -51,9 +51,9 @@ html:not(.dark) {
   --foreground:         #0F172A;
   --foreground-muted:   #475569;
 
-  --primary:            #0090B8;
-  --primary-dim:        rgba(0, 144, 184, 0.08);
-  --primary-glow:       rgba(0, 144, 184, 0.20);
+  --primary:            #006E8F;
+  --primary-dim:        rgba(0, 110, 143, 0.08);
+  --primary-glow:       rgba(0, 110, 143, 0.20);
 
   --secondary:          #D91A5E;
   --secondary-dim:      rgba(217, 26, 94, 0.08);
@@ -64,6 +64,10 @@ html:not(.dark) {
 
   --gold:               #B45309;
   --gold-dim:           rgba(180, 83, 9, 0.10);
+  --gold-light:         #92400E;
+
+  --accent-glow:        rgba(4, 120, 87, 0.20);
+  --success:            #047857;
 
   --danger:             #DC2626;
 
@@ -81,10 +85,10 @@ html:not(.dark) {
   --glow:               rgba(0, 144, 184, 0.12);
 }
 
-/* Light mode body — gradient glace fixe */
+/* Light mode body — gradient glace */
 html:not(.dark) body {
   background: linear-gradient(160deg, #EEF9FF 0%, #F0EDFF 100%);
-  background-attachment: fixed;
+  background-attachment: scroll;
 }
 
 /* Light mode glass cards */
@@ -106,6 +110,17 @@ html:not(.dark) .card-cyber {
 html:not(.dark) .card-cyber:hover {
   border-color: rgba(0, 144, 184, 0.35);
   box-shadow: 0 8px 32px rgba(0, 144, 184, 0.14);
+}
+
+/* Light mode dot grid — replace neon cyan dots */
+html:not(.dark) .bg-grid {
+  background-image: radial-gradient(circle, rgba(0, 110, 143, 0.10) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+html:not(.dark) .bg-hero::before {
+  background-image: radial-gradient(circle, rgba(0, 110, 143, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
 /* Light mode bg-mesh override */
@@ -218,6 +233,7 @@ body {
   border: 1px solid var(--border);
   border-radius: 16px;
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   position: relative;
   transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
@@ -465,7 +481,7 @@ body {
 }
 @keyframes glow-pulse {
   0%, 100% { box-shadow: 0 0 20px var(--primary-glow); }
-  50%       { box-shadow: 0 0 50px var(--primary-glow), 0 0 80px rgba(0,229,255,0.15); }
+  50%       { box-shadow: 0 0 50px var(--primary-glow), 0 0 80px var(--glow); }
 }
 @keyframes border-spin {
   to { --angle: 360deg; }
