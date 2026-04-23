@@ -5,6 +5,7 @@ import { getTranslations } from "next-intl/server";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { AnimateOnScroll } from "@/components/animate-on-scroll";
+import { prisma } from "@/server/db";
 
 function roleHome(role: string) {
   if (role === "ADMIN") return "/admin";
@@ -13,10 +14,23 @@ function roleHome(role: string) {
   return "/";
 }
 
+function formatStat(n: number): string {
+  if (n >= 10_000) return `${Math.floor(n / 1_000)}K+`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1).replace(/\.0$/, "")}K+`;
+  return `${n.toLocaleString()}+`;
+}
+
 export default async function HomePage() {
   const t = await getTranslations();
-  const session = await getServerSession(authOptions);
+  const [session, influencerCount, companyCount, participationCount, sponsorshipCount] = await Promise.all([
+    getServerSession(authOptions),
+    prisma.user.count({ where: { role: "INFLUENCER", isDeleted: false, isBlocked: false } }),
+    prisma.user.count({ where: { role: "COMPANY", isDeleted: false, isBlocked: false } }),
+    prisma.campaignParticipation.count({ where: { status: { in: ["ONGOING", "COMPLETED", "CONFIRMED", "PAID"] } } }),
+    prisma.pitchSponsorship.count({ where: { status: { in: ["COMMITTED", "PAID"] } } }),
+  ]);
   const role = session?.user?.role ?? null;
+  const contentCount = participationCount + sponsorshipCount;
 
   return (
     <>
@@ -88,9 +102,9 @@ export default async function HomePage() {
             {/* Stats bar */}
             <div className="animate-fade-in-up delay-400 grid grid-cols-3 gap-px rounded-xl overflow-hidden border border-[var(--border)]">
               {[
-                { value: "5,000+", label: t("home.statVoices") },
-                { value: "500+",   label: t("home.statBrands") },
-                { value: "10K+",   label: t("home.statContent") },
+                { value: formatStat(influencerCount), label: t("home.statVoices") },
+                { value: formatStat(companyCount),    label: t("home.statBrands") },
+                { value: formatStat(contentCount),    label: t("home.statContent") },
               ].map((stat, i) => (
                 <div
                   key={i}
