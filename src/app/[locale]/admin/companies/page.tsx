@@ -77,10 +77,10 @@ export default async function AdminCompaniesPage({
     <AppShell title={tNav("company")} nav={await getAdminNav()}>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 shadow-md shadow-emerald-500/25">
-            <span className="text-sm font-bold text-white">{total}</span>
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] shadow-md shadow-[var(--primary-glow)]">
+            <span className="text-sm font-bold text-[var(--background)]">{total}</span>
           </div>
-          <div className="text-sm text-slate-500">Total companies</div>
+          <div className="text-sm text-[var(--foreground-muted)]">Total companies</div>
         </div>
         <div className="w-72">
           <AdminSearchInput placeholder={t("searchCompany")} />
@@ -89,7 +89,7 @@ export default async function AdminCompaniesPage({
 
       <div className="mt-6">
         {users.length === 0 && (
-          <div className="glass rounded-xl p-8 text-center text-[#64748B]">
+          <div className="glass rounded-xl p-8 text-center text-[var(--foreground-muted)]">
             {q ? t("noResultsFor", { query: q }) : t("noResultsEmpty")}
           </div>
         )}
@@ -109,12 +109,12 @@ export default async function AdminCompaniesPage({
                 <TD>
                   <Link
                     href={`/admin/companies/${u.id}`}
-                    className="font-medium text-slate-900 hover:text-violet-700 hover:underline"
+                    className="font-medium text-[var(--foreground)] hover:text-[var(--primary)] hover:underline"
                   >
                     {u.firstName} {u.lastName}
                   </Link>
                 </TD>
-                <TD className="text-slate-500">
+                <TD className="text-[var(--foreground-muted)]">
                   {u.companyProfile?.companyName ?? "—"}
                 </TD>
                 <TD>{u.email}</TD>
@@ -194,7 +194,7 @@ export default async function AdminCompaniesPage({
         </Table>
       </div>
 
-      <div className="mt-6 flex items-center justify-between text-sm text-slate-500">
+      <div className="mt-6 flex items-center justify-between text-sm text-[var(--foreground-muted)]">
         <div>
           {t("pageLabel")} {page} / {pages} &mdash; {t("totalCount", { count: total })}
         </div>

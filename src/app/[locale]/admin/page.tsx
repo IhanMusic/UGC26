@@ -83,7 +83,7 @@ export default async function AdminDashboardPage() {
             <CardDescription>Influencers</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold tracking-tight text-violet-600">{influencers}</div>
+            <div className="text-3xl font-bold tracking-tight text-[var(--primary)]">{influencers}</div>
           </CardContent>
         </Card>
         <Card className="group">
@@ -91,7 +91,7 @@ export default async function AdminDashboardPage() {
             <CardDescription>Companies</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold tracking-tight text-emerald-600">{companies}</div>
+            <div className="text-3xl font-bold tracking-tight text-[var(--success)]">{companies}</div>
           </CardContent>
         </Card>
         <Card className="group">
@@ -107,7 +107,7 @@ export default async function AdminDashboardPage() {
             <CardDescription>Total Revenue</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold tracking-tight text-amber-600">{revenue.toLocaleString()} DZD</div>
+            <div className="text-3xl font-bold tracking-tight text-[var(--gold)]">{revenue.toLocaleString()} DZD</div>
           </CardContent>
         </Card>
         <Card className="group">
@@ -115,7 +115,7 @@ export default async function AdminDashboardPage() {
             <CardDescription>Open Disputes</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold tracking-tight text-red-600">{openDisputes}</div>
+            <div className="text-3xl font-bold tracking-tight text-[var(--danger)]">{openDisputes}</div>
           </CardContent>
         </Card>
       </div>
@@ -132,12 +132,12 @@ export default async function AdminDashboardPage() {
             <div className="flex items-end gap-2 h-40">
               {monthlyData.map((m) => (
                 <div key={m.month} className="flex-1 flex flex-col items-center gap-1">
-                  <span className="text-xs font-semibold text-slate-700">{m.campaigns}</span>
+                  <span className="text-xs font-semibold text-[var(--foreground-muted)]">{m.campaigns}</span>
                   <div
-                    className="w-full rounded-t-md bg-gradient-to-t from-violet-500 to-indigo-400 transition-all"
+                    className="w-full rounded-t-md bg-gradient-to-t from-[var(--primary)] to-[var(--secondary)] transition-all"
                     style={{ height: `${Math.max((m.campaigns / maxCampaigns) * 100, 4)}%` }}
                   />
-                  <span className="text-[10px] text-slate-400">{m.month.slice(5)}</span>
+                  <span className="text-[10px] text-[var(--foreground-muted)]">{m.month.slice(5)}</span>
                 </div>
               ))}
             </div>
@@ -152,41 +152,41 @@ export default async function AdminDashboardPage() {
           <CardContent className="space-y-4">
             <div>
               <div className="flex justify-between text-sm mb-1">
-                <span className="text-slate-500">Application Conversion Rate</span>
-                <span className="font-bold text-violet-600">{conversionRate}%</span>
+                <span className="text-[var(--foreground-muted)]">Application Conversion Rate</span>
+                <span className="font-bold text-[var(--primary)]">{conversionRate}%</span>
               </div>
-              <div className="h-2.5 rounded-full bg-slate-100 overflow-hidden">
-                <div className="h-full rounded-full bg-gradient-to-r from-violet-500 to-indigo-500" style={{ width: `${conversionRate}%` }} />
+              <div className="h-2.5 rounded-full bg-[var(--surface-mid)] overflow-hidden">
+                <div className="h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)]" style={{ width: `${conversionRate}%` }} />
               </div>
-              <div className="text-xs text-slate-400 mt-1">{acceptedApps} accepted / {totalApps} total</div>
+              <div className="text-xs text-[var(--foreground-muted)] mt-1">{acceptedApps} accepted / {totalApps} total</div>
             </div>
             <div>
               <div className="flex justify-between text-sm mb-1">
-                <span className="text-slate-500">Account Health</span>
+                <span className="text-[var(--foreground-muted)]">Account Health</span>
               </div>
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1.5">
-                  <div className="h-3 w-3 rounded-full bg-emerald-500" />
-                  <span className="text-xs text-slate-600">Active: {active}</span>
+                  <div className="h-3 w-3 rounded-full bg-[var(--success)]" />
+                  <span className="text-xs text-[var(--foreground-muted)]">Active: {active}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <div className="h-3 w-3 rounded-full bg-amber-500" />
-                  <span className="text-xs text-slate-600">Blocked: {blocked}</span>
+                  <div className="h-3 w-3 rounded-full bg-[var(--gold)]" />
+                  <span className="text-xs text-[var(--foreground-muted)]">Blocked: {blocked}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <div className="h-3 w-3 rounded-full bg-red-500" />
-                  <span className="text-xs text-slate-600">Deleted: {deleted}</span>
+                  <div className="h-3 w-3 rounded-full bg-[var(--danger)]" />
+                  <span className="text-xs text-[var(--foreground-muted)]">Deleted: {deleted}</span>
                 </div>
               </div>
             </div>
             {topInfluencers.length > 0 && (
               <div>
-                <div className="text-sm font-medium text-slate-700 mb-2">Top Influencers</div>
+                <div className="text-sm font-medium text-[var(--foreground)] mb-2">Top Influencers</div>
                 <div className="space-y-1.5">
                   {topInfluencers.map((t, i) => (
                     <div key={i} className="flex items-center justify-between text-xs">
-                      <span className="text-slate-600">{t.name}</span>
-                      <span className="font-semibold text-violet-600">{t.count} campaigns</span>
+                      <span className="text-[var(--foreground-muted)]">{t.name}</span>
+                      <span className="font-semibold text-[var(--primary)]">{t.count} campaigns</span>
                     </div>
                   ))}
                 </div>
@@ -206,8 +206,8 @@ export default async function AdminDashboardPage() {
             <div className="grid grid-cols-6 gap-3">
               {monthlyData.map((m) => (
                 <div key={m.month} className="text-center">
-                  <div className="text-lg font-bold text-emerald-600">{m.revenue.toLocaleString()}</div>
-                  <div className="text-[10px] text-slate-400">{m.month}</div>
+                  <div className="text-lg font-bold text-[var(--success)]">{m.revenue.toLocaleString()}</div>
+                  <div className="text-[10px] text-[var(--foreground-muted)]">{m.month}</div>
                 </div>
               ))}
             </div>
@@ -225,15 +225,15 @@ export default async function AdminDashboardPage() {
           <CardContent>
             <div className="space-y-3">
               {recentUsers.map((u) => (
-                <div key={u.id} className="flex items-center gap-3 rounded-xl border border-slate-100/80 bg-white/50 p-3 backdrop-blur-sm transition-colors hover:bg-violet-50/30">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-indigo-500 text-xs font-bold text-white shadow-sm">
+                <div key={u.id} className="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-3 backdrop-blur-sm transition-colors hover:bg-[var(--surface-hover)]">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] text-xs font-bold text-[var(--background)] shadow-sm">
                     {u.firstName?.charAt(0)}{u.lastName?.charAt(0)}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-sm font-medium text-slate-800">{u.firstName} {u.lastName}</div>
-                    <div className="truncate text-xs text-slate-500">{u.email}</div>
+                    <div className="text-sm font-medium text-[var(--foreground)]">{u.firstName} {u.lastName}</div>
+                    <div className="truncate text-xs text-[var(--foreground-muted)]">{u.email}</div>
                   </div>
-                  <div className="rounded-full border border-violet-200/50 bg-violet-50/80 px-2.5 py-0.5 text-[10px] font-medium text-violet-700">
+                  <div className="rounded-full border border-[var(--border)] bg-[var(--primary-dim)] px-2.5 py-0.5 text-[10px] font-medium text-[var(--primary)]">
                     {u.role}
                   </div>
                 </div>

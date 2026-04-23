@@ -115,7 +115,7 @@ export default function AdminPitchReviewClient({ pitch }: { pitch: Pitch }) {
           style={{
             background: pitch.status === "PENDING_REVIEW" ? "var(--gold-dim)" : "var(--surface-mid)",
             color: pitch.status === "PENDING_REVIEW" ? "var(--gold)" : "var(--foreground-muted)",
-            border: `1px solid ${pitch.status === "PENDING_REVIEW" ? "rgba(255,184,0,0.3)" : "var(--border)"}`,
+            border: `1px solid ${pitch.status === "PENDING_REVIEW" ? "var(--gold)" : "var(--border)"}`,
           }}
         >
           {pitch.status === "PENDING_REVIEW" ? "En attente" : pitch.status}
@@ -228,7 +228,7 @@ export default function AdminPitchReviewClient({ pitch }: { pitch: Pitch }) {
                       style={{
                         background: "var(--secondary-dim)",
                         color: "var(--secondary)",
-                        border: "1px solid rgba(255,45,120,0.3)",
+                        border: "1px solid var(--border)",
                       }}
                     >
                       {DELIVERABLE_TYPE_LABELS[d.type] ?? d.type}
@@ -243,7 +243,7 @@ export default function AdminPitchReviewClient({ pitch }: { pitch: Pitch }) {
                       style={{
                         background: "var(--gold-dim)",
                         color: "var(--gold)",
-                        border: "1px solid rgba(255,184,0,0.3)",
+                        border: "1px solid var(--gold)",
                       }}
                     >
                       min {d.minSponsorshipDZD.toLocaleString("fr-DZ")} DZD
@@ -338,7 +338,7 @@ export default function AdminPitchReviewClient({ pitch }: { pitch: Pitch }) {
                   style={{
                     background: "var(--danger-dim)",
                     color: "var(--danger)",
-                    border: "1px solid rgba(255,59,92,0.4)",
+                    border: "1px solid var(--danger)",
                   }}
                 >
                   {loading === "reject" ? "Refus…" : "✕ Refuser"}
@@ -361,7 +361,7 @@ export default function AdminPitchReviewClient({ pitch }: { pitch: Pitch }) {
               style={{
                 background: pitch.status === "PUBLISHED" ? "var(--accent-dim)" : "var(--danger-dim)",
                 color: pitch.status === "PUBLISHED" ? "var(--accent)" : "var(--danger)",
-                border: `1px solid ${pitch.status === "PUBLISHED" ? "rgba(0,255,136,0.3)" : "rgba(255,59,92,0.3)"}`,
+                border: `1px solid ${pitch.status === "PUBLISHED" ? "var(--accent)" : "var(--danger)"}`,
               }}
             >
               {pitch.status === "PUBLISHED" ? "✓ Projet validé et publié" : "✕ Projet refusé"}

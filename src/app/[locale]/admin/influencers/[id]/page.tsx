@@ -24,7 +24,7 @@ export default async function AdminInfluencerDetailPage({
   if (!user) {
     return (
       <AppShell title={t("influencerDetail")} nav={await getAdminNav()}>
-        <div className="text-slate-700">Not found</div>
+        <div className="text-[var(--foreground-muted)]">Not found</div>
       </AppShell>
     );
   }
@@ -49,7 +49,7 @@ export default async function AdminInfluencerDetailPage({
             )}
           </div>
 
-          <div className="grid gap-2 text-sm text-slate-700">
+          <div className="grid gap-2 text-sm text-[var(--foreground-muted)]">
             <div>Phone: {user.phone ?? "—"}</div>
             <div>Main account: {user.influencerProfile?.mainAccountLink ?? "—"}</div>
             <div>Country: {user.influencerProfile?.country ?? "—"}</div>

@@ -74,10 +74,10 @@ export default async function AdminCampaignsPage({
     <AppShell title={tNav("campaigns")} nav={await getAdminNav()}>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-rose-500 shadow-md shadow-orange-500/25">
-            <span className="text-sm font-bold text-white">{total}</span>
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] shadow-md shadow-[var(--primary-glow)]">
+            <span className="text-sm font-bold text-[var(--background)]">{total}</span>
           </div>
-          <div className="text-sm text-slate-500">Total campaigns</div>
+          <div className="text-sm text-[var(--foreground-muted)]">Total campaigns</div>
         </div>
         <div className="flex flex-wrap items-center gap-3">
           <AdminStatusFilter />
@@ -104,11 +104,11 @@ export default async function AdminCampaignsPage({
                 key={c.id}
                 className={
                   focus === c.id
-                    ? "border-b border-violet-200/50 bg-violet-50/50"
+                    ? "border-b border-[var(--border)] bg-[var(--primary-dim)]"
                     : undefined
                 }
               >
-                <TD className="font-medium text-slate-900">{c.title}</TD>
+                <TD className="font-medium text-[var(--foreground)]">{c.title}</TD>
                 <TD>
                   {c.company.companyProfile?.companyName ?? c.company.email}
                 </TD>
@@ -121,7 +121,7 @@ export default async function AdminCampaignsPage({
                 <TD className="text-right">
                   <Link
                     href={`/admin/campaigns/${c.id}`}
-                    className="text-sm font-medium text-violet-600 underline underline-offset-4 hover:text-violet-700"
+                    className="text-sm font-medium text-[var(--primary)] underline underline-offset-4 hover:text-[var(--primary)]"
                   >
                     Manage
                   </Link>
@@ -132,13 +132,13 @@ export default async function AdminCampaignsPage({
         </Table>
 
         {campaigns.length === 0 && (
-          <div className="glass rounded-xl p-8 text-center text-[#64748B]">
+          <div className="glass rounded-xl p-8 text-center text-[var(--foreground-muted)]">
             {q ? t("noResultsFor", { query: q }) : t("noResultsEmpty")}
           </div>
         )}
       </div>
 
-      <div className="mt-6 flex items-center justify-between text-sm text-slate-500">
+      <div className="mt-6 flex items-center justify-between text-sm text-[var(--foreground-muted)]">
         <div>
           {t("pageLabel")} {page} / {pages} &mdash; {t("totalCount", { count: total })}
         </div>

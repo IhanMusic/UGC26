@@ -53,14 +53,14 @@ export default async function AdminApplicationsPage() {
         <TBody>
           {applications.length === 0 ? (
             <TR>
-              <TD colSpan={6} className="text-center text-slate-400">
+              <TD colSpan={6} className="text-center text-[var(--foreground-muted)]">
                 Aucune candidature en attente de pré-validation.
               </TD>
             </TR>
           ) : (
             applications.map((app) => (
               <TR key={app.id}>
-                <TD className="font-medium text-slate-900">
+                <TD className="font-medium text-[var(--foreground)]">
                   {app.campaign.title}
                 </TD>
                 <TD>
@@ -81,13 +81,13 @@ export default async function AdminApplicationsPage() {
                         )
                       )
                     ) : (
-                      <span className="text-slate-400 text-xs">—</span>
+                      <span className="text-[var(--foreground-muted)] text-xs">—</span>
                     )}
                   </div>
                 </TD>
                 <TD>
                   {app.influencer.influencerProfile?.followersCountRange ?? (
-                    <span className="text-slate-400">—</span>
+                    <span className="text-[var(--foreground-muted)]">—</span>
                   )}
                 </TD>
                 <TD>{app.createdAt.toLocaleDateString()}</TD>

@@ -43,7 +43,7 @@ export default async function AdminPitchesPage() {
             style={{
               background: pitches.length > 0 ? "var(--gold-dim)" : "var(--surface-mid)",
               color: pitches.length > 0 ? "var(--gold)" : "var(--foreground-muted)",
-              border: `1px solid ${pitches.length > 0 ? "rgba(255,184,0,0.3)" : "var(--border)"}`,
+              border: `1px solid ${pitches.length > 0 ? "var(--gold)" : "var(--border)"}`,
             }}
           >
             {pitches.length} en attente

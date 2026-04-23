@@ -24,7 +24,7 @@ export default async function AdminCompanyDetailPage({
   if (!user) {
     return (
       <AppShell title={t("companyDetail")} nav={await getAdminNav()}>
-        <div className="text-slate-700">Not found</div>
+        <div className="text-[var(--foreground-muted)]">Not found</div>
       </AppShell>
     );
   }
@@ -49,7 +49,7 @@ export default async function AdminCompanyDetailPage({
             )}
           </div>
 
-          <div className="grid gap-2 text-sm text-slate-700">
+          <div className="grid gap-2 text-sm text-[var(--foreground-muted)]">
             <div>Position: {user.companyProfile?.position ?? "—"}</div>
             <div>Details: {user.companyProfile?.companyDetails ?? "—"}</div>
           </div>

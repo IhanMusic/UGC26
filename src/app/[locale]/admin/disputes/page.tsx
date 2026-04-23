@@ -29,7 +29,7 @@ export default async function AdminDisputesPage() {
   return (
     <AppShell title={t("disputes")} nav={await getAdminNav()}>
       {disputes.length === 0 ? (
-        <div className="text-center text-slate-400 py-12">No disputes.</div>
+        <div className="text-center text-[var(--foreground-muted)] py-12">No disputes.</div>
       ) : (
         <Table>
           <THead>
@@ -46,18 +46,18 @@ export default async function AdminDisputesPage() {
             {disputes.map((d) => (
               <TR key={d.id}>
                 <TD className="font-medium">{d.campaign.title}</TD>
-                <TD className="text-sm text-slate-600">
+                <TD className="text-sm text-[var(--foreground-muted)]">
                   {d.raisedBy.firstName} {d.raisedBy.lastName}
-                  <div className="text-xs text-slate-400">{d.raisedBy.role}</div>
+                  <div className="text-xs text-[var(--foreground-muted)]">{d.raisedBy.role}</div>
                 </TD>
-                <TD className="max-w-xs text-sm text-slate-600 truncate">{d.reason}</TD>
+                <TD className="max-w-xs text-sm text-[var(--foreground-muted)] truncate">{d.reason}</TD>
                 <TD><Badge variant={statusVariant(d.status)}>{d.status}</Badge></TD>
-                <TD className="max-w-xs text-sm text-slate-500 truncate">{d.resolution ?? "—"}</TD>
+                <TD className="max-w-xs text-sm text-[var(--foreground-muted)] truncate">{d.resolution ?? "—"}</TD>
                 <TD>
                   {(d.status === "OPEN" || d.status === "UNDER_REVIEW") ? (
                     <DisputeActions disputeId={d.id} />
                   ) : (
-                    <span className="text-xs text-slate-400">Done</span>
+                    <span className="text-xs text-[var(--foreground-muted)]">Done</span>
                   )}
                 </TD>
               </TR>

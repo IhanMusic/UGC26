@@ -89,7 +89,7 @@ const STATUS_CONFIG: Record<
     label: "En révision",
     color: "var(--gold)",
     bg: "var(--gold-dim)",
-    border: "rgba(255,184,0,0.3)",
+    border: "var(--border)",
   },
   PUBLISHED: {
     label: "Publié",
@@ -101,31 +101,31 @@ const STATUS_CONFIG: Record<
     label: "Financé",
     color: "var(--accent)",
     bg: "var(--accent-dim)",
-    border: "rgba(0,255,136,0.3)",
+    border: "var(--accent-glow)",
   },
   IN_PRODUCTION: {
     label: "En production",
     color: "var(--secondary)",
     bg: "var(--secondary-dim)",
-    border: "rgba(255,45,120,0.3)",
+    border: "var(--border)",
   },
   COMPLETED: {
     label: "Terminé",
     color: "var(--accent)",
     bg: "var(--accent-dim)",
-    border: "rgba(0,255,136,0.3)",
+    border: "var(--accent-glow)",
   },
   CLOSED: {
     label: "Fermé",
     color: "var(--danger)",
-    bg: "rgba(255,59,92,0.1)",
-    border: "rgba(255,59,92,0.3)",
+    bg: "var(--danger-dim)",
+    border: "var(--danger)",
   },
   REJECTED: {
     label: "Rejeté",
     color: "var(--danger)",
-    bg: "rgba(255,59,92,0.1)",
-    border: "rgba(255,59,92,0.3)",
+    bg: "var(--danger-dim)",
+    border: "var(--danger)",
   },
 };
 
@@ -269,9 +269,9 @@ export default function CreatorPitchDetailClient({
                 disabled={working}
                 className="inline-flex items-center rounded-lg border px-3 py-1.5 text-xs font-medium transition-all disabled:opacity-50"
                 style={{
-                  borderColor: "rgba(255,59,92,0.3)",
+                  borderColor: "var(--danger)",
                   color: "var(--danger)",
-                  background: "rgba(255,59,92,0.08)",
+                  background: "var(--danger-dim)",
                 }}
               >
                 Fermer le projet
@@ -378,7 +378,7 @@ export default function CreatorPitchDetailClient({
                       style={{
                         background: "var(--secondary-dim)",
                         color: "var(--secondary)",
-                        border: "1px solid rgba(255,45,120,0.3)",
+                        border: "1px solid var(--border)",
                       }}
                     >
                       {sp.brand.firstName.charAt(0)}

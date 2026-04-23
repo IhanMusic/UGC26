@@ -76,10 +76,11 @@ export default function NotificationsPage() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-8">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-slate-900">{t("title")}</h1>
+        <h1 className="text-2xl font-bold text-[var(--foreground)]">{t("title")}</h1>
         <button
+          type="button"
           onClick={markAllRead}
-          className="text-sm font-medium text-violet-600 hover:text-violet-700"
+          className="text-sm font-medium text-[var(--primary)] hover:text-[var(--primary)]"
         >
           {t("markAllRead")}
         </button>
@@ -87,10 +88,10 @@ export default function NotificationsPage() {
 
       {loading ? (
         <div className="flex items-center justify-center py-12">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-violet-300 border-t-violet-600" />
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-[var(--primary-dim)] border-t-[var(--primary)]" />
         </div>
       ) : notifications.length === 0 ? (
-        <div className="rounded-2xl border border-white/20 bg-white/60 py-16 text-center text-sm text-slate-400 backdrop-blur-2xl">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] py-16 text-center text-sm text-[var(--foreground-muted)] backdrop-blur-2xl">
           {t("empty")}
         </div>
       ) : (
@@ -99,23 +100,24 @@ export default function NotificationsPage() {
             <button
               key={n.id}
               onClick={() => handleClick(n)}
+              type="button"
               className={cn(
-                "flex w-full gap-4 rounded-xl px-4 py-3 text-left transition-colors hover:bg-violet-50/50",
-                !n.read ? "bg-violet-50/30 border border-violet-100" : "bg-white/60 border border-white/20"
+                "flex w-full gap-4 rounded-xl px-4 py-3 text-left transition-colors hover:bg-[var(--surface-hover)]",
+                !n.read ? "bg-[var(--primary-dim)] border border-[var(--border)]" : "bg-[var(--surface)] border border-[var(--border)]"
               )}
             >
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className={cn("text-sm font-medium", n.read ? "text-slate-600" : "text-slate-900")}>
+                  <span className={cn("text-sm font-medium", n.read ? "text-[var(--foreground-muted)]" : "text-[var(--foreground)]")}>
                     {n.title}
                   </span>
                   {!n.read && (
-                    <span className="h-2 w-2 flex-shrink-0 rounded-full bg-violet-500" />
+                    <span className="h-2 w-2 flex-shrink-0 rounded-full bg-[var(--primary)]" />
                   )}
                 </div>
-                <p className="mt-0.5 text-xs text-slate-500">{n.message}</p>
+                <p className="mt-0.5 text-xs text-[var(--foreground-muted)]">{n.message}</p>
               </div>
-              <span className="text-[10px] text-slate-400 flex-shrink-0 pt-1">{timeAgo(n.createdAt)}</span>
+              <span className="text-[10px] text-[var(--foreground-muted)] flex-shrink-0 pt-1">{timeAgo(n.createdAt)}</span>
             </button>
           ))}
         </div>
@@ -125,19 +127,21 @@ export default function NotificationsPage() {
       {pages > 1 && (
         <div className="mt-6 flex items-center justify-center gap-2">
           <button
+            type="button"
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page === 1}
-            className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 disabled:opacity-50"
+            className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-xs font-medium text-[var(--foreground-muted)] hover:bg-[var(--surface-mid)] disabled:opacity-50"
           >
             ←
           </button>
-          <span className="text-xs text-slate-500">
+          <span className="text-xs text-[var(--foreground-muted)]">
             {page} / {pages}
           </span>
           <button
+            type="button"
             onClick={() => setPage((p) => Math.min(pages, p + 1))}
             disabled={page === pages}
-            className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 disabled:opacity-50"
+            className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-xs font-medium text-[var(--foreground-muted)] hover:bg-[var(--surface-mid)] disabled:opacity-50"
           >
             →
           </button>

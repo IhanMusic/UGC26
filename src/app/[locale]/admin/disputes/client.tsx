@@ -29,13 +29,13 @@ export function DisputeActions({ disputeId }: { disputeId: string }) {
         value={resolution}
         onChange={(e) => setResolution(e.target.value)}
         placeholder="Resolution note…"
-        className="h-8 rounded-lg border border-slate-200 px-2 text-xs"
+        className="h-8 rounded-lg border border-[var(--border)] px-2 text-xs"
       />
       <div className="flex gap-1">
-        <Button size="sm" onClick={() => handle("resolve")} disabled={loading}>
+        <Button type="button" size="sm" onClick={() => handle("resolve")} disabled={loading}>
           {loading ? "…" : "Resolve"}
         </Button>
-        <Button size="sm" variant="outline" onClick={() => handle("dismiss")} disabled={loading}>
+        <Button type="button" size="sm" variant="outline" onClick={() => handle("dismiss")} disabled={loading}>
           {loading ? "…" : "Dismiss"}
         </Button>
       </div>

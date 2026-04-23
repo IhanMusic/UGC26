@@ -62,27 +62,27 @@ export default async function AdminTransactionsPage({
   return (
     <AppShell title={t("transactions")} nav={await getAdminNav()}>
       <div className="mb-8 space-y-3">
-        <div className="text-sm font-medium text-slate-700">{tAdmin("filter")}</div>
+        <div className="text-sm font-medium text-[var(--foreground)]">{tAdmin("filter")}</div>
         <form className="flex flex-wrap items-end gap-3" action="/admin/transactions">
           <label className="space-y-1.5 text-sm">
-            <div className="text-xs font-medium text-slate-500">{tAdmin("from")}</div>
+            <div className="text-xs font-medium text-[var(--foreground-muted)]">{tAdmin("from")}</div>
             <input
               type="date"
               name="from"
               defaultValue={from}
-              className="h-10 rounded-xl border border-slate-200/60 bg-white/50 px-4 shadow-sm backdrop-blur-sm transition-all focus:border-violet-300 focus:outline-none focus:ring-2 focus:ring-violet-400/50"
+              className="h-10 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 shadow-sm backdrop-blur-sm transition-all focus-visible:border-[var(--primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-glow)]"
             />
           </label>
           <label className="space-y-1.5 text-sm">
-            <div className="text-xs font-medium text-slate-500">{tAdmin("to")}</div>
+            <div className="text-xs font-medium text-[var(--foreground-muted)]">{tAdmin("to")}</div>
             <input
               type="date"
               name="to"
               defaultValue={to}
-              className="h-10 rounded-xl border border-slate-200/60 bg-white/50 px-4 shadow-sm backdrop-blur-sm transition-all focus:border-violet-300 focus:outline-none focus:ring-2 focus:ring-violet-400/50"
+              className="h-10 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 shadow-sm backdrop-blur-sm transition-all focus-visible:border-[var(--primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-glow)]"
             />
           </label>
-          <button className="h-10 rounded-xl border border-slate-200/60 bg-white/50 px-5 text-sm font-medium shadow-sm backdrop-blur-sm transition-all hover:bg-violet-50 hover:border-violet-300 hover:text-violet-700">
+          <button type="submit" className="h-10 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-5 text-sm font-medium shadow-sm backdrop-blur-sm transition-all hover:bg-[var(--primary-dim)] hover:border-[var(--primary)] hover:text-[var(--primary)]">
             {tAdmin("apply")}
           </button>
         </form>
@@ -91,7 +91,7 @@ export default async function AdminTransactionsPage({
       <div className="mb-4 flex justify-end">
         <a
           href="/api/admin/transactions/export"
-          className="rounded-xl border border-slate-200/60 bg-white/50 dark:bg-slate-900/50 dark:border-slate-700 px-4 py-2 text-sm font-medium shadow-sm hover:bg-violet-50 dark:hover:bg-violet-900/20 hover:border-violet-300 hover:text-violet-700 dark:hover:text-violet-300 transition-all"
+          className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-medium shadow-sm hover:bg-[var(--primary-dim)] hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all"
         >
           Exporter CSV
         </a>
@@ -99,7 +99,7 @@ export default async function AdminTransactionsPage({
 
       <div className="space-y-8">
         <div>
-          <div className="mb-3 text-sm font-semibold text-slate-800">{tAdmin("readyToPay")}</div>
+          <div className="mb-3 text-sm font-semibold text-[var(--foreground)]">{tAdmin("readyToPay")}</div>
           <Table>
             <THead>
               <TR>
@@ -112,14 +112,14 @@ export default async function AdminTransactionsPage({
             <TBody>
               {toPay.length === 0 ? (
                 <TR>
-                  <TD colSpan={4} className="text-center text-slate-400">
+                  <TD colSpan={4} className="text-center text-[var(--foreground-muted)]">
                     {tAdmin("nothingToPay")}
                   </TD>
                 </TR>
               ) : (
                 toPay.map((p) => (
                   <TR key={p.id}>
-                    <TD className="font-medium text-slate-900">{p.campaign.title}</TD>
+                    <TD className="font-medium text-[var(--foreground)]">{p.campaign.title}</TD>
                     <TD>
                       {p.influencer.firstName} {p.influencer.lastName}
                     </TD>
@@ -139,13 +139,13 @@ export default async function AdminTransactionsPage({
               )}
             </TBody>
           </Table>
-          <div className="mt-2 text-xs text-slate-400">
+          <div className="mt-2 text-xs text-[var(--foreground-muted)]">
             Stripe Connect payout will replace this action later.
           </div>
         </div>
 
         <div>
-          <div className="mb-3 text-sm font-semibold text-slate-800">{t("transactions")}</div>
+          <div className="mb-3 text-sm font-semibold text-[var(--foreground)]">{t("transactions")}</div>
           <Table>
             <THead>
               <TR>
@@ -159,7 +159,7 @@ export default async function AdminTransactionsPage({
             <TBody>
               {txs.length === 0 ? (
                 <TR>
-                  <TD colSpan={5} className="text-center text-slate-400">
+                  <TD colSpan={5} className="text-center text-[var(--foreground-muted)]">
                     {tAdmin("noTransactions")}
                   </TD>
                 </TR>

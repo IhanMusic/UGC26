@@ -32,8 +32,8 @@ export default function AdminCategoriesClient() {
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-indigo-500 shadow-lg shadow-violet-500/25">
-            <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] shadow-lg shadow-[var(--primary-glow)]">
+            <svg className="h-5 w-5 text-[var(--background)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z" />
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 6h.008v.008H6V6z" />
             </svg>
@@ -48,6 +48,7 @@ export default function AdminCategoriesClient() {
             placeholder="New category name"
           />
           <Button
+            type="button"
             onClick={async () => {
               const name = newName.trim();
               if (!name) return;
@@ -79,13 +80,13 @@ export default function AdminCategoriesClient() {
         <TBody>
           {loading ? (
             <TR>
-              <TD colSpan={2} className="text-center text-slate-400">
-                <div className="animate-shimmer h-6 rounded bg-slate-100" />
+              <TD colSpan={2} className="text-center text-[var(--foreground-muted)]">
+                <div className="animate-shimmer h-6 rounded bg-[var(--surface-mid)]" />
               </TD>
             </TR>
           ) : filtered.length === 0 ? (
             <TR>
-              <TD colSpan={2} className="text-center text-slate-400">
+              <TD colSpan={2} className="text-center text-[var(--foreground-muted)]">
                 No categories
               </TD>
             </TR>
@@ -95,7 +96,7 @@ export default function AdminCategoriesClient() {
                 <TD>
                   <input
                     defaultValue={c.name}
-                    className="h-9 w-full rounded-xl border border-slate-200/60 bg-white/50 px-4 text-sm shadow-sm backdrop-blur-sm transition-all focus:border-violet-300 focus:outline-none focus:ring-2 focus:ring-violet-400/50"
+                    className="h-9 w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 text-sm shadow-sm backdrop-blur-sm transition-all focus-visible:border-[var(--primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-glow)]"
                     onBlur={async (e) => {
                       const name = e.target.value.trim();
                       if (!name || name === c.name) return;

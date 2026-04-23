@@ -57,7 +57,7 @@ export default function CreatorPitchesClient({ pitches }: CreatorPitchesClientPr
             className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl text-3xl"
             style={{
               background: "var(--secondary-dim)",
-              border: "1px solid rgba(255,45,120,0.3)",
+              border: "1px solid var(--border)",
             }}
           >
             🎬

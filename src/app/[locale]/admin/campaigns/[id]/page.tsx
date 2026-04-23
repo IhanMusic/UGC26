@@ -35,7 +35,7 @@ export default async function AdminCampaignDetailPage({
   if (!campaign) {
     return (
       <AppShell title={t("campaignDetail")} nav={await getAdminNav()}>
-        <div className="text-slate-700">Not found</div>
+        <div className="text-[var(--foreground-muted)]">Not found</div>
       </AppShell>
     );
   }
@@ -57,7 +57,7 @@ export default async function AdminCampaignDetailPage({
                 {campaign.status}
               </Badge>
             </div>
-            <div className="text-sm text-slate-700 whitespace-pre-wrap">
+            <div className="text-sm text-[var(--foreground-muted)] whitespace-pre-wrap">
               {campaign.description}
             </div>
           </CardContent>
@@ -68,14 +68,14 @@ export default async function AdminCampaignDetailPage({
             <CardTitle>Lifecycle</CardTitle>
             <CardDescription>Stripe future-ready</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-3 text-sm text-slate-700">
+          <CardContent className="space-y-3 text-sm text-[var(--foreground-muted)]">
             <div>
               Company payment: <Badge variant="secondary">Stripe (coming soon)</Badge>
             </div>
             <div>
               Influencer payout: <Badge variant="secondary">Stripe Connect (coming soon)</Badge>
             </div>
-            <div className="text-xs text-slate-500">
+            <div className="text-xs text-[var(--foreground-muted)]">
               For now, use Transactions screen to mark as paid manually.
             </div>
           </CardContent>
@@ -104,7 +104,7 @@ export default async function AdminCampaignDetailPage({
                     <TD className="font-medium">
                       {a.influencer.firstName} {a.influencer.lastName}
                     </TD>
-                    <TD className="text-slate-700">{a.influencer.email}</TD>
+                    <TD className="text-[var(--foreground-muted)]">{a.influencer.email}</TD>
                     <TD>
                       <Badge
                         variant={

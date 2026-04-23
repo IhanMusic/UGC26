@@ -35,7 +35,7 @@ export default async function AdminRequestsPage() {
         <TBody>
           {requests.map((r) => (
             <TR key={r.id}>
-              <TD className="font-medium text-slate-900">{r.title}</TD>
+              <TD className="font-medium text-[var(--foreground)]">{r.title}</TD>
               <TD>
                 {r.company.companyProfile?.companyName ?? r.company.email}
               </TD>
@@ -75,7 +75,7 @@ export default async function AdminRequestsPage() {
                   ) : r.status === "APPROVED" && r.approvedCampaign ? (
                     <a
                       href={`/admin/campaigns?focus=${r.approvedCampaign.id}`}
-                      className="text-sm font-medium text-violet-600 underline underline-offset-4 hover:text-violet-700"
+                      className="text-sm font-medium text-[var(--primary)] underline underline-offset-4 hover:text-[var(--primary)]"
                     >
                       View campaign
                     </a>

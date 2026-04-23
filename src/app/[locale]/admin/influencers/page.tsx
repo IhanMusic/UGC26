@@ -71,10 +71,10 @@ export default async function AdminInfluencersPage({
     <AppShell title={tNav("influencer")} nav={await getAdminNav()}>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-indigo-500 shadow-md shadow-violet-500/25">
-            <span className="text-sm font-bold text-white">{total}</span>
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] shadow-md shadow-[var(--primary-glow)]">
+            <span className="text-sm font-bold text-[var(--background)]">{total}</span>
           </div>
-          <div className="text-sm text-slate-500">Total influencers</div>
+          <div className="text-sm text-[var(--foreground-muted)]">Total influencers</div>
         </div>
         <div className="w-72">
           <AdminSearchInput placeholder={t("searchInfluencer")} />
@@ -83,7 +83,7 @@ export default async function AdminInfluencersPage({
 
       <div className="mt-6">
         {users.length === 0 && (
-          <div className="glass rounded-xl p-8 text-center text-[#64748B]">
+          <div className="glass rounded-xl p-8 text-center text-[var(--foreground-muted)]">
             {q ? t("noResultsFor", { query: q }) : t("noResultsEmpty")}
           </div>
         )}
@@ -102,7 +102,7 @@ export default async function AdminInfluencersPage({
                 <TD>
                   <Link
                     href={`/admin/influencers/${u.id}`}
-                    className="font-medium text-slate-900 hover:text-violet-700 hover:underline"
+                    className="font-medium text-[var(--foreground)] hover:text-[var(--primary)] hover:underline"
                   >
                     {u.firstName} {u.lastName}
                   </Link>
@@ -184,7 +184,7 @@ export default async function AdminInfluencersPage({
         </Table>
       </div>
 
-      <div className="mt-6 flex items-center justify-between text-sm text-slate-500">
+      <div className="mt-6 flex items-center justify-between text-sm text-[var(--foreground-muted)]">
         <div>
           {t("pageLabel")} {page} / {pages} &mdash; {t("totalCount", { count: total })}
         </div>
