@@ -108,11 +108,12 @@ export function NotificationBell() {
   return (
     <div className="relative" ref={dropdownRef}>
       <button
+        type="button"
         onClick={handleToggle}
-        className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/60 backdrop-blur-sm transition-colors hover:bg-violet-50"
+        className="relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] backdrop-blur-sm transition-colors hover:bg-[var(--surface-mid)]"
         aria-label={t("title")}
       >
-        <svg className="h-5 w-5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <svg className="h-5 w-5 text-[var(--foreground-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
         </svg>
         {count > 0 && (
@@ -123,14 +124,15 @@ export function NotificationBell() {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-12 z-50 w-80 rounded-2xl border border-white/20 bg-white/95 shadow-2xl backdrop-blur-2xl sm:w-96">
+        <div className="absolute right-0 top-12 z-50 w-80 rounded-2xl border border-[var(--border)] bg-[var(--surface-high)] shadow-2xl backdrop-blur-2xl sm:w-96">
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3">
-            <h3 className="text-sm font-semibold text-slate-900">{t("title")}</h3>
+          <div className="flex items-center justify-between border-b border-[var(--border)] px-4 py-3">
+            <h3 className="text-sm font-semibold text-[var(--foreground)]">{t("title")}</h3>
             {count > 0 && (
               <button
+                type="button"
                 onClick={markAllRead}
-                className="text-xs font-medium text-violet-600 hover:text-violet-700"
+                className="cursor-pointer text-xs font-medium text-[var(--primary)] hover:opacity-80"
               >
                 {t("markAllRead")}
               </button>
@@ -141,33 +143,34 @@ export function NotificationBell() {
           <div className="max-h-80 overflow-y-auto">
             {loading ? (
               <div className="flex items-center justify-center py-8">
-                <div className="h-5 w-5 animate-spin rounded-full border-2 border-violet-300 border-t-violet-600" />
+                <div className="h-5 w-5 animate-spin rounded-full border-2 border-[var(--border)] border-t-[var(--primary)]" />
               </div>
             ) : notifications.length === 0 ? (
-              <div className="py-8 text-center text-sm text-slate-400">
+              <div className="py-8 text-center text-sm text-[var(--foreground-muted)]">
                 {t("empty")}
               </div>
             ) : (
               notifications.map((n) => (
                 <button
                   key={n.id}
+                  type="button"
                   onClick={() => handleClick(n)}
                   className={cn(
-                    "flex w-full gap-3 px-4 py-3 text-left transition-colors hover:bg-violet-50/50",
-                    !n.read && "bg-violet-50/30"
+                    "flex w-full cursor-pointer gap-3 px-4 py-3 text-left transition-colors hover:bg-[var(--surface-mid)]",
+                    !n.read && "bg-[var(--primary-dim)]"
                   )}
                 >
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className={cn("text-sm font-medium truncate", n.read ? "text-slate-600" : "text-slate-900")}>
+                      <span className={cn("text-sm font-medium truncate", n.read ? "text-[var(--foreground-muted)]" : "text-[var(--foreground)]")}>
                         {n.title}
                       </span>
                       {!n.read && (
-                        <span className="h-2 w-2 flex-shrink-0 rounded-full bg-violet-500" />
+                        <span className="h-2 w-2 flex-shrink-0 rounded-full bg-[var(--primary)]" />
                       )}
                     </div>
-                    <p className="mt-0.5 text-xs text-slate-500 line-clamp-2">{n.message}</p>
-                    <span className="mt-1 text-[10px] text-slate-400">{timeAgo(n.createdAt)}</span>
+                    <p className="mt-0.5 text-xs text-[var(--foreground-muted)] line-clamp-2">{n.message}</p>
+                    <span className="mt-1 text-[10px] text-[var(--foreground-muted)]">{timeAgo(n.createdAt)}</span>
                   </div>
                 </button>
               ))
@@ -175,13 +178,14 @@ export function NotificationBell() {
           </div>
 
           {/* Footer */}
-          <div className="border-t border-slate-100 px-4 py-2">
+          <div className="border-t border-[var(--border)] px-4 py-2">
             <button
+              type="button"
               onClick={() => {
                 setOpen(false);
                 router.push("/notifications" as never);
               }}
-              className="w-full text-center text-xs font-medium text-violet-600 hover:text-violet-700"
+              className="w-full cursor-pointer text-center text-xs font-medium text-[var(--primary)] hover:opacity-80"
             >
               {t("viewAll")}
             </button>

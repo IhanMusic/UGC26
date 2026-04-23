@@ -25,7 +25,7 @@ const variantStyles: Record<ToastVariant, string> = {
   success: "border-emerald-200/50 bg-emerald-50/90 text-emerald-800",
   error: "border-red-200/50 bg-red-50/90 text-red-800",
   warning: "border-amber-200/50 bg-amber-50/90 text-amber-800",
-  info: "border-violet-200/50 bg-violet-50/90 text-violet-800",
+  info: "border-[var(--primary)] bg-[var(--primary-dim)] text-[var(--primary)]",
 };
 
 const icons: Record<ToastVariant, string> = {
@@ -64,6 +64,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
             </span>
             <span className="flex-1">{t.message}</span>
             <button
+              type="button"
               onClick={() => setToasts((prev) => prev.filter((x) => x.id !== t.id))}
               className="ml-2 text-current opacity-50 hover:opacity-100 transition-opacity"
               aria-label="Close"
