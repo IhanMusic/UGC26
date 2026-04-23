@@ -29,33 +29,33 @@ export default async function PaymentsPage() {
     <AppShell title={tNav("paymentInfo")} nav={await getInfluencerNav()}>
       <div className="space-y-8">
         <div>
-          <h1 className="text-2xl font-bold text-[#E2E8F0]">{t("title")}</h1>
-          <p className="text-[#64748B]">{t("subtitle")}</p>
+          <h1 className="text-2xl font-bold text-[var(--foreground)]">{t("title")}</h1>
+          <p className="text-[var(--foreground-muted)]">{t("subtitle")}</p>
         </div>
 
         {/* Summary cards */}
         <div className="grid grid-cols-2 gap-4">
           <div className="glass rounded-xl p-5 space-y-1">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#475569]">{t("totalEarned")}</p>
-            <p className="text-2xl font-bold text-[#FBBF24]">{totalEarned.toLocaleString("fr-DZ")} DZD</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-[var(--foreground-muted)]">{t("totalEarned")}</p>
+            <p className="text-2xl font-bold text-[var(--gold-light)]">{totalEarned.toLocaleString("fr-DZ")} DZD</p>
           </div>
           <div className="glass rounded-xl p-5 space-y-1">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#475569]">{t("pendingAmount")}</p>
-            <p className="text-2xl font-bold text-[#94A3B8]">{pendingAmount.toLocaleString("fr-DZ")} DZD</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-[var(--foreground-muted)]">{t("pendingAmount")}</p>
+            <p className="text-2xl font-bold text-[var(--foreground-muted)]">{pendingAmount.toLocaleString("fr-DZ")} DZD</p>
           </div>
         </div>
 
         {/* Transaction history */}
         <div className="glass rounded-xl overflow-hidden">
           <div className="border-b border-white/[0.08] px-5 py-3">
-            <h2 className="font-semibold text-[#E2E8F0]">{t("historyTitle")}</h2>
+            <h2 className="font-semibold text-[var(--foreground)]">{t("historyTitle")}</h2>
           </div>
           {transactions.length === 0 ? (
-            <div className="p-8 text-center text-[#64748B]">{t("noTransactions")}</div>
+            <div className="p-8 text-center text-[var(--foreground-muted)]">{t("noTransactions")}</div>
           ) : (
             <table className="w-full">
               <thead>
-                <tr className="border-b border-white/[0.08] text-left text-xs text-[#475569]">
+                <tr className="border-b border-white/[0.08] text-left text-xs text-[var(--foreground-muted)]">
                   <th className="px-5 py-3 font-semibold uppercase tracking-wider">{t("colDate")}</th>
                   <th className="px-5 py-3 font-semibold uppercase tracking-wider">{t("colAmount")}</th>
                   <th className="px-5 py-3 font-semibold uppercase tracking-wider">{t("colStatus")}</th>
@@ -64,19 +64,19 @@ export default async function PaymentsPage() {
               <tbody>
                 {transactions.map((t) => (
                   <tr key={t.id} className="border-b border-white/[0.04] hover:bg-white/[0.02]">
-                    <td className="px-5 py-3 text-sm text-[#94A3B8]">
+                    <td className="px-5 py-3 text-sm text-[var(--foreground-muted)]">
                       {new Date(t.createdAt).toLocaleDateString("fr-FR")}
                     </td>
-                    <td className="px-5 py-3 text-sm font-medium text-[#E2E8F0]">
+                    <td className="px-5 py-3 text-sm font-medium text-[var(--foreground)]">
                       {t.netAmountInfluencer.toLocaleString("fr-DZ")} DZD
                     </td>
                     <td className="px-5 py-3">
                       <span
                         className={`rounded-full px-2.5 py-1 text-xs font-medium ${
                           t.status === "PAID"
-                            ? "bg-emerald-500/20 text-emerald-300"
+                            ? "bg-[var(--surface-mid)] text-[var(--success)]"
                             : t.status === "PENDING"
-                              ? "bg-amber-500/20 text-amber-300"
+                              ? "bg-[var(--surface-mid)] text-[var(--gold)]"
                               : "bg-white/10 text-white/60"
                         }`}
                       >
@@ -89,7 +89,7 @@ export default async function PaymentsPage() {
             </table>
           )}
         </div>
-        <p className="mt-2 text-xs text-slate-500">* Montant après déduction des frais de service (5%)</p>
+        <p className="mt-2 text-xs text-[var(--foreground-muted)]">* Montant après déduction des frais de service (5%)</p>
 
         {/* Bank details form */}
         <BankDetailsForm />

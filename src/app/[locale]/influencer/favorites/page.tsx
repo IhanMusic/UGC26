@@ -28,7 +28,7 @@ export default async function FavoritesPage() {
   return (
     <AppShell title={t("myFavorites")} nav={await getInfluencerNav()}>
       {favorites.length === 0 ? (
-        <div className="text-center text-slate-400 py-12">
+        <div className="text-center text-[var(--foreground-muted)] py-12">
           No favorites yet. Browse campaigns and click the heart icon to save them.
         </div>
       ) : (
@@ -42,16 +42,16 @@ export default async function FavoritesPage() {
               )}
               <CardHeader>
                 <CardTitle className="text-base">
-                  <Link href={`/public/campaigns/${f.campaign.id}`} className="hover:text-violet-700 hover:underline underline-offset-4">
+                  <Link href={`/public/campaigns/${f.campaign.id}`} className="hover:text-[var(--primary)] hover:underline underline-offset-4">
                     {f.campaign.title}
                   </Link>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
-                <div className="text-sm text-slate-500">
+                <div className="text-sm text-[var(--foreground-muted)]">
                   {f.campaign.priceDinar.toLocaleString()} DZD
                 </div>
-                <div className="text-xs text-slate-400">
+                <div className="text-xs text-[var(--foreground-muted)]">
                   {f.campaign.company.companyProfile?.companyName ?? `${f.campaign.company.firstName} ${f.campaign.company.lastName}`}
                 </div>
                 <div className="flex flex-wrap gap-1.5">

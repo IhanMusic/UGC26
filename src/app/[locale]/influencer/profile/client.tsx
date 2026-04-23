@@ -40,8 +40,8 @@ export default function InfluencerProfileClient() {
   return (
     <Card>
       <CardHeader>
-        <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-indigo-500 shadow-lg shadow-violet-500/25">
-          <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] shadow-lg shadow-[var(--primary-glow)]">
+          <svg className="h-5 w-5 text-[var(--background)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
           </svg>
         </div>
@@ -51,8 +51,8 @@ export default function InfluencerProfileClient() {
       <CardContent>
         {loading ? (
           <div className="space-y-3">
-            <div className="animate-shimmer h-11 rounded-xl bg-slate-100" />
-            <div className="animate-shimmer h-11 rounded-xl bg-slate-100" />
+            <div className="animate-shimmer h-11 rounded-xl bg-[var(--surface-mid)]" />
+            <div className="animate-shimmer h-11 rounded-xl bg-[var(--surface-mid)]" />
           </div>
         ) : (
           <form

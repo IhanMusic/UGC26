@@ -85,10 +85,10 @@ export default function InfluencerCampaignClient({
   }, [status]);
 
   if (loading) {
-    return <div className="text-sm text-slate-600">Loading…</div>;
+    return <div className="text-sm text-[var(--foreground-muted)]">Loading…</div>;
   }
   if (!campaign || !participation) {
-    return <div className="text-sm text-slate-700">Not available.</div>;
+    return <div className="text-sm text-[var(--foreground-muted)]">Not available.</div>;
   }
 
   return (
@@ -102,8 +102,8 @@ export default function InfluencerCampaignClient({
             className={cn(
               "flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors",
               activeTab === key
-                ? "bg-violet-600/20 text-violet-300"
-                : "text-[#64748B] hover:text-[#94A3B8]"
+                ? "bg-[var(--primary-dim)] text-[var(--primary)]"
+                : "text-[var(--foreground-muted)] hover:text-[var(--foreground-muted)]"
             )}
           >
             {t(key)}
@@ -120,7 +120,7 @@ export default function InfluencerCampaignClient({
               {campaign.priceDinar.toLocaleString()} DZD • status {statusBadge}
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-3 text-sm text-slate-700">
+          <CardContent className="space-y-3 text-sm text-[var(--foreground-muted)]">
             <div className="whitespace-pre-wrap">{campaign.description}</div>
             <div>Objective: {campaign.objectivePlatforms ?? "—"}</div>
 
@@ -128,13 +128,13 @@ export default function InfluencerCampaignClient({
             {(status === "ONGOING" || status === "COMPLETED") && (
               <div className="pt-2 border-t border-white/[0.06]">
                 {disputeSubmitted ? (
-                  <p className="text-xs text-emerald-400 font-medium">
+                  <p className="text-xs text-[var(--success)] font-medium">
                     {t("disputeSubmitted")}
                   </p>
                 ) : (
                   <button
                     onClick={() => setShowDispute(true)}
-                    className="rounded-lg border border-[#F43F5E]/40 px-3 py-1.5 text-xs font-semibold text-[#F43F5E] hover:bg-[#F43F5E]/10 transition-colors"
+                    className="rounded-lg border border-[var(--danger)]/40 px-3 py-1.5 text-xs font-semibold text-[var(--danger)] hover:bg-[var(--danger-dim)] transition-colors"
                   >
                     {t("openDispute")}
                   </button>
@@ -236,7 +236,7 @@ export default function InfluencerCampaignClient({
               </Button>
             </div>
 
-            <div className="rounded-md border border-slate-200 bg-white px-3 py-2 text-xs text-slate-600">
+            <div className="rounded-md border border-[var(--border)] bg-[var(--surface-high)] px-3 py-2 text-xs text-[var(--foreground-muted)]">
               Payments are mocked: after completion, company will confirm, then admin marks paid. Stripe placeholders are ready.
             </div>
           </CardContent>

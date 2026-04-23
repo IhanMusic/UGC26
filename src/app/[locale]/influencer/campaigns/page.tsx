@@ -27,8 +27,8 @@ function Section({
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-2">
-        <div className="text-sm font-semibold text-slate-800">{title}</div>
-        <div className="rounded-full border border-slate-200/60 bg-white/80 px-2 py-0.5 text-[10px] font-medium text-slate-500">
+        <div className="text-sm font-semibold text-[var(--foreground)]">{title}</div>
+        <div className="rounded-full border border-[var(--border)] bg-[var(--surface-high)]/80 px-2 py-0.5 text-[10px] font-medium text-[var(--foreground-muted)]">
           {rows.length}
         </div>
       </div>
@@ -43,7 +43,7 @@ function Section({
         <TBody>
           {rows.length === 0 ? (
             <TR>
-              <TD colSpan={3} className="text-center text-slate-400">
+              <TD colSpan={3} className="text-center text-[var(--foreground-muted)]">
                 No campaigns
               </TD>
             </TR>
@@ -52,11 +52,11 @@ function Section({
               <TR key={r.id}>
                 <TD>
                   {r.href ? (
-                    <Link href={r.href} className="font-medium text-slate-900 hover:text-violet-700 hover:underline underline-offset-4">
+                    <Link href={r.href} className="font-medium text-[var(--foreground)] hover:text-[var(--primary)] hover:underline underline-offset-4">
                       {r.title}
                     </Link>
                   ) : (
-                    <span className="font-medium text-slate-900">{r.title}</span>
+                    <span className="font-medium text-[var(--foreground)]">{r.title}</span>
                   )}
                 </TD>
                 <TD>{r.priceDinar.toLocaleString()} DZD</TD>

@@ -49,12 +49,12 @@ export function BankDetailsForm() {
     }
   };
 
-  if (loading) return <div className="glass rounded-xl p-6 text-[#64748B]">{t("loading")}</div>;
+  if (loading) return <div className="glass rounded-xl p-6 text-[var(--foreground-muted)]">{t("loading")}</div>;
 
   return (
     <div className="glass rounded-xl p-6 space-y-4">
-      <h2 className="font-semibold text-[#E2E8F0]">{t("bankDetailsTitle")}</h2>
-      <p className="text-sm text-[#64748B]">{t("bankDetailsDesc")}</p>
+      <h2 className="font-semibold text-[var(--foreground)]">{t("bankDetailsTitle")}</h2>
+      <p className="text-sm text-[var(--foreground-muted)]">{t("bankDetailsDesc")}</p>
 
       <div className="space-y-3">
         {(
@@ -65,25 +65,25 @@ export function BankDetailsForm() {
           ] as const
         ).map(({ key, label, placeholder }) => (
           <div key={key} className="space-y-1">
-            <label className="text-xs font-semibold uppercase tracking-widest text-[#475569]">{label}</label>
+            <label className="text-xs font-semibold uppercase tracking-widest text-[var(--foreground-muted)]">{label}</label>
             <input
               type="text"
               value={form[key]}
               onChange={(e) => setForm((f) => ({ ...f, [key]: e.target.value }))}
               placeholder={placeholder}
-              className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-[#E2E8F0] placeholder-[#64748B] focus:border-violet-500/40 focus:outline-none"
+              className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-[var(--foreground)] placeholder-[var(--foreground-muted)] focus-visible:border-[var(--primary)]/40 focus-visible:outline-none"
             />
           </div>
         ))}
       </div>
 
-      {error && <p className="text-xs text-[#F43F5E]">{error}</p>}
-      {saved && <p className="text-xs text-emerald-400">{t("savedConfirm")}</p>}
+      {error && <p className="text-xs text-[var(--danger)]">{error}</p>}
+      {saved && <p className="text-xs text-[var(--success)]">{t("savedConfirm")}</p>}
 
       <button
         onClick={handleSave}
         disabled={saving}
-        className="rounded-xl bg-gradient-to-r from-amber-600 to-yellow-500 px-4 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50"
+        className="rounded-xl bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] px-4 py-2 text-sm font-semibold text-[var(--background)] hover:opacity-90 disabled:opacity-50"
       >
         {saving ? t("saving") : t("saveButton")}
       </button>

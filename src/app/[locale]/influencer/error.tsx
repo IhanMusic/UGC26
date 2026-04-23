@@ -17,11 +17,11 @@ export default function InfluencerError({
   return (
     <main className="flex flex-1 flex-col items-center justify-center bg-mesh px-4 py-20 text-center">
       <div className="animate-fade-in-up">
-        <div className="mb-6 text-8xl font-bold text-red-400">500</div>
-        <h1 className="mb-3 text-2xl font-bold text-slate-900 dark:text-slate-100">
+        <div className="mb-6 text-8xl font-bold text-[var(--danger)]">500</div>
+        <h1 className="mb-3 text-2xl font-bold text-[var(--foreground)]">
           Une erreur s&apos;est produite
         </h1>
-        <p className="mb-8 max-w-md text-slate-500">
+        <p className="mb-8 max-w-md text-[var(--foreground-muted)]">
           {process.env.NODE_ENV === "development"
             ? error.message
             : "Veuillez réessayer ou contacter le support."}

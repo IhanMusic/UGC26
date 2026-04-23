@@ -70,13 +70,13 @@ export default async function InfluencerDashboardPage() {
         {/* Welcome */}
         <Card className="md:col-span-2 group">
           <CardHeader>
-            <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-indigo-500 text-xl font-bold text-white shadow-lg shadow-violet-500/25">
+            <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] text-xl font-bold text-[var(--background)] shadow-lg shadow-[var(--primary-glow)]">
               {session?.user?.email?.charAt(0).toUpperCase()}
             </div>
             <CardTitle>Welcome back</CardTitle>
             <CardDescription>{session?.user?.email}</CardDescription>
           </CardHeader>
-          <CardContent className="text-sm text-slate-500">
+          <CardContent className="text-sm text-[var(--foreground-muted)]">
             Apply to campaigns, submit deliverables, and track your earnings.
           </CardContent>
         </Card>
@@ -86,8 +86,8 @@ export default async function InfluencerDashboardPage() {
             <CardDescription>Total Earnings</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold tracking-tight text-emerald-600">{earned.toLocaleString()} DZD</div>
-            <div className="text-xs text-slate-400 mt-1">Pending: {pending.toLocaleString()} DZD</div>
+            <div className="text-3xl font-bold tracking-tight text-[var(--success)]">{earned.toLocaleString()} DZD</div>
+            <div className="text-xs text-[var(--foreground-muted)] mt-1">Pending: {pending.toLocaleString()} DZD</div>
           </CardContent>
         </Card>
 
@@ -96,9 +96,9 @@ export default async function InfluencerDashboardPage() {
             <CardDescription>Acceptance Rate</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold tracking-tight text-violet-600">{acceptanceRate}%</div>
-            <div className="h-2 rounded-full bg-slate-100 mt-2 overflow-hidden">
-              <div className="h-full rounded-full bg-gradient-to-r from-violet-500 to-indigo-500" style={{ width: `${acceptanceRate}%` }} />
+            <div className="text-3xl font-bold tracking-tight text-[var(--primary)]">{acceptanceRate}%</div>
+            <div className="h-2 rounded-full bg-[var(--surface-mid)] mt-2 overflow-hidden">
+              <div className="h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)]" style={{ width: `${acceptanceRate}%` }} />
             </div>
           </CardContent>
         </Card>
@@ -112,15 +112,15 @@ export default async function InfluencerDashboardPage() {
         </Card>
         <Card>
           <CardHeader className="pb-2"><CardDescription>Accepted</CardDescription></CardHeader>
-          <CardContent><div className="text-3xl font-bold text-emerald-600">{accepted}</div></CardContent>
+          <CardContent><div className="text-3xl font-bold text-[var(--success)]">{accepted}</div></CardContent>
         </Card>
         <Card>
           <CardHeader className="pb-2"><CardDescription>Completed</CardDescription></CardHeader>
-          <CardContent><div className="text-3xl font-bold text-violet-600">{completedCount}</div></CardContent>
+          <CardContent><div className="text-3xl font-bold text-[var(--primary)]">{completedCount}</div></CardContent>
         </Card>
         <Card>
           <CardHeader className="pb-2"><CardDescription>Favorites</CardDescription></CardHeader>
-          <CardContent><div className="text-3xl font-bold text-rose-500">{favoriteCount}</div></CardContent>
+          <CardContent><div className="text-3xl font-bold text-[var(--danger)]">{favoriteCount}</div></CardContent>
         </Card>
       </div>
 
@@ -134,8 +134,8 @@ export default async function InfluencerDashboardPage() {
             <div className="grid grid-cols-6 gap-3">
               {monthlyEarnings.map((m) => (
                 <div key={m.month} className="text-center">
-                  <div className="text-lg font-bold text-emerald-600">{m.amount.toLocaleString()}</div>
-                  <div className="text-[10px] text-slate-400">{m.month.slice(5)}</div>
+                  <div className="text-lg font-bold text-[var(--success)]">{m.amount.toLocaleString()}</div>
+                  <div className="text-[10px] text-[var(--foreground-muted)]">{m.month.slice(5)}</div>
                 </div>
               ))}
             </div>
@@ -151,8 +151,8 @@ export default async function InfluencerDashboardPage() {
               <div className="space-y-2">
                 {topCategories.map(([name, count]) => (
                   <div key={name} className="flex items-center justify-between">
-                    <span className="text-sm text-slate-600">{name}</span>
-                    <span className="text-sm font-bold text-violet-600">{count}</span>
+                    <span className="text-sm text-[var(--foreground-muted)]">{name}</span>
+                    <span className="text-sm font-bold text-[var(--primary)]">{count}</span>
                   </div>
                 ))}
               </div>
